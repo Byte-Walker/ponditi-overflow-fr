@@ -27,7 +27,7 @@ const Login = () => {
           <div className="h-[2px] w-[30%] bg-black">&nbsp;</div>
         </div>
         {/* login form */}
-        <form className="w-[70%] block mx-auto mt-10">
+        <form className="md:w-[70%] w-full block mx-auto mt-10">
           <input type="text" className={`${input} mb-5`} placeholder="Email" />
           <input type="password" className={`${input}`} placeholder="Password" />
           <button
