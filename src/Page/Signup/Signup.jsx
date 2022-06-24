@@ -9,7 +9,7 @@ const Signup = () => {
     // * main container * //
     <section className={`md:bg-blue-50 bg-white min-h-screen centerXY md:p-0`}>
       {/* Card */}
-      <div className="max-w-[500px] bg-white md:border md:border-blue-200 px-10 py-20 rounded md:shadow">
+      <div className="max-w-[500px] bg-white md:border md:border-blue-200 px-14 py-16 rounded md:shadow">
         <p className="text-center text-gray-400 text-lg mb-2 font-semibold">Hello New Pondit 👋</p>
         <h1 className="text-3xl font-semibold capitalize text-center mb-5">Create Your Account</h1>
         {/* login form */}
@@ -18,21 +18,21 @@ const Signup = () => {
             type="text"
             name="name"
             className={`input mb-5`}
-            placeholder="Please enter your Name"
+            placeholder="Full name"
             required
           />
           <input
             type="email"
             name="email"
             className={`input mb-5`}
-            placeholder="Please enter your Email"
+            placeholder="Email Address"
             required
           />
           <input
             type="password"
             name="passwword"
             className={`input`}
-            placeholder="Please enter your Password"
+            placeholder="Password"
             required
           />
           <button
@@ -61,14 +61,14 @@ const Signup = () => {
           </button>
         </div>
         <p className="mt-10 text-center text-gray-500">
-          Don't Have an Account?{" "}
+          Already Have an Account?{" "}
           <span
             className="text-blue-500 font-semibold cursor-pointer underline"
             onClick={() => {
               path("/");
             }}
           >
-            Register Here!
+            Login Here!
           </span>
         </p>
       </div>

@@ -9,7 +9,7 @@ const Login = () => {
     // * main container * //
     <section className={`md:bg-blue-50 bg-white min-h-screen centerXY md:p-0`}>
       {/* Card */}
-      <div className="max-w-[500px] bg-white md:border md:border-blue-200 px-10 py-20 rounded md:shadow">
+      <div className="max-w-[500px] bg-white md:border md:border-blue-200 px-14 py-16 rounded md:shadow">
         <p className="text-center text-gray-400 text-lg mb-2 font-semibold">Welcome back 👋</p>
         <h1 className="text-3xl font-semibold capitalize text-center mb-5">
           Login to your account
@@ -20,14 +20,14 @@ const Login = () => {
             type="email"
             name="email"
             className={`input mb-5`}
-            placeholder="Please enter your Email"
+            placeholder="Email Address"
             required
           />
           <input
             type="password"
             name="passwword"
             className={`input`}
-            placeholder="Please enter your Password"
+            placeholder="Password"
             required
           />
           <button
