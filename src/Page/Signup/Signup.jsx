@@ -3,19 +3,24 @@ import { useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { BsFacebook } from "react-icons/bs";
 
-const Login = () => {
+const Signup = () => {
   const path = useNavigate();
   return (
     // * main container * //
     <section className={`md:bg-blue-50 bg-white min-h-screen centerXY md:p-0`}>
       {/* Card */}
       <div className="max-w-[500px] bg-white md:border md:border-blue-200 px-10 py-20 rounded md:shadow">
-        <p className="text-center text-gray-400 text-lg mb-2 font-semibold">Welcome back 👋</p>
-        <h1 className="text-3xl font-semibold capitalize text-center mb-5">
-          Login to your account
-        </h1>
+        <p className="text-center text-gray-400 text-lg mb-2 font-semibold">Hello New Pondit 👋</p>
+        <h1 className="text-3xl font-semibold capitalize text-center mb-5">Create Your Account</h1>
         {/* login form */}
         <form className="mt-10">
+          <input
+            type="text"
+            name="name"
+            className={`input mb-5`}
+            placeholder="Please enter your Name"
+            required
+          />
           <input
             type="email"
             name="email"
@@ -60,7 +65,7 @@ const Login = () => {
           <span
             className="text-blue-500 font-semibold cursor-pointer underline"
             onClick={() => {
-              path("/signup");
+              path("/");
             }}
           >
             Register Here!
@@ -71,4 +76,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;

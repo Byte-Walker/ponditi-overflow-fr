@@ -7,3 +7,15 @@ html,
 body {
   font-family: "Poppins", sans-serif;
 }
+
+@layer components {
+  .centerXY {
+    @apply flex items-center justify-center;
+  }
+  .input {
+    @apply w-full border bg-gray-100 border-gray-300 px-5 py-3 rounded outline-none focus:bg-white focus:border-blue-500;
+  }
+  .transition {
+    @apply transition-all duration-300;
+  }
+}
