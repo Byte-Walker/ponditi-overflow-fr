@@ -1,10 +1,38 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
-import { BsFacebook } from "react-icons/bs";
+import GoogleLogin from "../../components/Social_Login/GoogleLogin";
+import GithubLogin from "../../components/Social_Login/GithubLogin";
 
 const Login = () => {
   const path = useNavigate();
+  // * handeling login * //
+  const loginHandler = (event) => {
+    event.preventDefault();
+    const user_email = event.target.elements.email.value;
+    const user_pass = event.target.elements.password.value;
+    // * stroring all data to a object * //
+    const userInfo = { user_email, user_pass };
+    event.target.reset();
+    console.log(userInfo);
+    // * sending data to api * //
+    const url = `http://localhost:5500/login`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userInfo),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res) {
+          alert("You Are Logged In MF");
+        } else {
+          alert("Marakhao Chutmarani");
+        }
+      });
+  };
   return (
     // * main container * //
     <section className={`md:bg-blue-50 bg-white min-h-screen centerXY md:p-0`}>
@@ -15,7 +43,7 @@ const Login = () => {
           Login to your account
         </h1>
         {/* login form */}
-        <form className="mt-10">
+        <form className="mt-10" onSubmit={loginHandler}>
           <input
             type="email"
             name="email"
@@ -25,7 +53,7 @@ const Login = () => {
           />
           <input
             type="password"
-            name="passwword"
+            name="password"
             className={`input`}
             placeholder="Password"
             required
@@ -44,16 +72,8 @@ const Login = () => {
         </div>
         {/* Social Login */}
         <div className="flex justify-center gap-5 mx-auto w-full">
-          <button
-            className={`bg-white p-3 rounded-lg border gap-3 centerXY hover:scale-105 hover:border-red-500 transition`}
-          >
-            <FcGoogle /> Google
-          </button>
-          <button
-            className={`bg-white p-3 rounded-lg border gap-3 centerXY hover:scale-105 hover:border-blue-500 transition`}
-          >
-            <BsFacebook className="text-blue-600" /> Facebook
-          </button>
+          <GoogleLogin />
+          <GithubLogin />
         </div>
         <p className="mt-10 text-center text-gray-500">
           Don't Have an Account?{" "}

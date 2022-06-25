@@ -1,10 +1,39 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
 import { BsFacebook } from "react-icons/bs";
+import GoogleLogin from "../../components/Social_Login/GoogleLogin";
+import GithubLogin from "../../components/Social_Login/GithubLogin";
 
 const Signup = () => {
   const path = useNavigate();
+  // * handling signup * //
+  const singupHandler = (event) => {
+    event.preventDefault();
+    const name = event.target.elements.firstName.value + " " + event.target.elements.lastName.value;
+    const user_email = event.target.elements.email.value;
+    const user_pass = event.target.elements.password.value;
+    const img_url = null;
+    // * stroring all data to a object * //
+    const userInfo = { name, user_email, user_pass, img_url };
+
+    const url = `http://localhost:5500/signup`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userInfo),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res) {
+          alert("Account Created");
+          event.target.reset();
+        }
+      });
+    // * sending data to api * //
+  };
   return (
     // * main container * //
     <section className={`md:bg-blue-50 bg-white min-h-screen centerXY md:p-0`}>
@@ -13,14 +42,24 @@ const Signup = () => {
         <p className="text-center text-gray-400 text-lg mb-2 font-semibold">Hello New Pondit 👋</p>
         <h1 className="text-3xl font-semibold capitalize text-center mb-5">Create Your Account</h1>
         {/* login form */}
-        <form className="mt-10">
-          <input
-            type="text"
-            name="name"
-            className={`input mb-5`}
-            placeholder="Full name"
-            required
-          />
+        <form className="mt-10" onSubmit={singupHandler}>
+          <div className="flex gap-5">
+            <input
+              type="text"
+              name="firstName"
+              className={`input mb-5`}
+              placeholder="First name"
+              required
+            />
+            <input
+              type="text"
+              name="lastName"
+              className={`input mb-5`}
+              placeholder="Last name"
+              required
+            />
+          </div>
+
           <input
             type="email"
             name="email"
@@ -30,7 +69,7 @@ const Signup = () => {
           />
           <input
             type="password"
-            name="passwword"
+            name="password"
             className={`input`}
             placeholder="Password"
             required
@@ -41,6 +80,7 @@ const Signup = () => {
             Log In
           </button>
         </form>
+
         {/* separator */}
         <div className={`centerXY my-8 gap-2`}>
           <div className="h-[2px] w-full bg-gray-300">&nbsp;</div>
@@ -49,16 +89,8 @@ const Signup = () => {
         </div>
         {/* Social Login */}
         <div className="flex justify-center gap-5 mx-auto w-full">
-          <button
-            className={`bg-white p-3 rounded-lg border gap-3 centerXY hover:scale-105 hover:border-red-500 transition`}
-          >
-            <FcGoogle /> Google
-          </button>
-          <button
-            className={`bg-white p-3 rounded-lg border gap-3 centerXY hover:scale-105 hover:border-blue-500 transition`}
-          >
-            <BsFacebook className="text-blue-600" /> Facebook
-          </button>
+          <GoogleLogin />
+          <GithubLogin />
         </div>
         <p className="mt-10 text-center text-gray-500">
           Already Have an Account?{" "}
