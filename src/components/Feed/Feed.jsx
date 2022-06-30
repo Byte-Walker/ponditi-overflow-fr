@@ -7,9 +7,9 @@ const Feed = ({ feedInfo }) => {
   const { name, designation, question, answer, love, comment, share } = feedInfo;
   // const { img_url } = user;
   return (
-    <section className="mb-3 shadow mx-auto max-w-[500px] border border-gray-200">
+    <section className="mb-3 bg-white shadow border rounded-lg border-gray-200">
       {/* Card */}
-      <div className="bg-white rounded p-5 ">
+      <div className="p-5 ">
         {/* user info starts*/}
         <div className="flex gap-3 centerY mb-4">
           <DpMaker name={name} height="40px" color="#d35400" />
