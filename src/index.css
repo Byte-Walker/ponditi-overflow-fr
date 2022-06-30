@@ -27,7 +27,7 @@ body {
 
 .homePageGrid {
   display: grid;
-  grid-template-columns: auto 600px auto;
+  grid-template-columns: auto 700px auto;
 }
 @layer components {
   .centerXY {

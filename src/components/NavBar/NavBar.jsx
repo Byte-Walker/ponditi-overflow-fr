@@ -4,13 +4,14 @@ import { VscNotebook, VscNote, VscHome, VscBell } from "react-icons/vsc";
 import { BsSearch } from "react-icons/bs";
 import CustomNavLink from "../CustomNavLink/CustomNavLink";
 import Modal from "../Modal/Modal";
+import ProfileMini from "../../Page/Home/ProfileMini";
 
 const NavBar = () => {
   const [openModal, setOpenModal] = useState(false);
-  const [profileModal, setProfileModal] = useState(false);
+  const [isProfileMiniOpen, setIsProfileMiniOpen] = useState(false);
 
   return (
-    <section className="bg-white sticky py-1 top-0 z-50">
+    <section className="bg-white sticky py-1 top-0 z-50 shadow">
       <nav className="container mx-auto navGrid">
         {/* left */}
         <div className="centerY gap-5">
@@ -53,19 +54,13 @@ const NavBar = () => {
               </div>
             </>
           </Modal>
-          <div onClick={() => setProfileModal(true)}>
+          <div className="relative" onClick={() => setIsProfileMiniOpen(!isProfileMiniOpen)}>
             {false ? (
               <img src="" alt="" />
             ) : (
               <DpMaker name="Faisal" color="#DC2626" height="40px" />
             )}
-            <Modal openModal={profileModal} setOpenModal={setProfileModal} title={"Log in"}>
-              <>
-                <div className="p-5">
-                  <button className="w-full bg-red-600 text-white p-2 rounded mt-3">Logout</button>
-                </div>
-              </>
-            </Modal>
+            <ProfileMini isOPen={isProfileMiniOpen} />
           </div>
         </div>
       </nav>

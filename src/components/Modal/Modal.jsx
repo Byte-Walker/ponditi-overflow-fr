@@ -14,7 +14,7 @@ const Modal = ({ openModal, setOpenModal, children, title }) => {
     // modal overlay
     <div className="centerXY modal" onClick={closeModal}>
       {/* modal body */}
-      <div className="bg-white min-w-[400px] h-fit rounded" onClick={(e) => e.stopPropagation()}>
+      <div className="bg-white min-w-[550px] h-fit rounded" onClick={(e) => e.stopPropagation()}>
         {/* modals header */}
         <header className="border-b border-gray-300 centerY justify-between p-3">
           <h1 className="text-xl font-semibold">{title}</h1>
