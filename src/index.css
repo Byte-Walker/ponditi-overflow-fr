@@ -6,16 +6,25 @@
 html,
 body {
   font-family: "Poppins", sans-serif;
+  @apply bg-blue-50;
 }
 
 @layer components {
   .centerXY {
     @apply flex items-center justify-center;
   }
+  .centerY {
+    @apply flex items-center;
+  }
   .input {
     @apply w-full border bg-gray-100 border-gray-300 px-5 py-3 rounded outline-none focus:bg-white focus:border-blue-500;
   }
   .transition {
     @apply transition-all duration-300;
+  }
+  .iconSize {
+  }
+  .iconButton {
+    @apply text-sm flex items-center gap-2 px-2 py-1 bg-gray-200 rounded-3xl;
   }
 }
