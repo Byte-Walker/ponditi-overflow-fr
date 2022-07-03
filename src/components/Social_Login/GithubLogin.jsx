@@ -1,8 +1,6 @@
 import { GithubAuthProvider, signInWithPopup } from "firebase/auth";
 import auth from "../firebase.init";
 import { BsGithub } from "react-icons/bs";
-import axios from "axios";
-import { useEffect } from "react";
 
 const GithubLogin = () => {
   const githubProvider = new GithubAuthProvider();

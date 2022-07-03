@@ -5,17 +5,28 @@ import { BsSearch } from "react-icons/bs";
 import CustomNavLink from "../CustomNavLink/CustomNavLink";
 import Modal from "../Modal/Modal";
 import ProfileMini from "../../Page/Home/ProfileMini";
+import { useNavigate } from "react-router-dom";
+import { useAuthState } from "react-firebase-hooks/auth";
+import auth from "../firebase.init";
 
 const NavBar = () => {
   const [openModal, setOpenModal] = useState(false);
   const [isProfileMiniOpen, setIsProfileMiniOpen] = useState(false);
+  const path = useNavigate();
+  const [user, loading] = useAuthState(auth);
+
+  if (loading) {
+    return null;
+  }
 
   return (
     <section className="bg-white sticky py-1 top-0 z-50 shadow">
       <nav className="container mx-auto navGrid">
         {/* left */}
         <div className="centerY gap-5">
-          <h1 className="text-2xl font-title text-red-600">Ponditi Overflow</h1>
+          <h1 className="text-2xl font-title text-red-600 cursor-pointer" onClick={() => path("/")}>
+            Ponditi Overflow
+          </h1>
         </div>
         {/* middle */}
         {/* navigation link */}
@@ -54,13 +65,22 @@ const NavBar = () => {
               </div>
             </>
           </Modal>
-          <div className="relative" onClick={() => setIsProfileMiniOpen(!isProfileMiniOpen)}>
-            {false ? (
-              <img src="" alt="" />
+          <div className="relative">
+            {user?.email ? (
+              <div onClick={() => setIsProfileMiniOpen(!isProfileMiniOpen)}>
+                {false ? (
+                  <img src="" alt="" />
+                ) : (
+                  <DpMaker name={user?.displayName} color="#DC2626" height="40px" />
+                )}{" "}
+              </div>
             ) : (
-              <DpMaker name="Faisal" color="#DC2626" height="40px" />
+              <button className="btn-red" onClick={() => path("/login")}>
+                Login
+              </button>
             )}
-            <ProfileMini isOPen={isProfileMiniOpen} />
+
+            <ProfileMini isOPen={isProfileMiniOpen} setIsOpen={setIsProfileMiniOpen} />
           </div>
         </div>
       </nav>

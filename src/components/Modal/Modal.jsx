@@ -12,7 +12,7 @@ const Modal = ({ openModal, setOpenModal, children, title }) => {
 
   return createPortal(
     // modal overlay
-    <div className="centerXY modal" onClick={closeModal}>
+    <div className="centerXY modal transition" onClick={closeModal}>
       {/* modal body */}
       <div className="bg-white min-w-[550px] h-fit rounded" onClick={(e) => e.stopPropagation()}>
         {/* modals header */}

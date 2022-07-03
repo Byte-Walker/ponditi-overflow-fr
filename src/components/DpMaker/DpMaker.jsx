@@ -1,6 +1,6 @@
 import React from "react";
 
-const DpMaker = ({ name, height, color, onClick }) => {
+const DpMaker = ({ name, height, color, onClick, fontSize }) => {
   return (
     <div
       className="rounded-full centerXY cursor-pointer"
@@ -11,7 +11,9 @@ const DpMaker = ({ name, height, color, onClick }) => {
       }}
       onClick={onClick}
     >
-      <h1 className="text-white">{name[0]}</h1>
+      <h1 className={`text-white`} style={{ fontSize: fontSize ? fontSize : "20px" }}>
+        {name && name[0]}
+      </h1>
     </div>
   );
 };

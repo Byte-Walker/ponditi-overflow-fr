@@ -1,9 +1,11 @@
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import auth from "../firebase.init";
 import { FcGoogle } from "react-icons/fc";
+import { useNavigate } from "react-router-dom";
 
 const GoogleLogin = () => {
   const googleProvider = new GoogleAuthProvider();
+  const path = useNavigate();
   const loginWithGoogle = () => {
     signInWithPopup(auth, googleProvider).then((result) => {
       const user_email = result.user.email;
@@ -24,7 +26,8 @@ const GoogleLogin = () => {
         .then((res) => res.json())
         .then((res) => {
           if (res) {
-            alert("Account Created");
+            alert("You're Logged In");
+            path("/");
           }
         });
     });

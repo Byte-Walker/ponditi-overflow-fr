@@ -1,15 +1,6 @@
 import React from "react";
 import Feed from "../../components/Feed/Feed";
-import NavBar from "../../components/NavBar/NavBar";
-import Post from "./Post";
-import { useAuthState } from "react-firebase-hooks/auth";
-import auth from "../../components/firebase.init";
-
-const Home = () => {
-  const [user, loading] = useAuthState(auth);
-  if (loading) {
-    return null;
-  }
+const ProfileAnsers = () => {
   const feedInfo = [
     {
       name: "Son Goku Kakarot",
@@ -49,22 +40,12 @@ const Home = () => {
     },
   ];
   return (
-    <>
-      <NavBar />{" "}
-      {user ? (
-        <section className="homePageContainer mx-auto gap-10 mt-3">
-          <div>
-            <Post />
-            {feedInfo.map((feedInformation) => (
-              <Feed feedInfo={feedInformation} key={Math.random()} />
-            ))}
-          </div>
-        </section>
-      ) : (
-        <h1 className="font-semibold text-2xl text-center mt-20">Please Login First!😪</h1>
-      )}
-    </>
+    <section>
+      {feedInfo.map((feedInformation) => (
+        <Feed feedInfo={feedInformation} key={Math.random()} />
+      ))}
+    </section>
   );
 };
 
-export default Home;
+export default ProfileAnsers;

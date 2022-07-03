@@ -7,7 +7,7 @@ const Feed = ({ feedInfo }) => {
   const { name, designation, question, answer, love, comment, share } = feedInfo;
   // const { img_url } = user;
   return (
-    <section className="mb-3 bg-white shadow border rounded-lg border-gray-200">
+    <section className="mb-3 card">
       {/* Card */}
       <div className="p-5 ">
         {/* user info starts*/}

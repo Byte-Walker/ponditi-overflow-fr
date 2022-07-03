@@ -1,37 +1,47 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import GoogleLogin from "../../components/Social_Login/GoogleLogin";
 import GithubLogin from "../../components/Social_Login/GithubLogin";
+import {
+  useSignInWithEmailAndPassword,
+  useSendPasswordResetEmail,
+} from "react-firebase-hooks/auth";
+import auth from "../../components/firebase.init";
+import Modal from "../../components/Modal/Modal";
+import { toastConfig } from "../../components/toastConfig";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const path = useNavigate();
+  const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(auth);
+  const [sendPasswordResetEmail, sending, veryficationError] = useSendPasswordResetEmail(auth);
+  const [openModal, setOpenModal] = useState(false);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error.code, toastConfig);
+    } else if (user) {
+      path("/");
+    } else if (veryficationError) {
+      toast.error(veryficationError.code, toastConfig);
+    }
+  }, [error, user, veryficationError]);
   // * handeling login * //
   const loginHandler = (event) => {
     event.preventDefault();
     const user_email = event.target.elements.email.value;
     const user_pass = event.target.elements.password.value;
-    // * stroring all data to a object * //
-    const userInfo = { user_email, user_pass };
+    // * logging in into user account * //
+    signInWithEmailAndPassword(user_email, user_pass);
     event.target.reset();
-    console.log(userInfo);
-    // * sending data to api * //
-    const url = `http://localhost:5500/login`;
-    fetch(url, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userInfo),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        if (res) {
-          alert("You Are Logged In MF");
-        } else {
-          alert("Marakhao Chutmarani");
-        }
-      });
+  };
+  // * handeling forget password * //
+  const forgetPassword = async (event) => {
+    event.preventDefault();
+    const email = event.target.elements.email.value;
+    await sendPasswordResetEmail(email);
+    setOpenModal(false);
+    toast.success("Veryfication Email has been sent", toastConfig);
   };
   return (
     // * main container * //
@@ -58,10 +68,19 @@ const Login = () => {
             placeholder="Password"
             required
           />
-          <button
-            className={`w-full rounded block mt-10 bg-blue-600 text-white p-3 hover:scale-105 transition`}
+          {/* password reset */}
+          <p
+            className="my-5 text-right underline cursor-pointer text-red-600"
+            onClick={() => setOpenModal(true)}
           >
-            Log In
+            Forget Password?
+          </p>
+          <button
+            className={`w-full rounded block  text-white p-3 hover:scale-105 transition`}
+            disabled={loading}
+            style={{ backgroundColor: loading ? "#9BA3AF" : "#DC2626" }}
+          >
+            {loading ? "Loading" : "Log In"}
           </button>
         </form>
         {/* separator */}
@@ -87,6 +106,18 @@ const Login = () => {
           </span>
         </p>
       </div>
+      <Modal openModal={openModal} setOpenModal={setOpenModal} title={"Password Reset?😓"}>
+        <form className="p-5" onSubmit={forgetPassword}>
+          <input type="email" name="email" className="input" placeholder="Your Email" required />
+          <button
+            className="btn-red mt-5"
+            disabled={sending}
+            style={{ backgroundColor: sending ? "#9BA3AF" : "#DC2626" }}
+          >
+            Reset
+          </button>
+        </form>
+      </Modal>
     </section>
   );
 };
