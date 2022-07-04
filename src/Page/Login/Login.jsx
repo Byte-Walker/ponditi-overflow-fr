@@ -24,7 +24,7 @@ const Login = () => {
       path("/");
     } else if (veryficationError) {
       toast.error(veryficationError.code, toastConfig);
-    }
+  }
   }, [error, user, veryficationError]);
   // * handeling login * //
   const loginHandler = (event) => {

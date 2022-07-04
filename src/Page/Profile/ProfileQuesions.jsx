@@ -7,13 +7,13 @@ const ProfileQuesions = () => {
       questionId: "q1",
       name: "Faisal Ahmed",
       time: "22 Jun 2022 at 8:10 PM",
-      ques_desc: "I wanna get married but nobody gives a fuck about me. What sould I do?",
+      ques_desc: "I wanna get married but nobody gives a damn about me. What sould I do?",
     },
     {
       questionId: "q2",
       name: "Faisal Imran",
       time: "22 Jun 2022 at 8:10 PM",
-      ques_desc: "I wanna get married but nobody gives a fuck about me. What sould I do?",
+      ques_desc: "I wanna get married but nobody gives a damn about me. What sould I do?",
     },
   ];
   return (

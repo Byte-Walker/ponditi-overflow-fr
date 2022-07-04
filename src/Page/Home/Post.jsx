@@ -7,13 +7,14 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../../components/firebase.init";
 import { toast } from "react-toastify";
 import { toastConfig } from "../../components/toastConfig";
+import { useNavigate } from "react-router-dom";
 
 const Post = () => {
   const [postModal, setPostModal] = useState(false);
   const [user, loading] = useAuthState(auth);
   const [userFirstLetter, setUserFirstLetter] = useState(user?.displayName);
   const [user_email, setUser_email] = useState(user.email);
-
+  const path = useNavigate();
   useEffect(() => {
     setUserFirstLetter(userFirstLetter);
     setUser_email(user.email);
@@ -85,7 +86,7 @@ const Post = () => {
         >
           <BsQuestionSquare /> &nbsp; Ask
         </button>
-        <button className="centerXY hover:bg-gray-300 py-1 rounded">
+        <button className="centerXY hover:bg-gray-300 py-1 rounded" onClick={() => path("/answer")}>
           <VscNotebook /> &nbsp; Answer
         </button>
       </div>

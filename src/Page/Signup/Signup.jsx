@@ -8,6 +8,8 @@ import {
   useSendEmailVerification,
 } from "react-firebase-hooks/auth";
 import auth from "../../components/firebase.init";
+import { toast } from "react-toastify";
+import { toastConfig } from "../../components/toastConfig";
 
 const Signup = () => {
   const path = useNavigate();
@@ -54,7 +56,7 @@ const Signup = () => {
       .then((res) => res.json())
       .then((res) => {
         if (res) {
-          alert("Account Created");
+          toast.success("Account Created", toastConfig);
           event.target.reset();
         }
       });

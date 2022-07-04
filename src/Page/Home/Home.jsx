@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import Feed from "../../components/Feed/Feed";
 import NavBar from "../../components/NavBar/NavBar";
 import Post from "./Post";
@@ -7,47 +8,19 @@ import auth from "../../components/firebase.init";
 
 const Home = () => {
   const [user, loading] = useAuthState(auth);
+  const [feedInfo, setFeedinfo] = useState([]);
+
+  useEffect(() => {
+    const url = "http://localhost:5500/getallanswers";
+    const getData = async () => {
+      const { data } = await axios.get(url);
+      setFeedinfo(data);
+    };
+    getData();
+  }, []);
   if (loading) {
     return null;
   }
-  const feedInfo = [
-    {
-      name: "Son Goku Kakarot",
-      designation: "Font End Developer",
-      question: "What is React",
-      answer: `Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequatur reiciendis asperiores
-      illo ab quam! Excepturi eaque est esse mollitia accusantium enim pariatur. Eum culpa fugiat
-      accusantium alias reprehenderit quos rerum dolorum nesciunt recusandae aut, praesentium, porro
-      architecto natus? Molestiae, magni?`,
-      love: 10,
-      comment: 20,
-      share: 30,
-    },
-    {
-      name: "Shakib Al Hasan",
-      designation: "Full Stack Developer",
-      question: "What is NodeJs",
-      answer: `Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequatur reiciendis asperiores
-      illo ab quam! Excepturi eaque est esse mollitia accusantium enim pariatur. Eum culpa fugiat
-      accusantium alias reprehenderit quos rerum dolorum nesciunt recusandae aut, praesentium, porro
-      architecto natus? Molestiae, magni?`,
-      love: 406,
-      comment: 205,
-      share: 130,
-    },
-    {
-      name: "Adam Grilcist",
-      designation: "Useless MF",
-      question: "What is Programming",
-      answer: `Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequatur reiciendis asperiores
-      illo ab quam! Excepturi eaque est esse mollitia accusantium enim pariatur. Eum culpa fugiat
-      accusantium alias reprehenderit quos rerum dolorum nesciunt recusandae aut, praesentium, porro
-      architecto natus? Molestiae, magni?`,
-      love: 46,
-      comment: 22,
-      share: 110,
-    },
-  ];
   return (
     <>
       <NavBar />{" "}

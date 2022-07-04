@@ -4,7 +4,9 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { BiShare } from "react-icons/bi";
 import { FaRegComment } from "react-icons/fa";
 const Feed = ({ feedInfo }) => {
-  const { name, designation, question, answer, love, comment, share } = feedInfo;
+  const { user_name, question_description, answer_description, love, comment, share, time } =
+    feedInfo;
+  console.log(feedInfo);
   // const { img_url } = user;
   return (
     <section className="mb-3 card">
@@ -12,16 +14,16 @@ const Feed = ({ feedInfo }) => {
       <div className="p-5 ">
         {/* user info starts*/}
         <div className="flex gap-3 centerY mb-4">
-          <DpMaker name={name} height="40px" color="#d35400" />
+          <DpMaker name={user_name} height="40px" color="#d35400" />
           <div>
-            <p className="font-bold">{name}</p>
-            <p className="text-sm text-gray-500">{designation}</p>
+            <p className="font-bold">{user_name}</p>
+            <p className="text-sm text-gray-500">{time}</p>
           </div>
         </div>
         {/* user info ends*/}
         {/* question start */}
-        <h1 className="font-semibold text-xl mb-2">{question}</h1>
-        <p className="mb-3">{answer}</p>
+        <h1 className="font-semibold mb-2">{question_description}</h1>
+        <p className="mb-3">{answer_description}</p>
         {/* question ends */}
         {/* reactions, comments and share starts */}
         <div className="flex gap-5">
