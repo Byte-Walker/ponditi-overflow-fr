@@ -6,7 +6,6 @@ import { FaRegComment } from "react-icons/fa";
 const Feed = ({ feedInfo }) => {
   const { user_name, question_description, answer_description, love, comment, share, time } =
     feedInfo;
-  console.log(feedInfo);
   // const { img_url } = user;
   return (
     <section className="mb-3 card">

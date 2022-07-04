@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import Feed from "../../components/Feed/Feed";
 import NavBar from "../../components/NavBar/NavBar";
 import Post from "./Post";
-import { useAuthState } from "react-firebase-hooks/auth";
-import auth from "../../components/firebase.init";
+import { UserContext } from "../../ContextAPI/UserContext";
 
 const Home = () => {
-  const [user, loading] = useAuthState(auth);
   const [feedInfo, setFeedinfo] = useState([]);
-
+  const { user } = useContext(UserContext);
   useEffect(() => {
     const url = "http://localhost:5500/getallanswers";
     const getData = async () => {
@@ -18,13 +16,11 @@ const Home = () => {
     };
     getData();
   }, []);
-  if (loading) {
-    return null;
-  }
+
   return (
     <>
       <NavBar />{" "}
-      {user ? (
+      {user?.user_email ? (
         <section className="homePageContainer mx-auto gap-10 mt-3">
           <div>
             <Post />

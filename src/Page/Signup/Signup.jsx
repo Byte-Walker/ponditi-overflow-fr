@@ -1,49 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import GoogleLogin from "../../components/Social_Login/GoogleLogin";
 import GithubLogin from "../../components/Social_Login/GithubLogin";
-import {
-  useCreateUserWithEmailAndPassword,
-  useUpdateProfile,
-  useSendEmailVerification,
-} from "react-firebase-hooks/auth";
-import auth from "../../components/firebase.init";
 import { toast } from "react-toastify";
 import { toastConfig } from "../../components/toastConfig";
+import { UserContext } from "../../ContextAPI/UserContext";
 
 const Signup = () => {
   const path = useNavigate();
-  const [createUserWithEmailAndPassword, user, loading, error] =
-    useCreateUserWithEmailAndPassword(auth);
-  const [updateProfile, , updateError] = useUpdateProfile(auth);
-  const [sendEmailVerification, , varificationError] = useSendEmailVerification(auth);
-  // * handling signup * //
-  useEffect(() => {
-    if (error) {
-      alert(error.code);
-    } else if (updateError) {
-      alert(updateError.code);
-    } else if (varificationError) {
-      alert(varificationError);
-    } else if (user) {
-      console.log(user);
-      path("/");
-    }
-  }, [error, user, path, updateError, varificationError]);
+  const { manageUser } = useContext(UserContext);
 
+  // * handling signup * //
   const singupHandler = (event) => {
     event.preventDefault();
-    const name = event.target.elements.firstName.value + " " + event.target.elements.lastName.value;
+    const user_name =
+      event.target.elements.firstName.value + " " + event.target.elements.lastName.value;
     const user_email = event.target.elements.email.value;
     const user_pass = event.target.elements.password.value;
     const img_url = null;
 
     // * stroring all data to a object * //
-    const userInfo = { name, user_email, user_pass, img_url };
-    createUserWithEmailAndPassword(user_email, user_pass)
-      .then(() => updateProfile({ displayName: name }))
-      .then(() => sendEmailVerification());
-
+    const userInfo = { user_name, user_email, user_pass, img_url };
     const url = `http://localhost:5500/signup`;
     fetch(url, {
       method: "POST",
@@ -58,6 +35,11 @@ const Signup = () => {
         if (res) {
           toast.success("Account Created", toastConfig);
           event.target.reset();
+          const userInfo = { user_name, user_email, img_url };
+          // * saving userinfo into local storage * //
+          localStorage.setItem("userInfo", JSON.stringify(userInfo));
+          manageUser(userInfo);
+          path("/");
         }
       });
     // * sending data to api * //
@@ -104,10 +86,9 @@ const Signup = () => {
           />
           <button
             className={`w-full rounded block mt-10 text-white p-3 hover:scale-105 transition`}
-            disabled={loading}
-            style={{ backgroundColor: loading ? "#9BA3AF" : "#DC2626" }}
+            style={{ backgroundColor: "#9BA3AF" }}
           >
-            {loading ? "Loading" : "Sign Up"}
+            Sign Up
           </button>
         </form>
 

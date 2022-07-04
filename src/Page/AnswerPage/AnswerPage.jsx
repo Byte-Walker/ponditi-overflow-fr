@@ -30,6 +30,7 @@ const AnswerPage = () => {
         </h1>
         {allQuestion.map((question) => (
           <QuestionFeed
+            key={question?.question_id}
             questionData={question}
             user_name={user?.displayName}
             img_url={user?.photoURL}

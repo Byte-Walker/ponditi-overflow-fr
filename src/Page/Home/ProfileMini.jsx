@@ -1,17 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import DpMaker from "../../components/DpMaker/DpMaker";
-import { signOut } from "firebase/auth";
-import { useAuthState } from "react-firebase-hooks/auth";
-import auth from "../../components/firebase.init";
+import { UserContext } from "../../ContextAPI/UserContext";
 
 const ProfileMini = ({ isOPen, setIsOpen }) => {
-  const [user, loading] = useAuthState(auth);
   const path = useNavigate();
-  // if loading component won't mount
-  if (loading) {
-    return null;
-  }
+  const { user, manageUser } = useContext(UserContext);
+  const handleLogOut = () => {
+    localStorage.removeItem("userInfo");
+    manageUser("log-out", null);
+    path("/login");
+  };
 
   if (!isOPen) {
     return null;
@@ -22,17 +21,10 @@ const ProfileMini = ({ isOPen, setIsOpen }) => {
       style={{ display: isOPen ? "block" : "none" }}
     >
       <div className="flex items-center gap-5 cursor-pointer mb-3" onClick={() => path("/profile")}>
-        <div>{false ? <img src="" alt="" /> : <DpMaker name={user?.displayName} />}</div>
-        <h1>{user?.displayName}</h1>
+        <div>{false ? <img src={user?.img_url} alt="" /> : <DpMaker name={user?.user_name} />}</div>
+        <h1>{user?.user_name}</h1>
       </div>
-      <button
-        className="btn-red"
-        onClick={() => {
-          signOut(auth);
-          setIsOpen(false);
-          path("/login");
-        }}
-      >
+      <button className="btn-red" onClick={handleLogOut}>
         Logout
       </button>
     </section>

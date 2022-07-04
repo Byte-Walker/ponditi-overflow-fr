@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import DpMaker from "../DpMaker/DpMaker";
 import { VscNotebook, VscNote, VscHome, VscBell } from "react-icons/vsc";
 import { BsSearch } from "react-icons/bs";
@@ -6,18 +6,13 @@ import CustomNavLink from "../CustomNavLink/CustomNavLink";
 import Modal from "../Modal/Modal";
 import ProfileMini from "../../Page/Home/ProfileMini";
 import { useNavigate } from "react-router-dom";
-import { useAuthState } from "react-firebase-hooks/auth";
-import auth from "../firebase.init";
+import { UserContext } from "../../ContextAPI/UserContext";
 
 const NavBar = () => {
   const [openModal, setOpenModal] = useState(false);
   const [isProfileMiniOpen, setIsProfileMiniOpen] = useState(false);
   const path = useNavigate();
-  const [user, loading] = useAuthState(auth);
-
-  if (loading) {
-    return null;
-  }
+  const { user } = useContext(UserContext);
 
   return (
     <section className="bg-white sticky py-1 top-0 z-50 shadow">
@@ -66,12 +61,12 @@ const NavBar = () => {
             </>
           </Modal>
           <div className="relative">
-            {user?.email ? (
+            {user?.user_email ? (
               <div onClick={() => setIsProfileMiniOpen(!isProfileMiniOpen)}>
                 {false ? (
-                  <img src="" alt="" />
+                  <img src={user?.user_email} alt="" />
                 ) : (
-                  <DpMaker name={user?.displayName} color="#DC2626" height="40px" />
+                  <DpMaker name={user?.user_name} color="#DC2626" height="40px" />
                 )}{" "}
               </div>
             ) : (

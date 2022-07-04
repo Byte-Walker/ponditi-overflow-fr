@@ -4,9 +4,40 @@ import { FaUserGraduate } from "react-icons/fa";
 import { ImLocation } from "react-icons/im";
 import { AiOutlineEdit } from "react-icons/ai";
 import Modal from "../../components/Modal/Modal";
+import { toast } from "react-toastify";
+import { toastConfig } from "../../components/toastConfig";
 
 const About = () => {
   const [openModal, setOpenModal] = useState(false);
+
+  const updateProfile = (e) => {
+    e.preventDefault();
+    // * gatering all profile info * //
+    const job = e.target.elements.job.value;
+    const study = e.target.elements.study.value;
+    const location = e.target.elements.location.value;
+    // ! have to add email into the object as well ! //
+    const profileInfo = { job, study, location };
+    // * sending data to server *//
+    const url = `http://localhost:5500/updateProfile`;
+    fetch
+      .post(url, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(profileInfo),
+      })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res) {
+          toast.success("Your Profile Updated", toastConfig);
+          e.target.reset();
+        }
+      });
+    console.log(profileInfo);
+  };
   return (
     <section className="p-5 card">
       <div>
@@ -14,7 +45,7 @@ const About = () => {
           <h1 className="text-2xl font-semibold">Basic Overview</h1>
           <button
             className="text-xl centerXY rounded-full bg-gray-300 h-[40px] w-[40px] transition 
-          hover:scale-125 hover:bg-red-600 hover:text-white"
+            hover:scale-125 hover:bg-red-600 hover:text-white"
             onClick={() => setOpenModal(true)}
           >
             <AiOutlineEdit />
@@ -61,20 +92,13 @@ const About = () => {
         </div>
       </div>
       <Modal title={"Add Your Basic Infor"} openModal={openModal} setOpenModal={setOpenModal}>
-        <form className="p-5 flex gap-5 flex-col">
+        <form className="p-5 flex gap-5 flex-col" onSubmit={updateProfile}>
           <div className="bg-blue-100 text-blue-600 text-sm p-3 mb-3 rounded">
-            <h1 className="font-semibold text-base">
-              Tips on quickly completiing your profile info
-            </h1>
-            <div className="px-4">
-              <ul className="list-disc">
-                <li>Don't misspleeed</li>
-              </ul>
-            </div>
+            <h1 className="font-semibold text-base text-center">Update Your Profile</h1>
           </div>
-          <input type="text" className="input" placeholder="Where Do You Work?" />
-          <input type="text" className="input" placeholder="Where Do You Study?" />
-          <input type="text" className="input" placeholder="Where Do You Live?" />
+          <input type="text" name="job" className="input" placeholder="Where Do You Work?" />
+          <input type="text" name="study" className="input" placeholder="Where Do You Study?" />
+          <input type="text" name="location" className="input" placeholder="Where Do You Live?" />
           <button className="btn-red">Submit</button>
         </form>
       </Modal>
