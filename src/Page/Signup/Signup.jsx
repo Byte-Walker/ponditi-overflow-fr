@@ -46,9 +46,9 @@ const Signup = () => {
   };
   return (
     // * main container * //
-    <section className={`md:bg-red-50 bg-white min-h-screen centerXY md:p-0`}>
+    <section className={`md:bg-gray-50 bg-white min-h-screen centerXY md:p-0`}>
       {/* Card */}
-      <div className="max-w-[500px] bg-white md:border md:border-red-200 px-14 py-16 rounded md:shadow">
+      <div className="max-w-[500px] bg-white md:border md:border-gray-200 px-14 py-16 rounded md:shadow">
         <p className="text-center text-gray-400 text-lg mb-2 font-semibold">Hello New Pondit 👋</p>
         <h1 className="text-3xl font-semibold capitalize text-center mb-5">Create Your Account</h1>
         {/* login form */}

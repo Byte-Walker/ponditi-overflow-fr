@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import axios from "axios";
 import Feed from "../../components/Feed/Feed";
 import NavBar from "../../components/NavBar/NavBar";
 import Post from "./Post";
