@@ -1,25 +1,21 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import NavBar from "../../components/NavBar/NavBar";
-import { VscNotebook } from "react-icons/vsc";
+import { MdEditNote } from "react-icons/md";
 import Modal from "../../components/Modal/Modal";
-import { useAuthState } from "react-firebase-hooks/auth";
-import auth from "../../components/firebase.init";
 import DpMaker from "../../components/DpMaker/DpMaker";
 import { toast } from "react-toastify";
 import { toastConfig } from "../../components/toastConfig";
+import { FaVectorSquare } from "react-icons/fa";
+import { UserContext } from "../../ContextAPI/UserContext";
 
 const AnswerPage = () => {
   const [allQuestion, setAllQuestion] = useState([]);
-  const [user] = useAuthState(auth);
+  const { user } = useContext(UserContext);
   useEffect(() => {
     const url = "http://localhost:5500/getallquestions";
-    const getData = async () => {
-      const { data } = await axios.get(url);
-      console.log(data);
-      setAllQuestion(data);
-    };
-    getData();
+    fetch(url)
+      .then((res) => res.json())
+      .then((res) => setAllQuestion(res));
   }, []);
   return (
     <section>
@@ -32,9 +28,9 @@ const AnswerPage = () => {
           <QuestionFeed
             key={question?.question_id}
             questionData={question}
-            user_name={user?.displayName}
-            img_url={user?.photoURL}
-            user_email={user?.email}
+            user_name={user?.user_name}
+            img_url={user?.img_url}
+            user_email={user?.user_email}
           />
         ))}
       </div>
@@ -75,18 +71,19 @@ const QuestionFeed = ({ questionData, user_name, img_url, user_email }) => {
   };
 
   return (
-    <div className="mb-1 border-b border-gray-400 px-5 py-1">
+    <div className="mb-1 border-b border-gray-400 px-5 py-3">
       <h1 className="font-semibold mt-2">{question_description}</h1>
-      <p className="text-gray-500 my-1 text-sm">{time}</p>
+      <p className="text-gray-400 my-1 text-sm">{time}</p>
       <div>
         <button className="centerY gap-2 mt-3" onClick={() => setOpenModal(true)}>
-          <VscNotebook className="text-lg text-blue-500" /> <span>Answer</span>
+          <MdEditNote className="text-2xl text-gray-400" />{" "}
+          <span className="text-gray-400">Answer</span>
         </button>
       </div>
       <Modal title={"Answer Question"} openModal={openModal} setOpenModal={setOpenModal}>
         <div className="p-5">
           <div className="centerY gap-3">
-            {img_url ? <img src={img_url} alt="" /> : <DpMaker name={user_name} />}
+            {img_url !== "null" ? <img src={img_url} alt="" /> : <DpMaker name={user_name} />}
             <div>
               <h1 className="">{user_name}</h1>
               <p className="text-sm text-gray-500">Edit Credential</p>

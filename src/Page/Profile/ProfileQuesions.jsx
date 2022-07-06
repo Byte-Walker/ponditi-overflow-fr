@@ -1,21 +1,21 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import axios from "axios";
 import DpMaker from "../../components/DpMaker/DpMaker";
+import { UserContext } from "../../ContextAPI/UserContext";
 
 const ProfileQuesions = () => {
-  const questionData = [
-    {
-      questionId: "q1",
-      name: "Faisal Ahmed",
-      time: "22 Jun 2022 at 8:10 PM",
-      ques_desc: "I wanna get married but nobody gives a damn about me. What sould I do?",
-    },
-    {
-      questionId: "q2",
-      name: "Faisal Imran",
-      time: "22 Jun 2022 at 8:10 PM",
-      ques_desc: "I wanna get married but nobody gives a damn about me. What sould I do?",
-    },
-  ];
+  const { user } = useContext(UserContext);
+  useEffect(() => {
+    const url = `http://localhost:5500/getuserquestions/${user?.user_email}`;
+    fetch(url)
+      .then((res) => res.json())
+      .then((res) => {
+        setQuestiondata(res);
+        console.log(res);
+      });
+  }, []);
+
+  const [questionData, setQuestiondata] = useState([]);
   return (
     <section className="">
       {questionData.map((questionDataSingle) => (
@@ -26,17 +26,17 @@ const ProfileQuesions = () => {
 };
 
 const QuestionPost = ({ questionData }) => {
-  const { name, ques_desc, time } = questionData;
+  const { user_name, question_description, time } = questionData;
   return (
     <div className="card p-5 mb-3">
       <div className="centerY gap-3 mb-2">
-        {false ? <img src="" alt="" /> : <DpMaker name={name} />}
+        {false ? <img src="" alt="" /> : <DpMaker name={user_name} />}
         <div>
-          <h1 className="font-semibold text-lg">{name}</h1>
+          <h1 className="font-semibold text-lg">{user_name}</h1>
           <h3 className="text-sm text-gray-400">{time}</h3>
         </div>
       </div>
-      <h3>{ques_desc}</h3>
+      <h3>{question_description}</h3>
     </div>
   );
 };

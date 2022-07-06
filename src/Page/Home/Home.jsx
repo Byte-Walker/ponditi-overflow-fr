@@ -10,11 +10,11 @@ const Home = () => {
   const { user } = useContext(UserContext);
   useEffect(() => {
     const url = "http://localhost:5500/getallanswers";
-    const getData = async () => {
-      const { data } = await axios.get(url);
-      setFeedinfo(data);
-    };
-    getData();
+    fetch(url)
+      .then((res) => res.json())
+      .then((res) => {
+        setFeedinfo(res);
+      });
   }, []);
 
   return (

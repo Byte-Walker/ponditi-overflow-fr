@@ -33,6 +33,8 @@ const Login = () => {
           manageUser(user);
           toast.success("You Are Logged In", toastConfig);
           path("/");
+        } else {
+          toast.error("Error Occured", toastConfig);
         }
       });
 
@@ -65,16 +67,8 @@ const Login = () => {
             placeholder="Password"
             required
           />
-          {/* password reset */}
-          <p
-            className="my-5 text-right underline cursor-pointer text-red-600"
-            onClick={() => setOpenModal(true)}
-          >
-            Forget Password?
-          </p>
           <button
-            className={`w-full rounded block  text-white p-3 hover:scale-105 transition`}
-            style={{ backgroundColor: "#DC2626" }}
+            className={`w-full rounded block bg-red-600 text-white p-3 hover:scale-105 transition mt-10`}
           >
             Log In
           </button>

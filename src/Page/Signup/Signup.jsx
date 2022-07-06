@@ -85,8 +85,7 @@ const Signup = () => {
             required
           />
           <button
-            className={`w-full rounded block mt-10 text-white p-3 hover:scale-105 transition`}
-            style={{ backgroundColor: "#9BA3AF" }}
+            className={`w-full rounded block mt-10 bg-red-600 text-white p-3 hover:scale-105 transition`}
           >
             Sign Up
           </button>

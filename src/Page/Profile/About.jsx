@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { MdOutlineWork, MdEmail } from "react-icons/md";
 import { FaUserGraduate } from "react-icons/fa";
 import { ImLocation } from "react-icons/im";
@@ -6,34 +6,40 @@ import { AiOutlineEdit } from "react-icons/ai";
 import Modal from "../../components/Modal/Modal";
 import { toast } from "react-toastify";
 import { toastConfig } from "../../components/toastConfig";
+import { UserContext } from "../../ContextAPI/UserContext";
 
 const About = () => {
   const [openModal, setOpenModal] = useState(false);
+  const { user, manageUser } = useContext(UserContext);
+
+  const [job, setJob] = useState(user?.job);
+  const [study, setStudy] = useState(user?.study);
+  const [location, setLocation] = useState(user?.location);
 
   const updateProfile = (e) => {
     e.preventDefault();
+
     // * gatering all profile info * //
-    const job = e.target.elements.job.value;
-    const study = e.target.elements.study.value;
-    const location = e.target.elements.location.value;
-    // ! have to add email into the object as well ! //
-    const profileInfo = { job, study, location };
+    const profileInfo = { job, study, location, user_email: user?.user_email };
     // * sending data to server *//
     const url = `http://localhost:5500/updateProfile`;
-    fetch
-      .post(url, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(profileInfo),
-      })
+    fetch(url, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(profileInfo),
+    })
       .then((res) => res.json())
       .then((res) => {
         if (res) {
           toast.success("Your Profile Updated", toastConfig);
+          console.log(res);
+          manageUser(res);
+          localStorage.setItem("userInfo", JSON.stringify(user));
           e.target.reset();
+          setOpenModal(false);
         }
       });
     console.log(profileInfo);
@@ -52,23 +58,22 @@ const About = () => {
           </button>
         </div>
         {/* Works */}
-        <div className="centerY gap-4 mb-2">
+        <div className="centerY gap-4 mb-2" style={{ display: user?.job ? "flex" : "none" }}>
           <button className="text-2xl">
             <MdOutlineWork />
           </button>
           <p className="text-md">
             {" "}
-            <span className="font-semibold">Junior Front End Web Developer</span>{" "}
+            <span className="font-semibold">{user?.job}</span>{" "}
           </p>
         </div>
         {/* study */}
-        <div className="centerY gap-4 mb-2">
+        <div className="centerY gap-4 mb-2" style={{ display: user?.study ? "flex" : "none" }}>
           <button className="text-2xl">
             <FaUserGraduate />
           </button>
           <p className="text-md">
-            Studies at{" "}
-            <span className="font-semibold">Bangladesh University of Business Technology</span>
+            Studies at <span className="font-semibold">{user?.study}</span>
           </p>
         </div>
 
@@ -78,16 +83,16 @@ const About = () => {
             <MdEmail />
           </button>
           <p className="text-md">
-            Email : <span className="font-semibold">faisal.ahmed.20.35.197@gmail.com</span>
+            Email : <span className="font-semibold">{user?.user_email}</span>
           </p>
         </div>
         {/* Lives */}
-        <div className="centerY gap-4">
+        <div className="centerY gap-4" style={{ display: user?.location ? "flex" : "none" }}>
           <button className="text-2xl">
             <ImLocation />
           </button>
           <p className="text-md">
-            Lives in <span className="font-semibold">Dhaka, Bangladesh</span>
+            Lives in <span className="font-semibold">{user?.location}</span>
           </p>
         </div>
       </div>
@@ -96,10 +101,29 @@ const About = () => {
           <div className="bg-blue-100 text-blue-600 text-sm p-3 mb-3 rounded">
             <h1 className="font-semibold text-base text-center">Update Your Profile</h1>
           </div>
-          <input type="text" name="job" className="input" placeholder="Where Do You Work?" />
-          <input type="text" name="study" className="input" placeholder="Where Do You Study?" />
-          <input type="text" name="location" className="input" placeholder="Where Do You Live?" />
-          <button className="btn-red">Submit</button>
+          <input
+            type="text"
+            className="input"
+            placeholder="What Do You DO?"
+            onChange={(e) => setJob(e.target.value)}
+            value={job}
+          />
+          <input
+            type="text"
+            name="study"
+            className="input"
+            placeholder="Where Do You Study?"
+            onChange={(e) => setStudy(e.target.value)}
+            value={study}
+          />
+          <input
+            type="text"
+            className="input"
+            placeholder="Where Do You Live?"
+            onChange={(e) => setLocation(e.target.value)}
+            value={location}
+          />
+          <button className="btn-red mt-5">Submit</button>
         </form>
       </Modal>
     </section>

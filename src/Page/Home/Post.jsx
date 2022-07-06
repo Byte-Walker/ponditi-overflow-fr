@@ -11,20 +11,12 @@ import { UserContext } from "../../ContextAPI/UserContext";
 const Post = () => {
   const [postModal, setPostModal] = useState(false);
   const { user } = useContext(UserContext);
-  const [userFirstLetter, setUserFirstLetter] = useState(user?.user_name);
-  const [user_email, setUser_email] = useState(user.email);
   const path = useNavigate();
-
-  useEffect(() => {
-    setUserFirstLetter(user?.user_name);
-    setUser_email(user.email);
-  }, [user, setUserFirstLetter]);
-
   const askHandler = (e) => {
     e.preventDefault();
     const question_description = e.target.elements.askingFelid.value;
     const quesInfo = {
-      user_email,
+      user_email: user?.user_email,
       question_description,
     };
 
@@ -42,6 +34,7 @@ const Post = () => {
         if (res) {
           toast.success("You question has been published", toastConfig);
           setPostModal(false);
+          console.log(quesInfo);
           e.target.reset();
         }
       });
@@ -51,7 +44,7 @@ const Post = () => {
     <section className="mb-3 rounded-lg shadow border bg-white py-3 border-gray-200">
       <div className="centerY gap-5 border-b border-gray-300 px-5 pb-3">
         {/* user's dp */}
-        <div>{false ? <img src="" alt="" /> : <DpMaker name={userFirstLetter} />}</div>
+        <div>{false ? <img src="" alt="" /> : <DpMaker name={user?.user_name} />}</div>
         {/* post box */}
         <div className="input rounded-full" onClick={() => setPostModal(true)}>
           <h1>What do you want to ask?</h1>

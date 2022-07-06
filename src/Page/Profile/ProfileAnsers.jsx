@@ -1,48 +1,22 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Feed from "../../components/Feed/Feed";
+import { UserContext } from "../../ContextAPI/UserContext";
 const ProfileAnsers = () => {
-  const feedInfo = [
-    {
-      name: "Son Goku Kakarot",
-      designation: "Font End Developer",
-      question: "What is React",
-      answer: `Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequatur reiciendis asperiores
-      illo ab quam! Excepturi eaque est esse mollitia accusantium enim pariatur. Eum culpa fugiat
-      accusantium alias reprehenderit quos rerum dolorum nesciunt recusandae aut, praesentium, porro
-      architecto natus? Molestiae, magni?`,
-      love: 10,
-      comment: 20,
-      share: 30,
-    },
-    {
-      name: "Shakib Al Hasan",
-      designation: "Full Stack Developer",
-      question: "What is NodeJs",
-      answer: `Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequatur reiciendis asperiores
-      illo ab quam! Excepturi eaque est esse mollitia accusantium enim pariatur. Eum culpa fugiat
-      accusantium alias reprehenderit quos rerum dolorum nesciunt recusandae aut, praesentium, porro
-      architecto natus? Molestiae, magni?`,
-      love: 406,
-      comment: 205,
-      share: 130,
-    },
-    {
-      name: "Adam Grilcist",
-      designation: "Useless MF",
-      question: "What is Programming",
-      answer: `Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequatur reiciendis asperiores
-      illo ab quam! Excepturi eaque est esse mollitia accusantium enim pariatur. Eum culpa fugiat
-      accusantium alias reprehenderit quos rerum dolorum nesciunt recusandae aut, praesentium, porro
-      architecto natus? Molestiae, magni?`,
-      love: 46,
-      comment: 22,
-      share: 110,
-    },
-  ];
+  const [feedInfo, setFeedInfo] = useState([]);
+  const { user } = useContext(UserContext);
+  useEffect(() => {
+    const url = `http://localhost:5500/getuseranswers/${user?.user_email}`;
+    fetch(url)
+      .then((res) => res.json())
+      .then((res) => {
+        setFeedInfo(res);
+        console.log(res);
+      });
+  }, []);
   return (
     <section>
-      {feedInfo.map((feedInformation) => (
-        <Feed feedInfo={feedInformation} key={Math.random()} />
+      {feedInfo.map((feedInformation, index) => (
+        <Feed feedInfo={feedInformation} key={index} />
       ))}
     </section>
   );

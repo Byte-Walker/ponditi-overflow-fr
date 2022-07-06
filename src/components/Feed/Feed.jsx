@@ -13,7 +13,7 @@ const Feed = ({ feedInfo }) => {
       <div className="p-5 ">
         {/* user info starts*/}
         <div className="flex gap-3 centerY mb-4">
-          <DpMaker name={user_name} height="40px" color="#d35400" />
+          <DpMaker name={user_name} height="40px" color="#DC2626" />
           <div>
             <p className="font-bold">{user_name}</p>
             <p className="text-sm text-gray-500">{time}</p>

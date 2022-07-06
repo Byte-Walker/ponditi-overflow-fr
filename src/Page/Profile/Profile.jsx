@@ -1,17 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Outlet } from "react-router-dom";
 import CustomNavLink from "../../components/CustomNavLink/CustomNavLink";
 import DpMaker from "../../components/DpMaker/DpMaker";
 import NavBar from "../../components/NavBar/NavBar";
-import { useAuthState } from "react-firebase-hooks/auth";
-import auth from "../../components/firebase.init";
+import { UserContext } from "../../ContextAPI/UserContext";
 
 const Profile = () => {
+  const { user } = useContext(UserContext);
   const [userInfo, setUserInfo] = useState({});
-  const [user, loading] = useAuthState(auth);
-  if (loading) {
-    return null;
-  }
+
   return (
     <>
       <NavBar />
@@ -21,10 +18,10 @@ const Profile = () => {
             {false ? (
               <img src="" alt="" />
             ) : (
-              <DpMaker name={user?.displayName} height="100px" fontSize={"60px"} />
+              <DpMaker name={user?.user_name} height="100px" fontSize={"60px"} />
             )}
           </div>
-          <h1 className="text-3xl text-center mt-16 font-semibold">{user?.displayName}</h1>
+          <h1 className="text-3xl text-center mt-16 font-semibold">{user?.user_name}</h1>
           <p className="text-center text-gray-400 mt-2 border-b border-gray-300 pb-3">
             {userInfo?.designation}
           </p>
