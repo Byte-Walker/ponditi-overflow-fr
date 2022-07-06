@@ -2,16 +2,21 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import auth from "../firebase.init";
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { toastConfig } from "../toastConfig";
+import { useContext } from "react";
+import { UserContext } from "../../ContextAPI/UserContext";
 
 const GoogleLogin = () => {
   const googleProvider = new GoogleAuthProvider();
   const path = useNavigate();
+  const { user } = useContext(UserContext);
   const loginWithGoogle = () => {
     signInWithPopup(auth, googleProvider).then((result) => {
-      const user_email = result.user.email;
-      const name = result.user.displayName;
-      const img_url = result.user.photoURL;
-      const user_pass = null;
+      const user_email = result?.user?.email;
+      const name = result?.user?.displayName;
+      const img_url = result?.user?.photoURL;
+      const user_pass = "";
       const userInfo = { user_email, name, img_url, user_pass };
       // * sending to server * //
       const url = `http://localhost:5500/signup`;
@@ -26,7 +31,7 @@ const GoogleLogin = () => {
         .then((res) => res.json())
         .then((res) => {
           if (res) {
-            alert("You're Logged In");
+            toast.success("You're Logged In", toastConfig);
             path("/");
           }
         });

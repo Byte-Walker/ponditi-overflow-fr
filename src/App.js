@@ -9,6 +9,7 @@ import ProfileQuesions from "./Page/Profile/ProfileQuesions";
 import Signup from "./Page/Signup/Signup";
 import { UserContext } from "./ContextAPI/UserContext";
 import { useState } from "react";
+import ErrorPage from "./Page/404/ErrorPage";
 
 const App = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("userInfo")));
@@ -29,6 +30,7 @@ const App = () => {
           <Route path="/profile/followers" />
           <Route path="/profile/followings" />
         </Route>
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </UserContext.Provider>
   );

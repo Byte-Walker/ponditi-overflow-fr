@@ -3,7 +3,6 @@
 ## To D0 List :
 
 - remove alert after logging in with google
-- 404 page
 - Profile Page for each User
 - Follow option (beside the username) and (profile page)
 - upvote option
@@ -16,6 +15,4 @@
 
 ## Bug List :
 
-- Remove profile mini while clicking outside
-- check whether input field is empty or not before posting
-- fix spacing in the search modal => done
+- Remove profile mini while clicking outside => {I will do it later man}
