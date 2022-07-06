@@ -67,6 +67,7 @@ const Post = () => {
                 placeholder="What do you want to ask?"
                 name="askingFelid"
                 rows={"4"}
+                required
               />
               <button className="btn-red">Ask</button>
             </form>
