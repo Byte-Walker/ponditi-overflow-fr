@@ -31,6 +31,7 @@ const Login = () => {
       .then((user) => {
         if (user) {
           manageUser(user);
+          localStorage.setItem("userInfo", JSON.stringify(user));
           toast.success("You Are Logged In", toastConfig);
           path("/");
         } else {
