@@ -56,7 +56,7 @@ const NavBar = () => {
             <>
               <div className="p-5">
                 <input className="input" type="text" placeholder="Write the keyword here" />
-                <button className="btn-red">Search</button>
+                <button className="btn-red mt-5">Search</button>
               </div>
             </>
           </Modal>

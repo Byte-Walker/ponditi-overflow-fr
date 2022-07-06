@@ -15,6 +15,7 @@
 - display all answers of a question
 
 ## Bug List :
+
 - Remove profile mini while clicking outside
 - check whether input field is empty or not before posting
-- fix spacing in the search modal
+- fix spacing in the search modal => done
