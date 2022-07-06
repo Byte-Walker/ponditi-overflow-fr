@@ -12,6 +12,7 @@
 - follwoing page (post will be shown)
 - notification
 - image upload option
+- display all answers of a question
 
 ## Bug List :
 - Remove profile mini while clicking outside
