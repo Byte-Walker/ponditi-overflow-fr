@@ -1,14 +1,15 @@
-import React, { useContext, useState } from "react";
-import { Outlet } from "react-router-dom";
+import React, { useContext } from "react";
+import { Outlet, useParams } from "react-router-dom";
 import CustomNavLink from "../../components/CustomNavLink/CustomNavLink";
 import DpMaker from "../../components/DpMaker/DpMaker";
 import NavBar from "../../components/NavBar/NavBar";
 import { UserContext } from "../../ContextAPI/UserContext";
+import useUserInfo from "../../Hooks/useUserInfo";
 
 const Profile = () => {
+  const { user_email_id } = useParams();
   const { user } = useContext(UserContext);
-  const [userInfo, setUserInfo] = useState({});
-
+  const userInfo = useUserInfo(user_email_id);
   return (
     <>
       <NavBar />
@@ -16,17 +17,17 @@ const Profile = () => {
         <div className="relative mt-20 card">
           <div className="topDp mx-auto">
             {false ? (
-              <img src="" alt="" />
+              <img src={userInfo?.img_url} alt="" />
             ) : (
-              <DpMaker name={user?.user_name} height="100px" fontSize={"60px"} />
+              <DpMaker name={userInfo?.user_name} height="100px" fontSize={"60px"} />
             )}
           </div>
-          <h1 className="text-3xl text-center mt-16 font-semibold">{user?.user_name}</h1>
+          <h1 className="text-3xl text-center mt-16 font-semibold">{userInfo?.user_name}</h1>
           <p className="text-center text-gray-400 mt-2 border-b border-gray-300 pb-3">
-            {userInfo?.designation}
+            {userInfo?.job}
           </p>
           <div className="w-fit mx-auto pt-2 flex gap-3">
-            <CustomNavLink to={"/profile"} fontSize="16px">
+            <CustomNavLink to={`/profile/${user_email_id}`} fontSize="16px">
               About
             </CustomNavLink>
             <CustomNavLink to={"answers"} fontSize="16px">
@@ -43,7 +44,7 @@ const Profile = () => {
             </CustomNavLink>
           </div>
         </div>
-        <div className=" mt-5 ">
+        <div className="mt-5 ">
           <Outlet />
         </div>
       </section>

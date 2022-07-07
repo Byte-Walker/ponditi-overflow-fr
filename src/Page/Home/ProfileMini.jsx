@@ -20,7 +20,10 @@ const ProfileMini = ({ isOPen, setIsOpen }) => {
       className="absolute top-[60px] right-0 bg-gray-300 p-3 w-[300px] rounded-md"
       style={{ display: isOPen ? "block" : "none" }}
     >
-      <div className="flex items-center gap-5 cursor-pointer mb-3" onClick={() => path("/profile")}>
+      <div
+        className="flex items-center gap-5 cursor-pointer mb-3"
+        onClick={() => path(`/profile/${user?.user_email}`)}
+      >
         <div>{false ? <img src={user?.img_url} alt="" /> : <DpMaker name={user?.user_name} />}</div>
         <h1>{user?.user_name}</h1>
       </div>

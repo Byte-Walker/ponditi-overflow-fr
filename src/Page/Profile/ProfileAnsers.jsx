@@ -1,22 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
+import React from "react";
+import { useParams } from "react-router-dom";
 import Feed from "../../components/Feed/Feed";
-import { UserContext } from "../../ContextAPI/UserContext";
+import useUserAnswer from "../../Hooks/useUserAnswers";
 const ProfileAnsers = () => {
-  const [feedInfo, setFeedInfo] = useState([]);
-  const { user } = useContext(UserContext);
-  useEffect(() => {
-    const url = `http://localhost:5500/getuseranswers/${user?.user_email}`;
-    fetch(url)
-      .then((res) => res.json())
-      .then((res) => {
-        setFeedInfo(res);
-        console.log(res);
-      });
-  }, []);
+  const { user_email_id } = useParams();
+  const answers = useUserAnswer(user_email_id);
+
   return (
     <section>
-      {feedInfo.map((feedInformation, index) => (
-        <Feed feedInfo={feedInformation} key={index} />
+      {answers.map((answer, index) => (
+        <Feed feedInfo={answer} key={index} />
       ))}
     </section>
   );

@@ -3,10 +3,19 @@ import DpMaker from "../DpMaker/DpMaker";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { BiShare } from "react-icons/bi";
 import { FaRegComment } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 const Feed = ({ feedInfo }) => {
-  const { user_name, question_description, answer_description, love, comment, share, time } =
-    feedInfo;
-  // const { img_url } = user;
+  const {
+    user_name,
+    user_email,
+    question_description,
+    answer_description,
+    love,
+    comment,
+    share,
+    time,
+  } = feedInfo;
+  const path = useNavigate();
   return (
     <section className="mb-3 card">
       {/* Card */}
@@ -15,7 +24,10 @@ const Feed = ({ feedInfo }) => {
         <div className="flex gap-3 centerY mb-4">
           <DpMaker name={user_name} height="40px" color="#DC2626" />
           <div>
-            <p className="font-bold">{user_name}</p>
+            {/* by clicking here any user can visit this user's profile */}
+            <p className="font-bold cursor-pointer" onClick={() => path(`/profile/${user_email}`)}>
+              {user_name}
+            </p>
             <p className="text-sm text-gray-500">{time}</p>
           </div>
         </div>

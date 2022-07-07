@@ -3,7 +3,7 @@
 ## To D0 List :
 
 - remove alert after logging in with google
-- Profile Page for each User
+- Profile Page for each User =================================> {partically completed exept following and follwers route}
 - Follow option (beside the username) and (profile page)
 - upvote option
 - comment option

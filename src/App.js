@@ -23,12 +23,12 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/answer" element={<AnswerPage />} />
-        <Route path="/profile" element={<Profile />}>
+        <Route path="/profile/:user_email_id" element={<Profile />}>
           <Route index element={<About />} />
-          <Route path="/profile/answers" element={<ProfileAnsers />} />
-          <Route path="/profile/questions" element={<ProfileQuesions />} />
-          <Route path="/profile/followers" />
-          <Route path="/profile/followings" />
+          <Route path="/profile/:user_email_id/answers" element={<ProfileAnsers />} />
+          <Route path="/profile/:user_email_id/questions" element={<ProfileQuesions />} />
+          <Route path="/profile/:user_email_id/followers" />
+          <Route path="/profile/:user_email_id/followings" />
         </Route>
         <Route path="*" element={<ErrorPage />} />
       </Routes>

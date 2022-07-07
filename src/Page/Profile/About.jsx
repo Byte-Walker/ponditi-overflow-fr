@@ -7,10 +7,14 @@ import Modal from "../../components/Modal/Modal";
 import { toast } from "react-toastify";
 import { toastConfig } from "../../components/toastConfig";
 import { UserContext } from "../../ContextAPI/UserContext";
+import useUserInfo from "../../Hooks/useUserInfo";
+import { useParams } from "react-router-dom";
 
 const About = () => {
   const [openModal, setOpenModal] = useState(false);
   const { user, manageUser } = useContext(UserContext);
+  const { user_email_id } = useParams();
+  const userInfo = useUserInfo(user_email_id);
 
   const [job, setJob] = useState(user?.job);
   const [study, setStudy] = useState(user?.study);
@@ -52,28 +56,30 @@ const About = () => {
           <button
             className="text-xl centerXY rounded-full bg-gray-300 h-[40px] w-[40px] transition 
             hover:scale-125 hover:bg-red-600 hover:text-white"
+            // * checking if user if the currently logged in * //
+            style={{ display: user?.user_email === userInfo?.user_email ? "block" : "none" }}
             onClick={() => setOpenModal(true)}
           >
             <AiOutlineEdit />
           </button>
         </div>
         {/* Works */}
-        <div className="centerY gap-4 mb-2" style={{ display: user?.job ? "flex" : "none" }}>
+        <div className="centerY gap-4 mb-2" style={{ display: userInfo?.job ? "flex" : "none" }}>
           <button className="text-2xl">
             <MdOutlineWork />
           </button>
           <p className="text-md">
             {" "}
-            <span className="font-semibold">{user?.job}</span>{" "}
+            <span className="font-semibold">{userInfo?.job}</span>{" "}
           </p>
         </div>
         {/* study */}
-        <div className="centerY gap-4 mb-2" style={{ display: user?.study ? "flex" : "none" }}>
+        <div className="centerY gap-4 mb-2" style={{ display: userInfo?.study ? "flex" : "none" }}>
           <button className="text-2xl">
             <FaUserGraduate />
           </button>
           <p className="text-md">
-            Studies at <span className="font-semibold">{user?.study}</span>
+            Studies at <span className="font-semibold">{userInfo?.study}</span>
           </p>
         </div>
 
@@ -83,16 +89,16 @@ const About = () => {
             <MdEmail />
           </button>
           <p className="text-md">
-            Email : <span className="font-semibold">{user?.user_email}</span>
+            Email : <span className="font-semibold">{userInfo?.user_email}</span>
           </p>
         </div>
         {/* Lives */}
-        <div className="centerY gap-4" style={{ display: user?.location ? "flex" : "none" }}>
+        <div className="centerY gap-4" style={{ display: userInfo?.location ? "flex" : "none" }}>
           <button className="text-2xl">
             <ImLocation />
           </button>
           <p className="text-md">
-            Lives in <span className="font-semibold">{user?.location}</span>
+            Lives in <span className="font-semibold">{userInfo?.location}</span>
           </p>
         </div>
       </div>
