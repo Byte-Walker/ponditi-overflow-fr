@@ -1,4 +1,4 @@
-import React, { Children } from "react";
+import React from "react";
 import DpMaker from "../DpMaker/DpMaker";
 
 const UserDP = ({ dimension, img_url, user_name, onClick }) => {

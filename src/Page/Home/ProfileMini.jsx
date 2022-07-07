@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import DpMaker from "../../components/DpMaker/DpMaker";
 import UserDP from "../../components/UserDP/UserDP";
 import { UserContext } from "../../ContextAPI/UserContext";
 

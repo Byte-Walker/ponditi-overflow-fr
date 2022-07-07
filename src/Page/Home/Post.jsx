@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
-import DpMaker from "../../components/DpMaker/DpMaker";
+import React, { useContext, useState } from "react";
 import { BsQuestionSquare } from "react-icons/bs";
 import { VscNotebook } from "react-icons/vsc";
 import Modal from "../../components/Modal/Modal";

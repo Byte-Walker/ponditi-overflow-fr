@@ -1,12 +1,8 @@
 import React, { useContext, useState } from "react";
-import DpMaker from "../../components/DpMaker/DpMaker";
 import useUserQuestions from "../../Hooks/useUserQuestions";
 import { useNavigate, useParams } from "react-router-dom";
 import { MdEditNote } from "react-icons/md";
 import { UserContext } from "../../ContextAPI/UserContext";
-import Modal from "../../components/Modal/Modal";
-import { toastConfig } from "../../components/toastConfig";
-import { toast } from "react-toastify";
 import useGetAnswerForQuestion from "../../Hooks/useGetAnswerForQuestion";
 import AnswerModal from "../../components/AnswerModal/AnswerModal";
 

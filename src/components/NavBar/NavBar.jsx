@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import DpMaker from "../DpMaker/DpMaker";
 import { VscNotebook, VscNote, VscHome, VscBell } from "react-icons/vsc";
 import { BsSearch } from "react-icons/bs";
 import CustomNavLink from "../CustomNavLink/CustomNavLink";
