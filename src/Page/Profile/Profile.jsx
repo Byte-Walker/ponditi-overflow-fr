@@ -3,6 +3,7 @@ import { Outlet, useParams } from "react-router-dom";
 import CustomNavLink from "../../components/CustomNavLink/CustomNavLink";
 import DpMaker from "../../components/DpMaker/DpMaker";
 import NavBar from "../../components/NavBar/NavBar";
+import UserDP from "../../components/UserDP/UserDP";
 import useUserInfo from "../../Hooks/useUserInfo";
 
 const Profile = () => {
@@ -14,11 +15,16 @@ const Profile = () => {
       <section className="homePageContainer mx-auto">
         <div className="relative mt-20 card">
           <div className="topDp mx-auto">
-            {false ? (
+            <UserDP
+              dimension={"100px"}
+              img_url={userInfo?.img_url}
+              user_name={userInfo?.user_name}
+            />
+            {/* <{false ? (
               <img src={userInfo?.img_url} alt="" />
             ) : (
               <DpMaker name={userInfo?.user_name} height="100px" fontSize={"60px"} />
-            )}
+            )}> */}
           </div>
           <h1 className="text-3xl text-center mt-16 font-semibold">{userInfo?.user_name}</h1>
           <p className="text-center text-gray-400 mt-2 border-b border-gray-300 pb-3">

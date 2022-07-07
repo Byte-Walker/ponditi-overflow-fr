@@ -5,7 +5,6 @@ import { BiShare } from "react-icons/bi";
 import { FaRegComment } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 const Feed = ({ feedInfo }) => {
-  console.log(feedInfo);
   const {
     user_name,
     user_email,

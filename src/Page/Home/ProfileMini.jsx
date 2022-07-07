@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import DpMaker from "../../components/DpMaker/DpMaker";
+import UserDP from "../../components/UserDP/UserDP";
 import { UserContext } from "../../ContextAPI/UserContext";
 
 const ProfileMini = ({ isOPen, setIsOpen }) => {
@@ -24,7 +25,7 @@ const ProfileMini = ({ isOPen, setIsOpen }) => {
         className="flex items-center gap-5 cursor-pointer mb-3"
         onClick={() => path(`/profile/${user?.user_email}`)}
       >
-        <div>{false ? <img src={user?.img_url} alt="" /> : <DpMaker name={user?.user_name} />}</div>
+        <UserDP dimension={"45px"} img_url={user?.img_url} user_name={user?.user_name} />
         <h1>{user?.user_name}</h1>
       </div>
       <button className="btn-red" onClick={handleLogOut}>

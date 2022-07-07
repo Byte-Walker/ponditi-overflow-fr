@@ -1,34 +1,44 @@
 import { GithubAuthProvider, signInWithPopup } from "firebase/auth";
 import auth from "../firebase.init";
 import { BsGithub } from "react-icons/bs";
+import { useContext } from "react";
+import { UserContext } from "../../ContextAPI/UserContext";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { toastConfig } from "../toastConfig";
 
 const GithubLogin = () => {
   const githubProvider = new GithubAuthProvider();
+  const { manageUser } = useContext(UserContext);
+  const path = useNavigate();
   const loginWithGoogle = () => {
-    signInWithPopup(auth, githubProvider).then((result) => {
-      const user_email = result.user.email;
-      const name = result.user.displayName;
-      const img_url = result.user.photoURL;
-      const user_pass = null;
-      const userInfo = { user_email, name, img_url, user_pass };
-      console.log(userInfo);
-      // * sending to server * //
-      const url = `http://localhost:5500/signup`;
-      fetch(url, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userInfo),
+    signInWithPopup(auth, githubProvider)
+      .then((result) => {
+        const user_email = result.user.email;
+        const user_name = result.user.displayName;
+        const img_url = result.user.photoURL;
+        const userInfo = { user_email, user_name, img_url };
+
+        // * sending to server * //
+        const url = `http://localhost:5500/sociallogin`;
+        fetch(url, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userInfo),
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            if (res) {
+              manageUser(res);
+              localStorage.setItem("userInfo", JSON.stringify(res));
+              path("/");
+            }
+          });
       })
-        .then((res) => res.json())
-        .then((res) => {
-          if (res) {
-            alert("Account Created");
-          }
-        });
-    });
+      .catch((err) => toast.error(err.code, toastConfig));
   };
 
   return (

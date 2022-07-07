@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { toastConfig } from "../../components/toastConfig";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../ContextAPI/UserContext";
+import UserDP from "../../components/UserDP/UserDP";
 
 const Post = () => {
   const [postModal, setPostModal] = useState(false);
@@ -44,7 +45,10 @@ const Post = () => {
     <section className="mb-3 rounded-lg shadow border bg-white py-3 border-gray-200">
       <div className="centerY gap-5 border-b border-gray-300 px-5 pb-3">
         {/* user's dp */}
-        <div>{false ? <img src="" alt="" /> : <DpMaker name={user?.user_name} />}</div>
+        <div>
+          <UserDP dimension={"50px"} user_name={user?.user_name} img_url={user?.img_url} />
+        </div>
+
         {/* post box */}
         <div className="input rounded-full" onClick={() => setPostModal(true)}>
           <h1>What do you want to ask?</h1>

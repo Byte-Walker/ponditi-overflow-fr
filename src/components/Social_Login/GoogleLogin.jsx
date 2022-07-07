@@ -10,32 +10,35 @@ import { UserContext } from "../../ContextAPI/UserContext";
 const GoogleLogin = () => {
   const googleProvider = new GoogleAuthProvider();
   const path = useNavigate();
-  const { user } = useContext(UserContext);
+  const { manageUser } = useContext(UserContext);
   const loginWithGoogle = () => {
-    signInWithPopup(auth, googleProvider).then((result) => {
-      const user_email = result?.user?.email;
-      const name = result?.user?.displayName;
-      const img_url = result?.user?.photoURL;
-      const user_pass = "";
-      const userInfo = { user_email, name, img_url, user_pass };
-      // * sending to server * //
-      const url = `http://localhost:5500/signup`;
-      fetch(url, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userInfo),
+    signInWithPopup(auth, googleProvider)
+      .then((result) => {
+        const user_email = result?.user?.email;
+        const user_name = result?.user?.displayName;
+        const img_url = result?.user?.photoURL;
+        const user_pass = "";
+        const userInfo = { user_email, user_name, img_url, user_pass };
+        // * sending to server * //
+        const url = `http://localhost:5500/sociallogin`;
+        fetch(url, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userInfo),
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            if (res) {
+              manageUser(res);
+              localStorage.setItem("userInfo", JSON.stringify(res));
+              path("/");
+            }
+          });
       })
-        .then((res) => res.json())
-        .then((res) => {
-          if (res) {
-            toast.success("You're Logged In", toastConfig);
-            path("/");
-          }
-        });
-    });
+      .catch((err) => toast.error(err.code, toastConfig));
   };
   return (
     <button

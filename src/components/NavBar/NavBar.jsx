@@ -7,13 +7,14 @@ import Modal from "../Modal/Modal";
 import ProfileMini from "../../Page/Home/ProfileMini";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../ContextAPI/UserContext";
+import UserDP from "../UserDP/UserDP";
 
 const NavBar = () => {
   const [openModal, setOpenModal] = useState(false);
   const [isProfileMiniOpen, setIsProfileMiniOpen] = useState(false);
   const path = useNavigate();
   const { user } = useContext(UserContext);
-
+  console.log(user);
   return (
     <section className="bg-white sticky py-1 top-0 z-50 shadow">
       <nav className="container mx-auto navGrid">
@@ -62,13 +63,12 @@ const NavBar = () => {
           </Modal>
           <div className="relative">
             {user?.user_email ? (
-              <div onClick={() => setIsProfileMiniOpen(!isProfileMiniOpen)}>
-                {false ? (
-                  <img src={user?.user_email} alt="" />
-                ) : (
-                  <DpMaker name={user?.user_name} color="#DC2626" height="40px" />
-                )}{" "}
-              </div>
+              <UserDP
+                dimension={"45px"}
+                img_url={user?.img_url}
+                user_name={user?.user_name}
+                onClick={() => setIsProfileMiniOpen(!isProfileMiniOpen)}
+              />
             ) : (
               <button className="btn-red" onClick={() => path("/login")}>
                 Login
