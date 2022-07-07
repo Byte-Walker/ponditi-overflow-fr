@@ -1,14 +1,12 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Outlet, useParams } from "react-router-dom";
 import CustomNavLink from "../../components/CustomNavLink/CustomNavLink";
 import DpMaker from "../../components/DpMaker/DpMaker";
 import NavBar from "../../components/NavBar/NavBar";
-import { UserContext } from "../../ContextAPI/UserContext";
 import useUserInfo from "../../Hooks/useUserInfo";
 
 const Profile = () => {
   const { user_email_id } = useParams();
-  const { user } = useContext(UserContext);
   const userInfo = useUserInfo(user_email_id);
   return (
     <>

@@ -5,29 +5,36 @@ import { BiShare } from "react-icons/bi";
 import { FaRegComment } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 const Feed = ({ feedInfo }) => {
+  console.log(feedInfo);
   const {
     user_name,
     user_email,
     job,
     question_description,
     answer_description,
+    question_id,
     love,
     comment,
     share,
     time,
   } = feedInfo;
-  console.log(feedInfo);
   const path = useNavigate();
   return (
-    <section className="mb-3 card">
+    <section className="mb-2 card">
       {/* Card */}
       <div className="p-5 ">
         {/* user info starts*/}
-        <div className="flex gap-3 centerY mb-4">
+        <div
+          className="flex gap-3 centerY mb-4 cursor-pointer"
+          onClick={() => path(`/profile/${user_email}`)}
+        >
           <DpMaker name={user_name} height="40px" color="#DC2626" />
           <div>
             {/* by clicking here any user can visit this user's profile */}
-            <p className="font-bold cursor-pointer" onClick={() => path(`/profile/${user_email}`)}>
+            <p
+              className="font-bold cursor-pointer hover:underline"
+              onClick={() => path(`/profile/${user_email}`)}
+            >
               {user_name}
             </p>
             <p className="text-sm text-gray-500">
@@ -37,7 +44,12 @@ const Feed = ({ feedInfo }) => {
         </div>
         {/* user info ends*/}
         {/* question start */}
-        <h1 className="font-semibold mb-2">{question_description}</h1>
+        <h1
+          className="font-semibold mb-2 cursor-default hover:underline"
+          onClick={() => path(`/question/${question_id}`)}
+        >
+          {question_description}
+        </h1>
         <p className="mb-3">{answer_description}</p>
         {/* question ends */}
         {/* reactions, comments and share starts */}

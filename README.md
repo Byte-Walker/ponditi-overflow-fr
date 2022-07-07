@@ -16,3 +16,4 @@
 ## Bug List :
 
 - Remove profile mini while clicking outside => {I will do it later man}
+- profile, question to all answer page, update after changing

@@ -14,7 +14,7 @@ const About = () => {
   const [openModal, setOpenModal] = useState(false);
   const { user, manageUser } = useContext(UserContext);
   const { user_email_id } = useParams();
-  const userInfo = useUserInfo(user_email_id);
+  let userInfo = useUserInfo(user_email_id);
 
   const [job, setJob] = useState(user?.job);
   const [study, setStudy] = useState(user?.study);

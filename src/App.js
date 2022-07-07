@@ -10,6 +10,7 @@ import Signup from "./Page/Signup/Signup";
 import { UserContext } from "./ContextAPI/UserContext";
 import { useState } from "react";
 import ErrorPage from "./Page/404/ErrorPage";
+import SignleQuestion from "./Page/SingleQuestion/SignleQuestion";
 
 const App = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("userInfo")));
@@ -23,6 +24,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/answer" element={<AnswerPage />} />
+        <Route path="/question/:question_id" element={<SignleQuestion />} />
         <Route path="/profile/:user_email_id" element={<Profile />}>
           <Route index element={<About />} />
           <Route path="/profile/:user_email_id/answers" element={<ProfileAnsers />} />
