@@ -8,6 +8,7 @@ const Feed = ({ feedInfo }) => {
   const {
     user_name,
     user_email,
+    job,
     question_description,
     answer_description,
     love,
@@ -15,6 +16,7 @@ const Feed = ({ feedInfo }) => {
     share,
     time,
   } = feedInfo;
+  console.log(feedInfo);
   const path = useNavigate();
   return (
     <section className="mb-3 card">
@@ -28,7 +30,9 @@ const Feed = ({ feedInfo }) => {
             <p className="font-bold cursor-pointer" onClick={() => path(`/profile/${user_email}`)}>
               {user_name}
             </p>
-            <p className="text-sm text-gray-500">{time}</p>
+            <p className="text-sm text-gray-500">
+              <span className="text-gray-500 font-semibold">{job}</span> {job && "-"} {time}
+            </p>
           </div>
         </div>
         {/* user info ends*/}

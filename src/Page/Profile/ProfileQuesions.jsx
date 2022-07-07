@@ -7,6 +7,7 @@ import { UserContext } from "../../ContextAPI/UserContext";
 import Modal from "../../components/Modal/Modal";
 import { toastConfig } from "../../components/toastConfig";
 import { toast } from "react-toastify";
+import useGetAnswerForQuestion from "../../Hooks/useGetAnswerForQuestion";
 
 const ProfileQuesions = () => {
   const { user_email_id } = useParams();
@@ -20,7 +21,7 @@ const ProfileQuesions = () => {
         {questions.map((question) => (
           <QuestionPost
             question={question}
-            key={question.questionId}
+            key={question?.question_id}
             user_email_id={user_email_id}
           />
         ))}
@@ -33,6 +34,12 @@ const QuestionPost = ({ question, user_email_id }) => {
   const { question_description, time, question_id } = question;
   const [openModal, setOpenModal] = useState(false);
   const { user } = useContext(UserContext);
+  const answerData = useGetAnswerForQuestion(question_id);
+
+  // * str * //
+  const strGenerator = (count) => {
+    return count > 1 ? count + " Answers" : count + " Answer";
+  };
 
   const createAnswer = (e) => {
     e.preventDefault();
@@ -65,7 +72,12 @@ const QuestionPost = ({ question, user_email_id }) => {
   return (
     <div className="mb-1 border-b border-gray-400 px-5 py-3">
       <h1 className="font-semibold mt-2">{question_description}</h1>
-      <p className="text-gray-400 my-1 text-sm">{time}</p>
+      <p className="text-gray-400 my-1 text-sm">
+        <span className="font-semibold text-gray-500">
+          {answerData.length ? strGenerator(answerData.length) : "No Answer Yet😥"}
+        </span>{" "}
+        - {time}
+      </p>
       <div>
         <button
           className="gap-2 mt-3"

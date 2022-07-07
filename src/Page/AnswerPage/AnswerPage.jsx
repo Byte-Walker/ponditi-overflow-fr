@@ -5,8 +5,8 @@ import Modal from "../../components/Modal/Modal";
 import DpMaker from "../../components/DpMaker/DpMaker";
 import { toast } from "react-toastify";
 import { toastConfig } from "../../components/toastConfig";
-import { FaVectorSquare } from "react-icons/fa";
 import { UserContext } from "../../ContextAPI/UserContext";
+import useGetAnswerForQuestion from "../../Hooks/useGetAnswerForQuestion";
 
 const AnswerPage = () => {
   const [allQuestion, setAllQuestion] = useState([]);
@@ -41,7 +41,13 @@ const AnswerPage = () => {
 const QuestionFeed = ({ questionData, user_name, img_url, user_email }) => {
   const { question_description, time, question_id } = questionData;
   const [openModal, setOpenModal] = useState(false);
+  const answerData = useGetAnswerForQuestion(question_id);
 
+  // * str * //
+  const strGenerator = (count) => {
+    return count > 1 ? count + " Answers" : count + " Answer";
+  };
+  // * Giving Ans to the question * //
   const createAnswer = (e) => {
     e.preventDefault();
     const answer_description = e.target.elements.answerFeild.value;
@@ -50,6 +56,7 @@ const QuestionFeed = ({ questionData, user_name, img_url, user_email }) => {
       user_email,
       answer_description,
     };
+    // * sending answer's info to the server * //
     const url = "http://localhost:5500/createanswer";
     console.log(feedback);
     fetch(url, {
@@ -73,7 +80,12 @@ const QuestionFeed = ({ questionData, user_name, img_url, user_email }) => {
   return (
     <div className="mb-1 border-b border-gray-400 px-5 py-3">
       <h1 className="font-semibold mt-2">{question_description}</h1>
-      <p className="text-gray-400 my-1 text-sm">{time}</p>
+      <p className="text-gray-400 my-1 text-sm">
+        <span className="font-semibold text-gray-500">
+          {answerData.length ? strGenerator(answerData.length) : "No Answer Yet😥"}
+        </span>{" "}
+        - {time}
+      </p>
       <div>
         <button className="centerY gap-2 mt-3" onClick={() => setOpenModal(true)}>
           <MdEditNote className="text-2xl text-gray-400" />{" "}

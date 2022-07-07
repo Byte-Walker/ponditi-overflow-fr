@@ -57,7 +57,7 @@ const About = () => {
             className="text-xl centerXY rounded-full bg-gray-300 h-[40px] w-[40px] transition 
             hover:scale-125 hover:bg-red-600 hover:text-white"
             // * checking if user if the currently logged in * //
-            style={{ display: user?.user_email === userInfo?.user_email ? "block" : "none" }}
+            style={{ display: user?.user_email === userInfo?.user_email ? "flex" : "none" }}
             onClick={() => setOpenModal(true)}
           >
             <AiOutlineEdit />
