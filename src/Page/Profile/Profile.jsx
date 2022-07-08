@@ -63,7 +63,7 @@ const Profile = () => {
           <div className="border-b border-gray-300 mt-4 pb-3 text-center ">
             {user?.user_email !== user_email_id && (
               <div>
-                {following[user_email_id] && (
+                {following && following[user_email_id] && (
                   <button
                     className="btn-red w-fit rounded-full"
                     onClick={() =>
@@ -77,7 +77,7 @@ const Profile = () => {
                     Unfollow
                   </button>
                 )}
-                {!following[user_email_id] && (
+                {following && !following[user_email_id] && (
                   <button
                     className="btn-red w-fit rounded-full"
                     onClick={() =>
@@ -101,6 +101,9 @@ const Profile = () => {
             </CustomNavLink>
             <CustomNavLink to={"answers"} fontSize="16px">
               Answers
+            </CustomNavLink>
+            <CustomNavLink to={"shared"} fontSize="16px">
+              Shared
             </CustomNavLink>
             <CustomNavLink to={"questions"} fontSize="16px">
               Questions

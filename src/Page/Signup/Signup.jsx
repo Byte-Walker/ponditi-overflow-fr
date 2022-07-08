@@ -17,7 +17,7 @@ const Signup = () => {
       event.target.elements.firstName.value + " " + event.target.elements.lastName.value;
     const user_email = event.target.elements.email.value;
     const user_pass = event.target.elements.password.value;
-    const img_url = null;
+    const img_url = "null";
 
     // * stroring all data to a object * //
     const userInfo = { user_name, user_email, user_pass, img_url };
@@ -37,8 +37,9 @@ const Signup = () => {
           event.target.reset();
           const userInfo = { user_name, user_email, img_url };
           // * saving userinfo into local storage * //
-          localStorage.setItem("userInfo", JSON.stringify(userInfo));
-          manageUser(userInfo);
+          localStorage.setItem("userInfo", JSON.stringify(res));
+          console.log(res);
+          manageUser(res);
           path("/");
         }
       });

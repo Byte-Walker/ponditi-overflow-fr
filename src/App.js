@@ -11,6 +11,7 @@ import { UserContext } from "./ContextAPI/UserContext";
 import { useState } from "react";
 import ErrorPage from "./Page/404/ErrorPage";
 import SignleQuestion from "./Page/SingleQuestion/SignleQuestion";
+import Shared from "./Page/Profile/Shared";
 
 const App = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("userInfo")));
@@ -28,6 +29,7 @@ const App = () => {
         <Route path="/profile/:user_email_id" element={<Profile />}>
           <Route index element={<About />} />
           <Route path="/profile/:user_email_id/answers" element={<ProfileAnsers />} />
+          <Route path="/profile/:user_email_id/shared" element={<Shared />} />
           <Route path="/profile/:user_email_id/questions" element={<ProfileQuesions />} />
           <Route path="/profile/:user_email_id/followers" />
           <Route path="/profile/:user_email_id/followings" />

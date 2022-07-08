@@ -15,7 +15,9 @@ const UserDP = ({ dimension, img_url, user_name, onClick, fontSize }) => {
       }}
       onClick={onClick}
     >
-      {img_url === "null" && <DpMaker name={user_name} height={dimension} fontSize={fontSize} />}
+      {(img_url == "null" || img_url == "") && (
+        <DpMaker name={user_name} height={dimension} fontSize={fontSize} />
+      )}
     </div>
   );
 };

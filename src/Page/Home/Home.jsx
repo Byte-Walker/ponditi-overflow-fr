@@ -8,9 +8,12 @@ import { useQuery } from "react-query";
 const Home = () => {
   const { user } = useContext(UserContext);
   // * fetching followed list of logged user * //
-  const { data: following, refetch: followingRefetch } = useQuery(
-    `following_${user?.user_email}`,
-    () => fetch(`http://localhost:5500/followings/${user?.user_email}`).then((res) => res.json())
+  const {
+    data: following,
+    refetch: followingRefetch,
+    isLoading,
+  } = useQuery(`following_${user?.user_email}`, () =>
+    fetch(`http://localhost:5500/followings/${user?.user_email}`).then((res) => res.json())
   );
 
   const { data: feedInfo, refetch: feedInfoRefetch } = useQuery("allAnswers", () =>
@@ -22,6 +25,10 @@ const Home = () => {
     feedInfoRefetch();
     followingRefetch();
   }, [feedInfoRefetch, followingRefetch]);
+
+  if (isLoading) {
+    return null;
+  }
 
   return (
     <>
