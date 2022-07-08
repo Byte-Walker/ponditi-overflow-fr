@@ -73,4 +73,7 @@ body::-webkit-scrollbar-thumb {
   .card {
     @apply shadow border bg-white border-gray-200 rounded-md;
   }
+  .bubleOnHOver {
+    @apply hover:scale-110 transition-all duration-300 hover:bg-blue-100 hover:text-blue-600;
+  }
 }

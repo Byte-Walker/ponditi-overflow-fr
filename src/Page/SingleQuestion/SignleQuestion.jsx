@@ -55,7 +55,7 @@ const SignleQuestion = () => {
         {/* all answer of that specific quesion */}
         <div className="mt-2">
           {answers.map((answer) => (
-            <Feed feedInfo={answer} />
+            <Feed feedInfo={answer} key={answer.answer_id} />
           ))}
         </div>
       </div>

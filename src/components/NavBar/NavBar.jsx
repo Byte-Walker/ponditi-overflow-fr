@@ -13,7 +13,6 @@ const NavBar = () => {
   const [isProfileMiniOpen, setIsProfileMiniOpen] = useState(false);
   const path = useNavigate();
   const { user } = useContext(UserContext);
-  console.log(user);
   return (
     <section className="bg-white sticky py-1 top-0 z-50 shadow">
       <nav className="container mx-auto navGrid">
@@ -63,7 +62,7 @@ const NavBar = () => {
           <div className="relative">
             {user?.user_email ? (
               <UserDP
-                dimension={"45px"}
+                dimension={"40px"}
                 img_url={user?.img_url}
                 user_name={user?.user_name}
                 onClick={() => setIsProfileMiniOpen(!isProfileMiniOpen)}

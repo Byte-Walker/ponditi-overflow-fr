@@ -18,6 +18,7 @@ const Profile = () => {
               dimension={"100px"}
               img_url={userInfo?.img_url}
               user_name={userInfo?.user_name}
+              fontSize="60px"
             />
           </div>
           <h1 className="text-3xl text-center mt-16 font-semibold">{userInfo?.user_name}</h1>

@@ -1,7 +1,7 @@
 import React from "react";
 import DpMaker from "../DpMaker/DpMaker";
 
-const UserDP = ({ dimension, img_url, user_name, onClick }) => {
+const UserDP = ({ dimension, img_url, user_name, onClick, fontSize }) => {
   return (
     <div
       className="rounded-full relative cursor-pointer"
@@ -15,7 +15,7 @@ const UserDP = ({ dimension, img_url, user_name, onClick }) => {
       }}
       onClick={onClick}
     >
-      {img_url === "null" && <DpMaker name={user_name} />}
+      {img_url === "null" && <DpMaker name={user_name} height={dimension} fontSize={fontSize} />}
     </div>
   );
 };

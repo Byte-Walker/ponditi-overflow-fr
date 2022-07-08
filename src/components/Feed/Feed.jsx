@@ -1,23 +1,31 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import DpMaker from "../DpMaker/DpMaker";
-import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { ImArrowUp } from "react-icons/im";
+import { TbArrowBigTop } from "react-icons/tb";
 import { BiShare } from "react-icons/bi";
 import { FaRegComment } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import useGetUpvote from "../../Hooks/useGetUpvote";
+import { UserContext } from "../../ContextAPI/UserContext";
+import handleUpvote from "../UlitiyFunctions/handleUpvote";
+
 const Feed = ({ feedInfo }) => {
   const {
-    user_name,
-    user_email,
+    answer_id,
+    user_name: post_user_name,
+    user_email: post_user_email,
     job,
     question_description,
     answer_description,
     question_id,
-    love,
     comment,
     share,
     time,
   } = feedInfo;
+  const [upvoteInfo, setUpvoteInfo] = useGetUpvote(answer_id);
   const path = useNavigate();
+  const { user } = useContext(UserContext);
+  const upvoteContent = { answer_id, user_email: user?.user_email };
   return (
     <section className="mb-2 card">
       {/* Card */}
@@ -25,16 +33,16 @@ const Feed = ({ feedInfo }) => {
         {/* user info starts*/}
         <div
           className="flex gap-3 centerY mb-4 cursor-pointer"
-          onClick={() => path(`/profile/${user_email}`)}
+          onClick={() => path(`/profile/${post_user_email}`)}
         >
-          <DpMaker name={user_name} height="40px" color="#DC2626" />
+          <DpMaker name={post_user_name} height="40px" color="#DC2626" />
           <div>
             {/* by clicking here any user can visit this user's profile */}
             <p
               className="font-bold cursor-pointer hover:underline"
-              onClick={() => path(`/profile/${user_email}`)}
+              onClick={() => path(`/profile/${post_user_email}`)}
             >
-              {user_name}
+              {post_user_name}
             </p>
             <p className="text-sm text-gray-500">
               <span className="text-gray-500 font-semibold">{job}</span> {job && "-"} {time}
@@ -53,14 +61,30 @@ const Feed = ({ feedInfo }) => {
         {/* question ends */}
         {/* reactions, comments and share starts */}
         <div className="flex gap-5">
-          <button className="iconButton">
-            {true ? <AiFillHeart className="iconSize" /> : <AiOutlineHeart className="iconSize" />}
-            {love}
+          {/* upvote */}
+          <button
+            className="iconButton bubleOnHOver"
+            // * handeling upvote * //
+            onClick={() =>
+              handleUpvote({ upvoteContent, upvoteInfo, setUpvoteInfo, answer_id, user })
+            }
+            style={{
+              backgroundColor: upvoteInfo[user?.user_email] ? "#DBEAFE" : " ",
+              color: upvoteInfo[user?.user_email] ? "#2563EB" : "",
+            }}
+            //
+          >
+            {!upvoteInfo[user?.user_email] ? (
+              <TbArrowBigTop className="iconSize" />
+            ) : (
+              <ImArrowUp className="iconSize" />
+            )}
+            {Object.keys(upvoteInfo).length}
           </button>
-          <button className="iconButton">
+          <button className="iconButton bubleOnHOver">
             <BiShare className="iconSize" /> {share}
           </button>
-          <button className="iconButton">
+          <button className="iconButton bubleOnHOver">
             <FaRegComment className="iconSize" /> {comment}
           </button>
         </div>

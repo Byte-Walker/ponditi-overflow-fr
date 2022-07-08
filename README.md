@@ -5,7 +5,7 @@
 - remove alert after logging in with google
 - Profile Page for each User =================================> {partically completed exept following and follwers route}
 - Follow option (beside the username) and (profile page)
-- upvote option
+- (done) upvote option
 - comment option
 - share
 - follwoing page (post will be shown)
