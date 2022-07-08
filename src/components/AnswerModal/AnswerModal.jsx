@@ -4,12 +4,10 @@ import { toast } from "react-toastify";
 import { toastConfig } from "../toastConfig";
 import Modal from "../Modal/Modal";
 import DpMaker from "../DpMaker/DpMaker";
-import { useQueryClient } from "react-query";
 
-const AnswerModal = ({ questionInfo, setOpenModal, openModal }) => {
+const AnswerModal = ({ questionInfo, setOpenModal, openModal, refetch }) => {
   const { user } = useContext(UserContext);
   const { user_name, user_email, img_url } = user;
-  const queryClient = useQueryClient();
 
   // * answer handler * //
   const createAnswer = (e) => {
@@ -37,7 +35,7 @@ const AnswerModal = ({ questionInfo, setOpenModal, openModal }) => {
         if (res) {
           toast.success("Answer Submitted", toastConfig);
           e.target.reset();
-          queryClient.invalidateQueries("allQuestion");
+          refetch();
         }
       });
     setOpenModal(false);

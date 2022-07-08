@@ -52,7 +52,7 @@ const Feed = ({ feedInfo }) => {
         {/* user info ends*/}
         {/* question start */}
         <h1
-          className="font-semibold mb-2 cursor-default hover:underline"
+          className="font-semibold mb-2 hover:underline cursor-pointer"
           onClick={() => path(`/question/${question_id}`)}
         >
           {question_description}
