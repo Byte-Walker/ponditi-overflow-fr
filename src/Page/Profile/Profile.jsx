@@ -3,11 +3,13 @@ import { Outlet, useParams } from "react-router-dom";
 import CustomNavLink from "../../components/CustomNavLink/CustomNavLink";
 import NavBar from "../../components/NavBar/NavBar";
 import UserDP from "../../components/UserDP/UserDP";
-import useUserInfo from "../../Hooks/useUserInfo";
+import { useQuery } from "react-query";
 
 const Profile = () => {
   const { user_email_id } = useParams();
-  const userInfo = useUserInfo(user_email_id);
+  const { data: userInfo } = useQuery("userInfo", () =>
+    fetch(`http://localhost:5500/profile/${user_email_id}`).then((res) => res.json())
+  );
   return (
     <>
       <NavBar />

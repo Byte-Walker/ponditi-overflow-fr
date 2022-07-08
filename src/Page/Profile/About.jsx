@@ -7,32 +7,30 @@ import Modal from "../../components/Modal/Modal";
 import { toast } from "react-toastify";
 import { toastConfig } from "../../components/toastConfig";
 import { UserContext } from "../../ContextAPI/UserContext";
-import useUserInfo from "../../Hooks/useUserInfo";
 import { useParams } from "react-router-dom";
+import { useQuery } from "react-query";
 
 const About = () => {
   const [openModal, setOpenModal] = useState(false);
   const { user, manageUser } = useContext(UserContext);
   const { user_email_id } = useParams();
-  let userInfo = useUserInfo(user_email_id);
+  const { data: userInfo, refetch } = useQuery("userInfo", () =>
+    fetch(`http://localhost:5500/profile/${user_email_id}`).then((res) => res.json())
+  );
+  const [job, setJob] = useState(userInfo?.job);
+  const [study, setStudy] = useState(userInfo?.study);
+  const [location, setLocation] = useState(userInfo?.location);
 
-  const [job, setJob] = useState(user?.job);
-  const [study, setStudy] = useState(user?.study);
-  const [location, setLocation] = useState(user?.location);
-
+  // * Update Profile Hadler * //
   const updateProfile = (e) => {
     e.preventDefault();
-
     // * gatering all profile info * //
     const profileInfo = { job, study, location, user_email: user?.user_email };
     // * sending data to server *//
     const url = `http://localhost:5500/updateProfile`;
     fetch(url, {
       method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(profileInfo),
     })
       .then((res) => res.json())
@@ -44,10 +42,11 @@ const About = () => {
           localStorage.setItem("userInfo", JSON.stringify(user));
           e.target.reset();
           setOpenModal(false);
+          refetch();
         }
       });
-    console.log(profileInfo);
   };
+  // * returning component *//
   return (
     <section className="p-5 card">
       <div>
