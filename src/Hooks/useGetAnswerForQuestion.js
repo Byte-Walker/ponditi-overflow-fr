@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const useGetAnswerForQuestion = (question_id) => {
   const [answersForQuestion, setAnswersForQuestion] = useState([]);

@@ -8,14 +8,6 @@ const AnswerPage = () => {
     fetch(`http://localhost:5500/getallquestions`).then((res) => res.json())
   );
 
-  // const [allQuestion, setAllQuestion] = useState([]);
-  // useEffect(() => {
-  //   const url = "http://localhost:5500/getallquestions";
-  //   fetch(url)
-  //     .then((res) => res.json())
-  //     .then((res) => setAllQuestion(res));
-  // }, []);
-
   return (
     <section>
       <NavBar />

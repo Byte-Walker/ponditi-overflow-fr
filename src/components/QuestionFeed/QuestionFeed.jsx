@@ -7,13 +7,14 @@ import { useQuery } from "react-query";
 const QuestionFeed = ({ questionData }) => {
   const { question_description, time, question_id } = questionData;
   const [openModal, setOpenModal] = useState(false);
+
   const { data: answerData, refetch } = useQuery(`answer${question_id}`, () =>
     fetch(`http://localhost:5500/answers/${question_id}`).then((res) => res.json())
   );
 
   useEffect(() => {
     refetch();
-  }, []);
+  }, [refetch]);
 
   const path = useNavigate();
   // * str * //

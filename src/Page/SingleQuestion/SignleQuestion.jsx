@@ -8,13 +8,14 @@ import useGetQuestionInfo from "../../Hooks/useGetQuestionInfo";
 import { MdEditNote } from "react-icons/md";
 import AnswerModal from "../../components/AnswerModal/AnswerModal";
 import Feed from "../../components/Feed/Feed";
+
 const SignleQuestion = () => {
   const { question_id } = useParams();
   const answers = useGetAnswerForQuestion(question_id);
   const { user } = useContext(UserContext);
   const question = useGetQuestionInfo(question_id);
   const [openModal, setOpenModal] = useState(false);
-  console.log(answers);
+
   return (
     <>
       <NavBar />
