@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { MdOutlineWork, MdEmail } from "react-icons/md";
 import { FaUserGraduate } from "react-icons/fa";
 import { ImLocation } from "react-icons/im";
@@ -14,9 +14,14 @@ const About = () => {
   const [openModal, setOpenModal] = useState(false);
   const { user, manageUser } = useContext(UserContext);
   const { user_email_id } = useParams();
+
   const { data: userInfo, refetch } = useQuery("userInfo", () =>
     fetch(`http://localhost:5500/profile/${user_email_id}`).then((res) => res.json())
   );
+
+  useEffect(() => {
+    refetch();
+  }, []);
   const [job, setJob] = useState(userInfo?.job);
   const [study, setStudy] = useState(userInfo?.study);
   const [location, setLocation] = useState(userInfo?.location);
