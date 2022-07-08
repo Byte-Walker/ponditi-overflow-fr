@@ -1,13 +1,14 @@
 import React, { useContext } from "react";
 import { ImArrowUp } from "react-icons/im";
 import { TbArrowBigTop } from "react-icons/tb";
-import { BiShare } from "react-icons/bi";
+import { RiShareForwardLine, RiShareForwardFill } from "react-icons/ri";
 import { FaRegComment } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import useGetUpvote from "../../Hooks/useGetUpvote";
 import { UserContext } from "../../ContextAPI/UserContext";
 import handleUpvote from "../UlitiyFunctions/handleUpvote";
 import UserDP from "../UserDP/UserDP";
+import { useQuery } from "react-query";
 
 const Feed = ({ feedInfo, following, followingRefetch }) => {
   const {
@@ -23,10 +24,14 @@ const Feed = ({ feedInfo, following, followingRefetch }) => {
   } = feedInfo;
 
   const { user } = useContext(UserContext);
-
   const [upvoteInfo, setUpvoteInfo] = useGetUpvote(answer_id);
   const path = useNavigate();
   const upvoteContent = { answer_id, user_email: user?.user_email };
+
+  const { data: sharers, refetch: sharersRefetch } = useQuery(`sharers_${answer_id}`, () =>
+    fetch(`http://localhost:5500/sharers/${answer_id}`).then((res) => res.json())
+  );
+
   // * following * //
   const modFollow = ({ followed, follower, mode }) => {
     const followData = { followed, follower, mode };
@@ -40,6 +45,23 @@ const Feed = ({ feedInfo, following, followingRefetch }) => {
       .then((res) => {
         if (res) {
           followingRefetch();
+        }
+      });
+  };
+
+  // * handleShare * //
+  const handleShare = ({ user_email, answer_id }) => {
+    const shareInfo = { user_email, answer_id };
+    const url = `http://localhost:5500/createshare`;
+    fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(shareInfo),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res) {
+          sharersRefetch();
         }
       });
   };
@@ -130,8 +152,18 @@ const Feed = ({ feedInfo, following, followingRefetch }) => {
             )}
             {Object.keys(upvoteInfo).length}
           </button>
-          <button className="iconButton bubleOnHOver">
-            <BiShare className="iconSize" />
+          <button
+            className={`iconButton  ${
+              sharers && sharers[user?.user_email] ? "btnDisabled" : "bubleOnHOver"
+            }`}
+            onClick={() => handleShare({ user_email: user?.user_email, answer_id })}
+            style={{
+              cursor: sharers && sharers[user?.user_email] ? "not-allowed" : "pointer",
+              backgroundColor: sharers && sharers[user?.user_email] ? "#DBEAFE" : "",
+              color: sharers && sharers[user?.user_email] ? "#2563EB" : "",
+            }}
+          >
+            <RiShareForwardLine className="iconSize" /> {sharers && Object.keys(sharers).length}
           </button>
           <button className="iconButton bubleOnHOver">
             <FaRegComment className="iconSize" />

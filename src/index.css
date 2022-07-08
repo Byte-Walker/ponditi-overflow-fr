@@ -76,4 +76,7 @@ body::-webkit-scrollbar-thumb {
   .bubleOnHOver {
     @apply hover:scale-110 transition-all duration-300 hover:bg-blue-100 hover:text-blue-600;
   }
+  .btnDisabled {
+    @apply hover:scale-100 bg-gray-500;
+  }
 }

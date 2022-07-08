@@ -8,6 +8,7 @@ import useGetQuestionInfo from "../../Hooks/useGetQuestionInfo";
 import { MdEditNote } from "react-icons/md";
 import AnswerModal from "../../components/AnswerModal/AnswerModal";
 import Feed from "../../components/Feed/Feed";
+import { useQuery } from "react-query";
 
 const SignleQuestion = () => {
   const { question_id } = useParams();
@@ -15,6 +16,12 @@ const SignleQuestion = () => {
   const { user } = useContext(UserContext);
   const question = useGetQuestionInfo(question_id);
   const [openModal, setOpenModal] = useState(false);
+
+  // * fetching followed list of logged user * //
+  const { data: following, refetch: followingRefetch } = useQuery(
+    `following_${user?.user_email}`,
+    () => fetch(`http://localhost:5500/followings/${user?.user_email}`).then((res) => res.json())
+  );
 
   return (
     <>
@@ -55,8 +62,13 @@ const SignleQuestion = () => {
         </div>
         {/* all answer of that specific quesion */}
         <div className="mt-2">
-          {answers.map((answer) => (
-            <Feed feedInfo={answer} key={answer.answer_id} />
+          {answers?.map((answer, index) => (
+            <Feed
+              feedInfo={answer}
+              key={index}
+              following={following}
+              followingRefetch={followingRefetch}
+            />
           ))}
         </div>
       </div>
