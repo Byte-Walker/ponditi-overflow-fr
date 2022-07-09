@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import DpMaker from "../../components/DpMaker/DpMaker";
 import NavBar from "../../components/NavBar/NavBar";
@@ -8,9 +8,16 @@ import { MdEditNote } from "react-icons/md";
 import AnswerModal from "../../components/AnswerModal/AnswerModal";
 import Feed from "../../components/Feed/Feed";
 import { useQuery } from "react-query";
+import UserDP from "../../components/UserDP/UserDP";
 
 const SignleQuestion = () => {
   const { question_id } = useParams();
+  const question = useGetQuestionInfo(question_id);
+
+  useEffect(() => {
+    document.title = `Question : ${question?.question_description}`;
+  }, []);
+
   const { user } = useContext(UserContext);
   const {
     data: answers,
@@ -20,7 +27,6 @@ const SignleQuestion = () => {
     fetch(`http://localhost:5500/answers/${question_id}`).then((res) => res.json())
   );
 
-  const question = useGetQuestionInfo(question_id);
   const [openModal, setOpenModal] = useState(false);
 
   // * fetching followed list of logged user * //
@@ -28,6 +34,10 @@ const SignleQuestion = () => {
     `following_${user?.user_email}`,
     () => fetch(`http://localhost:5500/followings/${user?.user_email}`).then((res) => res.json())
   );
+
+  if (answersLoading) {
+    return null;
+  }
 
   return (
     <>
@@ -39,11 +49,12 @@ const SignleQuestion = () => {
           </h1>
           {/* user dp */}
           <div className="w-fit mx-auto">
-            {false ? (
-              <img src={user?.img_url} alt="" />
-            ) : (
-              <DpMaker name={user?.user_name} height="70px" fontSize={"50px"} />
-            )}
+            <UserDP
+              img_url={user?.img_url}
+              user_name={user?.user_name}
+              dimension={"80px"}
+              fontSize={"50px"}
+            />
           </div>
           {/* user's info */}
           <p className="text-center mt-4">
