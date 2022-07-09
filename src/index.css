@@ -85,4 +85,7 @@ body::-webkit-scrollbar-thumb {
   .btnGray {
     @apply bg-gray-300 py-1 px-3 rounded-full text-gray-600 hover:scale-110 transition-all duration-300;
   }
+  .hover {
+    @apply hover:scale-110 transition-all duration-300;
+  }
 }

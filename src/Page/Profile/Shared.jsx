@@ -7,6 +7,7 @@ import { UserContext } from "../../ContextAPI/UserContext";
 const Shared = () => {
   const { user_email_id } = useParams();
   const { user } = useContext(UserContext);
+
   // * Shared Post * //
   const {
     data: shared,
@@ -15,6 +16,7 @@ const Shared = () => {
   } = useQuery(`shared_${user_email_id}`, () =>
     fetch(`http://localhost:5500/shares/${user_email_id}`).then((res) => res.json())
   );
+
   // * Follower Info * //
   const {
     data: following,
@@ -40,6 +42,7 @@ const Shared = () => {
             key={index}
             following={following}
             followingRefetch={followingRefetch}
+            feedRefetch={sharedRefetch}
           />
         ))}
         {shared.length === 0 && (

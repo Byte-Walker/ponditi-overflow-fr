@@ -40,6 +40,7 @@ const Home = () => {
             {feedInfo?.map((feedInformation, index) => (
               <Feed
                 feedInfo={feedInformation}
+                feedRefetch={feedInfoRefetch}
                 key={index}
                 following={following}
                 followingRefetch={followingRefetch}
