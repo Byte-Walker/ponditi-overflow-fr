@@ -69,7 +69,12 @@ const Post = () => {
                 rows={"4"}
                 required
               />
-              <button className="btn-red">Ask</button>
+              <div className="w-fit ml-auto mt-3 flex gap-5">
+                <button className="btnFade transitionCLass" onClick={() => setPostModal(false)}>
+                  Cancel
+                </button>
+                <button className="btn-red transitionCLass hover:bg-red-700">Ask Question</button>
+              </div>
             </form>
           </Modal>
         </div>

@@ -55,7 +55,7 @@ body::-webkit-scrollbar-thumb {
   .input {
     @apply w-full border bg-gray-100 border-gray-300 px-5 py-3 rounded outline-none focus:bg-white focus:border-blue-500;
   }
-  .transition {
+  .transitionClass {
     @apply transition-all duration-300;
   }
   .iconButton {
@@ -68,7 +68,7 @@ body::-webkit-scrollbar-thumb {
     @apply grid grid-cols-3;
   }
   .btn-red {
-    @apply w-full bg-red-600 text-white p-2 rounded;
+    @apply w-full bg-red-600 text-white py-2 px-3 rounded;
   }
   .card {
     @apply shadow border bg-white border-gray-200 rounded-md;
@@ -87,5 +87,8 @@ body::-webkit-scrollbar-thumb {
   }
   .hover {
     @apply hover:scale-110 transition-all duration-300;
+  }
+  .btnFade {
+    @apply p-2 hover:bg-gray-500 rounded;
   }
 }

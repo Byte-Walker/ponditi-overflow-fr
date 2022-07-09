@@ -1,6 +1,6 @@
 import React from "react";
 import { createPortal } from "react-dom";
-import { VscClose } from "react-icons/vsc";
+import { VscChromeClose } from "react-icons/vsc";
 
 const Modal = ({ openModal, setOpenModal, children, title }) => {
   if (!openModal) {
@@ -19,10 +19,10 @@ const Modal = ({ openModal, setOpenModal, children, title }) => {
         <header className="border-b border-gray-300 centerY justify-between p-3">
           <h1 className="text-xl font-semibold">{title}</h1>
           <button
-            className="w-[30px] h-[30px] rounded-full bg-gray-400 centerXY text-white"
+            className="w-[30px] h-[30px] rounded-full hover:bg-gray-600 bg-gray-400 centerXY text-white transitionClass"
             onClick={closeModal}
           >
-            {<VscClose />}
+            {<VscChromeClose className="text-xl" />}
           </button>
         </header>
         <div>{children}</div>

@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import DpMaker from "../../components/DpMaker/DpMaker";
 import NavBar from "../../components/NavBar/NavBar";
 import { UserContext } from "../../ContextAPI/UserContext";
-import useGetAnswerForQuestion from "../../Hooks/useGetAnswerForQuestion";
 import useGetQuestionInfo from "../../Hooks/useGetQuestionInfo";
 import { MdEditNote } from "react-icons/md";
 import AnswerModal from "../../components/AnswerModal/AnswerModal";
@@ -12,8 +11,15 @@ import { useQuery } from "react-query";
 
 const SignleQuestion = () => {
   const { question_id } = useParams();
-  const answers = useGetAnswerForQuestion(question_id);
   const { user } = useContext(UserContext);
+  const {
+    data: answers,
+    isLoading: answersLoading,
+    refetch: answersRefetch,
+  } = useQuery(`answer_${question_id}`, () =>
+    fetch(`http://localhost:5500/answers/${question_id}`).then((res) => res.json())
+  );
+
   const question = useGetQuestionInfo(question_id);
   const [openModal, setOpenModal] = useState(false);
 
@@ -58,7 +64,12 @@ const SignleQuestion = () => {
             <MdEditNote className="text-2xl" /> Answer
           </button>
           {/* Answer Modal */}
-          <AnswerModal questionInfo={question} setOpenModal={setOpenModal} openModal={openModal} />
+          <AnswerModal
+            questionInfo={question}
+            setOpenModal={setOpenModal}
+            openModal={openModal}
+            refetch={answersRefetch}
+          />
         </div>
         {/* all answer of that specific quesion */}
         <div className="mt-2">
@@ -68,6 +79,7 @@ const SignleQuestion = () => {
               key={index}
               following={following}
               followingRefetch={followingRefetch}
+              feedRefetch={answersRefetch}
             />
           ))}
         </div>
