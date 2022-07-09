@@ -14,6 +14,7 @@ import SignleQuestion from "./Page/SingleQuestion/SignleQuestion";
 import Shared from "./Page/Profile/Shared";
 import Following from "./Page/Profile/Following";
 import Followers from "./Page/Profile/Followers";
+import Search from "./Page/Search/Search";
 
 const App = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("userInfo")));
@@ -36,6 +37,7 @@ const App = () => {
           <Route path="/profile/:user_email_id/followers" element={<Followers />} />
           <Route path="/profile/:user_email_id/followings" element={<Following />} />
         </Route>
+        <Route path="/search/:searchStr" element={<Search />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </UserContext.Provider>
