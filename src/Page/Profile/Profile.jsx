@@ -62,7 +62,7 @@ const Profile = () => {
       <NavBar />
       <section className="homePageContainer mx-auto">
         {/* entire card of profile */}
-        <div className="mt-20 card">
+        <div className="mt-16 card">
           <div className="flex items-end justify-between px-20 py-5 border-b border-gray-200">
             <div className="flex gap-10 items-end">
               <UserDP

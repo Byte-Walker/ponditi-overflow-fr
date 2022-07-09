@@ -34,7 +34,7 @@ const Home = () => {
     <>
       <NavBar />{" "}
       {user?.user_email ? (
-        <section className="homePageContainer mx-auto gap-10 mt-3">
+        <section className="homePageContainer mx-auto gap-10 mt-8">
           <div>
             <Post />
             {feedInfo?.map((feedInformation, index) => (

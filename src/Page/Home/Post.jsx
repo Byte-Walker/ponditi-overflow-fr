@@ -38,7 +38,7 @@ const Post = () => {
   };
 
   return (
-    <section className="mb-3 rounded-lg shadow border bg-white py-3 border-gray-200">
+    <section className="mb-3 rounded-lg shadow border bg-white py-4 pt-5 border-gray-200">
       <div className="centerY gap-5 border-b border-gray-300 px-5 pb-3">
         {/* user's dp */}
         <div>
@@ -73,13 +73,13 @@ const Post = () => {
                 <button className="btnFade transitionCLass" onClick={() => setPostModal(false)}>
                   Cancel
                 </button>
-                <button className="btn-red transitionCLass hover:bg-red-700">Ask Question</button>
+                <button className="btn-red transitionCLass hover:bg-blue-700">Ask Question</button>
               </div>
             </form>
           </Modal>
         </div>
       </div>
-      <div className="grid grid-cols-2 pt-2 px-5">
+      <div className="grid grid-cols-2 pt-4 px-5">
         <button
           className="centerXY transition hover:bg-gray-300 py-1 rounded"
           onClick={() => setPostModal(true)}

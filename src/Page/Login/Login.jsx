@@ -69,7 +69,7 @@ const Login = () => {
             required
           />
           <button
-            className={`w-full rounded block bg-red-600 text-white p-3 hover:scale-105 transition mt-10`}
+            className={`w-full rounded block bg-blue-600 text-white p-3 hover:scale-105 transition mt-10`}
           >
             Log In
           </button>
