@@ -15,7 +15,7 @@ const About = () => {
   const { user, manageUser } = useContext(UserContext);
   const { user_email_id } = useParams();
 
-  const { data: userInfo, refetch } = useQuery("userInfo", () =>
+  const { data: userInfo, refetch } = useQuery(`userInfo_${user_email_id}`, () =>
     fetch(`http://localhost:5500/profile/${user_email_id}`).then((res) => res.json())
   );
 
@@ -31,6 +31,7 @@ const About = () => {
   const [location, setLocation] = useState(userInfo?.location);
 
   // * Update Profile Hadler * //
+
   const updateProfile = (e) => {
     e.preventDefault();
     // * gatering all profile info * //
@@ -72,7 +73,12 @@ const About = () => {
           </button>
         </div>
         {/* Works */}
-        <div className="centerY gap-4 mb-2" style={{ display: userInfo?.job ? "flex" : "none" }}>
+        <div
+          className="centerY gap-4 mb-2"
+          style={{
+            display: userInfo?.job ? "flex" : "none",
+          }}
+        >
           <button className="text-2xl">
             <MdOutlineWork />
           </button>
@@ -82,7 +88,12 @@ const About = () => {
           </p>
         </div>
         {/* study */}
-        <div className="centerY gap-4 mb-2" style={{ display: userInfo?.study ? "flex" : "none" }}>
+        <div
+          className="centerY gap-4 mb-2"
+          style={{
+            display: userInfo?.study ? "flex" : "none",
+          }}
+        >
           <button className="text-2xl">
             <FaUserGraduate />
           </button>

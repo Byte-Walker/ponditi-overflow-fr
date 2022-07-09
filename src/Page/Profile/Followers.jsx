@@ -23,7 +23,7 @@ const Followers = () => {
 
   return (
     <section className="card p-5 ">
-      <h1 className="font-semibold border-b pb-2">Your Followings</h1>
+      <h1 className="font-semibold border-b pb-2">Your Followers</h1>
       <div>
         {Object.keys(followerList).map((follower, index) => (
           <FollowList key={index} user_email_id={follower} />

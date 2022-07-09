@@ -3,12 +3,12 @@ import { UserContext } from "../../ContextAPI/UserContext";
 import { toast } from "react-toastify";
 import { toastConfig } from "../toastConfig";
 import Modal from "../Modal/Modal";
-import DpMaker from "../DpMaker/DpMaker";
 import UserDP from "../UserDP/UserDP";
 
 const AnswerModal = ({ questionInfo, setOpenModal, openModal, refetch }) => {
   const { user } = useContext(UserContext);
   // * answer handler * //
+
   const createAnswer = (e) => {
     e.preventDefault();
     const answer_description = e.target.elements.answerFeild.value;

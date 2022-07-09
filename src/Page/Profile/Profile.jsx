@@ -61,51 +61,58 @@ const Profile = () => {
     <>
       <NavBar />
       <section className="homePageContainer mx-auto">
-        <div className="relative mt-20 card">
-          <div className="topDp mx-auto">
-            <UserDP
-              dimension={"100px"}
-              img_url={userInfo?.img_url}
-              user_name={userInfo?.user_name}
-              fontSize="60px"
-            />
-          </div>
-          <h1 className="text-center text-3xl mt-16 font-semibold">{userInfo?.user_name}</h1>
-          <p className="text-center text-gray-400 mt-2">{userInfo?.job}</p>
-          <div className="border-b border-gray-300 mt-4 pb-3 text-center ">
-            {user?.user_email !== user_email_id && (
+        {/* entire card of profile */}
+        <div className="mt-20 card">
+          <div className="flex items-end justify-between px-20 py-5 border-b border-gray-200">
+            <div className="flex gap-10 items-end">
+              <UserDP
+                dimension={"100px"}
+                img_url={userInfo?.img_url}
+                user_name={userInfo?.user_name}
+                fontSize="60px"
+              />
               <div>
-                {followingUser && followingUser[user_email_id] && (
-                  <button
-                    className="btn-red w-fit rounded-full"
-                    onClick={() =>
-                      modFollow({
-                        followed: user_email_id,
-                        follower: user?.user_email,
-                        mode: "delete",
-                      })
-                    }
-                  >
-                    Unfollow
-                  </button>
-                )}
-                {followingUser && !followingUser[user_email_id] && (
-                  <button
-                    className="btn-red w-fit rounded-full"
-                    onClick={() =>
-                      modFollow({
-                        followed: user_email_id,
-                        follower: user?.user_email,
-                        mode: "add",
-                      })
-                    }
-                  >
-                    Follow
-                  </button>
-                )}
+                <h1 className="text-3xl font-semibold mb-1">{userInfo?.user_name}</h1>
+                <p className="text-gray-400">{userInfo?.job}</p>
               </div>
-            )}
+            </div>
+
+            <div className="border-gray-300 mt-4 pb-3 text-center ">
+              {user?.user_email !== user_email_id && (
+                <div>
+                  {followingUser && followingUser[user_email_id] && (
+                    <button
+                      className="btn-red w-fit"
+                      onClick={() =>
+                        modFollow({
+                          followed: user_email_id,
+                          follower: user?.user_email,
+                          mode: "delete",
+                        })
+                      }
+                    >
+                      Unfollow
+                    </button>
+                  )}
+                  {followingUser && !followingUser[user_email_id] && (
+                    <button
+                      className="btn-red w-fit"
+                      onClick={() =>
+                        modFollow({
+                          followed: user_email_id,
+                          follower: user?.user_email,
+                          mode: "add",
+                        })
+                      }
+                    >
+                      Follow
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
+
           {/* all links */}
           <div className="w-fit mx-auto pt-2 flex gap-3">
             <CustomNavLink to={`/profile/${user_email_id}`} fontSize="16px">

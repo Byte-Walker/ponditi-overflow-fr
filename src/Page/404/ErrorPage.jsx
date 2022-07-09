@@ -1,8 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import NavBar from "../../components/NavBar/NavBar";
 import img_404 from "./404.png";
 
 const ErrorPage = () => {
+  const path = useNavigate();
   return (
     <section>
       <NavBar />
@@ -13,7 +15,9 @@ const ErrorPage = () => {
           The link may be broken, or the page may have been removed. Check to see if the link you're
           trying to open is correct.
         </p>
-        <button className="btn-red w-fit mt-4">Go To Home</button>
+        <button className="btn-red w-fit mt-4" onClick={() => path("/")}>
+          Go To Home
+        </button>
       </div>
     </section>
   );
