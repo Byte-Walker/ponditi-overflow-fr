@@ -28,7 +28,9 @@ const Followers = () => {
         {Object.keys(followerList).map((follower, index) => (
           <FollowList key={index} user_email_id={follower} />
         ))}
-        {Object.keys(followerList).length === 0 && <h1>None Followed You Yet</h1>}
+        {Object.keys(followerList).length === 0 && (
+          <h1 className="pt-3 text-center text-lg font-semibold">None Followed You Yet</h1>
+        )}
       </div>
     </section>
   );
