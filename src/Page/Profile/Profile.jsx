@@ -10,14 +10,25 @@ const Profile = () => {
   const { user_email_id } = useParams();
   const { user } = useContext(UserContext);
 
-  const { data: userInfo, refetch } = useQuery(`userInfo_${user_email_id}`, () =>
+  const { data: userInfo, refetch: userInfoRefetch } = useQuery(`userInfo_${user_email_id}`, () =>
     fetch(`http://localhost:5500/profile/${user_email_id}`).then((res) => res.json())
   );
 
   // * getting follwing list logged in user's * //
-  const { data: following, refetch: followingRefetch } = useQuery(
+  const { data: followingUser, refetch: followingRefetchUser } = useQuery(
     `following_${user?.user_email}`,
     () => fetch(`http://localhost:5500/followings/${user?.user_email}`).then((res) => res.json())
+  );
+
+  // * following list of the user whose profile is being visited * //
+  const { data: followingList, refetch: followingListRefetch } = useQuery(
+    `following_${user_email_id}`,
+    () => fetch(`http://localhost:5500/followings/${user_email_id}`).then((res) => res.json())
+  );
+  // * followers list of user whose profile is being visited * //
+  const { data: followersList, refetch: followersListRefetch } = useQuery(
+    `followers_${user_email_id}`,
+    () => fetch(`http://localhost:5500/followers/${user_email_id}`).then((res) => res.json())
   );
 
   // * follower or unfollow * //
@@ -32,18 +43,19 @@ const Profile = () => {
       .then((res) => res.json())
       .then((res) => {
         if (res) {
-          followingRefetch();
+          followingRefetchUser();
+          followersListRefetch();
         }
       });
   };
 
-  // * unfollow * //
-
   useEffect(() => {
-    refetch();
-    followingRefetch();
+    userInfoRefetch();
+    followingRefetchUser();
+    followingListRefetch();
+    followersListRefetch();
     document.title = `${userInfo?.user_name} | Ponditi-Overflow`;
-  }, [refetch, followingRefetch, userInfo]);
+  }, [userInfoRefetch, followingListRefetch, followingRefetchUser, followersListRefetch, userInfo]);
 
   return (
     <>
@@ -63,7 +75,7 @@ const Profile = () => {
           <div className="border-b border-gray-300 mt-4 pb-3 text-center ">
             {user?.user_email !== user_email_id && (
               <div>
-                {following && following[user_email_id] && (
+                {followingUser && followingUser[user_email_id] && (
                   <button
                     className="btn-red w-fit rounded-full"
                     onClick={() =>
@@ -77,7 +89,7 @@ const Profile = () => {
                     Unfollow
                   </button>
                 )}
-                {following && !following[user_email_id] && (
+                {followingUser && !followingUser[user_email_id] && (
                   <button
                     className="btn-red w-fit rounded-full"
                     onClick={() =>
@@ -109,10 +121,10 @@ const Profile = () => {
               Questions
             </CustomNavLink>
             <CustomNavLink to={"followers"} fontSize="16px">
-              Followers
+              Followers ({followersList && Object.keys(followersList).length})
             </CustomNavLink>
             <CustomNavLink to={"followings"} fontSize="16px">
-              Followings
+              Followings ({followingList && Object.keys(followingList).length})
             </CustomNavLink>
           </div>
         </div>

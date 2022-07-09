@@ -12,6 +12,8 @@ import { useState } from "react";
 import ErrorPage from "./Page/404/ErrorPage";
 import SignleQuestion from "./Page/SingleQuestion/SignleQuestion";
 import Shared from "./Page/Profile/Shared";
+import Following from "./Page/Profile/Following";
+import Followers from "./Page/Profile/Followers";
 
 const App = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("userInfo")));
@@ -31,8 +33,8 @@ const App = () => {
           <Route path="/profile/:user_email_id/answers" element={<ProfileAnsers />} />
           <Route path="/profile/:user_email_id/shared" element={<Shared />} />
           <Route path="/profile/:user_email_id/questions" element={<ProfileQuesions />} />
-          <Route path="/profile/:user_email_id/followers" />
-          <Route path="/profile/:user_email_id/followings" />
+          <Route path="/profile/:user_email_id/followers" element={<Followers />} />
+          <Route path="/profile/:user_email_id/followings" element={<Following />} />
         </Route>
         <Route path="*" element={<ErrorPage />} />
       </Routes>

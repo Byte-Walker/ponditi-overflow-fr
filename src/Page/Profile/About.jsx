@@ -21,7 +21,7 @@ const About = () => {
 
   useEffect(() => {
     refetch();
-  }, [refetch]);
+  }, [refetch, user_email_id]);
 
   const [job, setJob] = useState(userInfo?.job);
   const [study, setStudy] = useState(userInfo?.study);
