@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import DpMaker from "../../components/DpMaker/DpMaker";
 import NavBar from "../../components/NavBar/NavBar";
 import { UserContext } from "../../ContextAPI/UserContext";
 import useGetQuestionInfo from "../../Hooks/useGetQuestionInfo";

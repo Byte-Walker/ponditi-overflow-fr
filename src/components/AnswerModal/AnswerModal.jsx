@@ -68,7 +68,7 @@ const AnswerModal = ({ questionInfo, setOpenModal, openModal, refetch }) => {
             <button className="btnFade transitionCLass" onClick={() => setOpenModal(false)}>
               Cancel
             </button>
-            <button className="btn-red transitionCLass hover:bg-red-700">Ask Question</button>
+            <button className="btn-red transitionCLass hover:bg-blue-700">Post Answer</button>
           </div>
         </form>
       </div>

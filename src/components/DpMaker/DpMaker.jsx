@@ -5,8 +5,8 @@ const DpMaker = ({ name, height, color, onClick, fontSize }) => {
     <div
       className="rounded-full centerXY cursor-pointer"
       style={{
-        height: height ? height : "40px",
-        width: height ? height : "40px",
+        height: height ? height : "37px",
+        width: height ? height : "37px",
         backgroundColor: color ? color : "#DC2626",
       }}
       onClick={onClick}

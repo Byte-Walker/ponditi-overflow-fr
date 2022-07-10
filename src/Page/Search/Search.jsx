@@ -45,21 +45,23 @@ const Search = () => {
     <>
       <NavBar />
       <section className="homePageContainer mx-auto mt-10">
-        <h1 className="card p-5">
+        <h1 className="card p-5 text-center text-xl text-blue-900 border border-blue-200">
           {questions && people && questions.length === 0 && people.length === 0 ? (
             <span>
               Nothing Found for the result of <span className="font-semibold">'{searchStr}'</span>{" "}
             </span>
           ) : (
             <span>
-              Result of <span className="font-semibold">'{searchStr}'</span>
+              Result for <span className="font-semibold">'{searchStr}'</span>
             </span>
           )}
         </h1>
         {/* people */}
         {people && people.length !== 0 && (
-          <div className="card p-5 mt-5">
-            <h1 className="font-semibold my-2">People</h1>
+          <div className="card mt-5 py-4 border border-blue-100">
+            <h1 className="font-bold mb-3 border-b  px-5 pb-4 border-blue-300 text-2xl text-blue-900">
+              People
+            </h1>
             {people?.map((person, index) => (
               <PeopleList
                 key={index}
@@ -74,8 +76,10 @@ const Search = () => {
 
         {/* Answers */}
         {questions && questions.length !== 0 && (
-          <div className="card p-5 mt-5">
-            <h1 className="font-semibold mb-2">Questions</h1>
+          <div className="card mt-5 py-4 border border-blue-100 shadow-xl shadow-blue-50">
+            <h1 className="font-bold mb-3 border-b px-5 pb-4 border-blue-300 text-2xl text-blue-900">
+              Questions
+            </h1>
             {questions?.map((question, index) => (
               <QuestionFeed key={index} questionData={question} />
             ))}

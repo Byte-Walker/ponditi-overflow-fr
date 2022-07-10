@@ -64,7 +64,7 @@ const About = () => {
           <h1 className="text-2xl font-semibold">Basic Overview</h1>
           <button
             className="text-xl centerXY rounded-full bg-gray-300 h-[40px] w-[40px] transition 
-            hover:scale-125 hover:bg-red-600 hover:text-white"
+            hover:scale-125 hover:bg-blue-600 hover:text-white"
             // * checking if user if the currently logged in * //
             style={{ display: user?.user_email === userInfo?.user_email ? "flex" : "none" }}
             onClick={() => setOpenModal(true)}

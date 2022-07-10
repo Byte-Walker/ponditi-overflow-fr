@@ -26,7 +26,7 @@ const PeopleList = ({ userInfo, user, followListUser, followListUserRefetch }) =
   };
 
   return (
-    <div className="py-3 border-b centerY justify-between">
+    <div className="px-5 py-3 border-b centerY justify-between">
       {/* userInfo */}
       <div className="centerY gap-3">
         <UserDP

@@ -62,7 +62,7 @@ const Profile = () => {
       <NavBar />
       <section className="homePageContainer mx-auto">
         {/* entire card of profile */}
-        <div className="mt-20 card">
+        <div className="mt-16 card">
           <div className="flex items-end justify-between px-20 py-5 border-b border-gray-200">
             <div className="flex gap-10 items-end">
               <UserDP
@@ -72,7 +72,7 @@ const Profile = () => {
                 fontSize="60px"
               />
               <div>
-                <h1 className="text-3xl font-semibold mb-1">{userInfo?.user_name}</h1>
+                <h1 className="text-3xl text-blue-900 font-semibold mb-1">{userInfo?.user_name}</h1>
                 <p className="text-gray-400">{userInfo?.job}</p>
               </div>
             </div>
