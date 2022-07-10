@@ -72,7 +72,7 @@ const Profile = () => {
                 fontSize="60px"
               />
               <div>
-                <h1 className="text-3xl font-semibold mb-1">{userInfo?.user_name}</h1>
+                <h1 className="text-3xl text-blue-900 font-semibold mb-1">{userInfo?.user_name}</h1>
                 <p className="text-gray-400">{userInfo?.job}</p>
               </div>
             </div>

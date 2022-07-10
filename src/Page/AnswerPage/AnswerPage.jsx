@@ -11,8 +11,8 @@ const AnswerPage = () => {
   return (
     <section>
       <NavBar />
-      <div className="homePageContainer card py-5 mx-auto mt-10 mb-5">
-        <h1 className="text-2xl font-semibold text-center pb-2 border-b border-gray-400">
+      <div className="homePageContainer shadow-lg card py-5 mx-auto mt-10 mb-5">
+        <h1 className="text-2xl font-bold text-center text-blue-900 pb-4 mb-2 border-b border-blue-300">
           Question For You 🤔
         </h1>
         {allQuestion?.map((question) => (

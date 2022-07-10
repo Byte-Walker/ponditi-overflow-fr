@@ -23,7 +23,7 @@ const QuestionFeed = ({ questionData }) => {
   };
 
   return (
-    <div className="mb-1 border-b border-gray-400 px-5 py-3">
+    <div className="mb-1 border-b px-5 py-3">
       <h1
         className="font-semibold mt-2 cursor-pointer hover:underline transition"
         onClick={() => path(`/question/${question_id}`)}

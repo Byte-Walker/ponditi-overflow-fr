@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { VscNotebook, VscNote, VscHome, VscBell } from 'react-icons/vsc';
-import {CgProfile} from 'react-icons/cg';
+import { CgProfile } from 'react-icons/cg';
 import { BsSearch } from 'react-icons/bs';
 import { FiEdit, FiHome, FiBell } from 'react-icons/fi';
 import CustomNavLink from '../CustomNavLink/CustomNavLink';
@@ -18,6 +17,7 @@ const NavBar = () => {
     const [isProfileMiniOpen, setIsProfileMiniOpen] = useState(false);
     const path = useNavigate();
     const { user, manageUser } = useContext(UserContext);
+    const [searchText, setSearchText] = useState('');
 
     // * logout handler * //
     const handleLogOut = () => {
@@ -90,10 +90,10 @@ const NavBar = () => {
         // </section>
 
         <section className="bg-white sticky top-0 z-50 shadow">
-            <nav className="container mx-auto navGrid">
+            <nav className="container mx-auto navGrid pt-1">
                 {/* left */}
                 <div className="centerY gap-5">
-                    <Link to="/" className="centerY py-2">
+                    <Link to="/" className="centerY pb-2 pt-1">
                         <SiMusicbrainz className="text-3xl text-blue-600 mr-2" />
                         <span className="whitespace-nowrap text-2xl font-semibold  dark:text-white text-blue-900 font-title">
                             Ponditi-Overflow
@@ -114,7 +114,7 @@ const NavBar = () => {
                         <FiHome />
                     </CustomNavLink>
                     <CustomNavLink to={'/answer'}>
-                        <FiEdit/>
+                        <FiEdit />
                     </CustomNavLink>
                     <CustomNavLink to={`/profile/${user?.user_email}`}>
                         <CgProfile />
@@ -129,7 +129,7 @@ const NavBar = () => {
                         className="text-[20px] h-[37px] w-[37px] rounded-full bg-blue-100 border border-blue-300 hover:bg-blue-600 hover:text-white hover:border-blue-600 centerXY text-blue-900"
                         onClick={() => setOpenModal(true)}
                     >
-                        <BsSearch className="text-[16px]"/>
+                        <BsSearch className="text-[16px]" />
                     </button>
                     {/* search modal */}
                     <Modal
@@ -147,14 +147,14 @@ const NavBar = () => {
                                     </h1>
                                     <div className="px-4 pt-2">
                                         <ul className="list-disc flex flex-col gap-1">
+                                            <li>Type at least 3 characters.</li>
                                             <li>
-                                                Type at least 3 characters.
+                                                It's not google, so lower your
+                                                expectation baby.
                                             </li>
                                             <li>
-                                                It's not google, so lower your expectation baby.
-                                            </li>
-                                            <li>
-                                                Please don't forget to press the search button!!
+                                                Please don't forget to press the
+                                                search button!!
                                             </li>
                                         </ul>
                                     </div>
@@ -164,8 +164,14 @@ const NavBar = () => {
                                     className="input"
                                     type="text"
                                     placeholder="Write the keyword here"
+                                    onChange = {(e) => setSearchText(e.target.value)}
                                 />
-                                <button className="btn-red mt-3">Search</button>
+                                <button
+                                    onClick={() => path(`/search/${searchText}`)}
+                                    className="btn-red mt-3"
+                                >
+                                    Search
+                                </button>
                             </div>
                         </>
                     </Modal>
@@ -226,10 +232,20 @@ const NavBar = () => {
                             >
                                 Notifications
                             </Dropdown.Item>
-                            <Dropdown.Item onClick={() => path(`profile/${user?.user_email}/questions`)}>
+                            <Dropdown.Item
+                                onClick={() =>
+                                    path(
+                                        `profile/${user?.user_email}/questions`
+                                    )
+                                }
+                            >
                                 Questions
                             </Dropdown.Item>
-                            <Dropdown.Item onClick={() => path(`profile/${user?.user_email}/answers`)}>
+                            <Dropdown.Item
+                                onClick={() =>
+                                    path(`profile/${user?.user_email}/answers`)
+                                }
+                            >
                                 Answers
                             </Dropdown.Item>
                             <Dropdown.Divider />
