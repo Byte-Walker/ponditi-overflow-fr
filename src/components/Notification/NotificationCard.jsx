@@ -27,7 +27,7 @@ const NotificationCard = ({
   }, [userInfoRefetch]);
 
   const handleClick = () => {
-    if (mode === "upvote" || mode === "share") {
+    if (mode === "upvote" || mode === "share" || mode === "answer") {
       path(`/single-answer/${answer_id}`);
       updateNotification({ notification_ids: [notification_id] });
       refetch();
@@ -57,7 +57,9 @@ const NotificationCard = ({
             {" "}
             {mode === "follow" && "Followed You"}
             {mode === "upvote" && "Upvoted Your Post"}
-            {mode === "share" && "Shared Your Post"} at {time}
+            {mode === "share" && "Shared Your Post"}
+            {mode === "answer" && "Answered Your Question"}
+            at {time}
           </span>
         </p>
       </div>

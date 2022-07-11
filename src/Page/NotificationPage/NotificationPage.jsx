@@ -32,7 +32,6 @@ const NotificationPage = () => {
 
   useEffect(() => {
     notificationsRefetch();
-    console.log("Called");
   }, []);
 
   return (

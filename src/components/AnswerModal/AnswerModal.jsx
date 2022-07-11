@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { toastConfig } from "../toastConfig";
 import Modal from "../Modal/Modal";
 import UserDP from "../UserDP/UserDP";
+import createNotification from "../UlitiyFunctions/createNotification";
 
 const AnswerModal = ({ questionInfo, setOpenModal, openModal, refetch }) => {
   const { user } = useContext(UserContext);
@@ -19,7 +20,7 @@ const AnswerModal = ({ questionInfo, setOpenModal, openModal, refetch }) => {
     };
     // * sending answer's info to the server * //
     const url = "http://localhost:5500/createanswer";
-    console.log(feedback);
+
     fetch(url, {
       method: "POST",
       headers: {
@@ -34,6 +35,13 @@ const AnswerModal = ({ questionInfo, setOpenModal, openModal, refetch }) => {
           toast.success("Answer Submitted", toastConfig);
           e.target.reset();
           refetch();
+          createNotification({
+            receiver: questionInfo?.user_email,
+            provoker: user?.user_email,
+            mode: "answer",
+            answer_id: res,
+            seen: false,
+          });
         }
       });
     setOpenModal(false);
