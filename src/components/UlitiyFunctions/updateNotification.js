@@ -6,7 +6,6 @@ const updateNotification = ({ notification_ids }) => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(notificationObject),
   }).then((res) => res.json());
-  console.log(res);
   return res;
 };
 

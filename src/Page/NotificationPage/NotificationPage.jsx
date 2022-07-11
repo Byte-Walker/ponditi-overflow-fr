@@ -1,6 +1,5 @@
 import { Dropdown } from "flowbite-react";
 import React, { useContext } from "react";
-import { useState } from "react";
 import { useEffect } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { useQuery } from "react-query";
@@ -33,6 +32,7 @@ const NotificationPage = () => {
 
   useEffect(() => {
     notificationsRefetch();
+    console.log("Called");
   }, []);
 
   return (
@@ -66,6 +66,7 @@ const NotificationPage = () => {
                 time={notification?.time}
                 answer_id={notification.answer_id}
                 notification_id={notification.notification_id}
+                refetch={newNotificationsRefetch}
               />
             ))}
       </div>
