@@ -5,6 +5,7 @@ import NavBar from "../../components/NavBar/NavBar";
 import UserDP from "../../components/UserDP/UserDP";
 import { useQuery } from "react-query";
 import { UserContext } from "../../ContextAPI/UserContext";
+import createNotification from "../../components/UlitiyFunctions/createNotification";
 
 const Profile = () => {
   const { user_email_id } = useParams();
@@ -45,6 +46,14 @@ const Profile = () => {
         if (res) {
           followingRefetchUser();
           followersListRefetch();
+          if (mode === "add") {
+            createNotification({
+              provoker: follower,
+              receiver: followed,
+              mode: "follow",
+              seen: false,
+            });
+          }
         }
       });
   };
@@ -62,7 +71,7 @@ const Profile = () => {
       <NavBar />
       <section className="homePageContainer mx-auto">
         {/* entire card of profile */}
-        <div className="mt-16 card">
+        <div className="mt-8 card">
           <div className="flex items-end justify-between px-20 py-5 border-b border-gray-200">
             <div className="flex gap-10 items-end">
               <UserDP

@@ -1,4 +1,6 @@
-const handleUpvote = ({ upvoteContent, upvoteInfo, setUpvoteInfo, answer_id, user }) => {
+import createNotification from "./createNotification";
+
+const handleUpvote = ({ upvoteContent, upvoteInfo, setUpvoteInfo, answer_id, user, receiver }) => {
   if (!upvoteInfo[user?.user_email]) {
     upvoteContent.mode = "add";
   } else {
@@ -21,6 +23,13 @@ const handleUpvote = ({ upvoteContent, upvoteInfo, setUpvoteInfo, answer_id, use
           const tempUpvoteCotent = { ...upvoteInfo };
           tempUpvoteCotent[user?.user_email] = answer_id;
           setUpvoteInfo(tempUpvoteCotent);
+          createNotification({
+            provoker: user?.user_email,
+            receiver,
+            mode: "upvote",
+            answer_id,
+            seen: false,
+          });
         } else {
           const tempUpvoteCotent = { ...upvoteInfo };
           delete tempUpvoteCotent[user?.user_email];

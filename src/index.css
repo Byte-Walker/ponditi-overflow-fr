@@ -31,7 +31,7 @@ body::-webkit-scrollbar-thumb {
   max-width: 1120px;
 }
 .modal {
-  background: rgba(9, 28, 82, 0.541);;
+  background: rgba(9, 28, 82, 0.541);
   min-height: 100vh;
   min-width: 100vw;
   position: fixed;

@@ -32,7 +32,6 @@ const Login = () => {
         if (user) {
           manageUser(user);
           localStorage.setItem("userInfo", JSON.stringify(user));
-          console.log(user);
           path("/");
         } else {
           toast.error("Error Occured", toastConfig);

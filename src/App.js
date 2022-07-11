@@ -15,6 +15,8 @@ import Shared from "./Page/Profile/Shared";
 import Following from "./Page/Profile/Following";
 import Followers from "./Page/Profile/Followers";
 import Search from "./Page/Search/Search";
+import SingleAnswer from "./components/SignleAnswer/SingleAnswer";
+import NotificationPage from "./Page/NotificationPage/NotificationPage";
 
 const App = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("userInfo")));
@@ -28,7 +30,9 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/answer" element={<AnswerPage />} />
+        <Route path="/single-answer/:answer_id" element={<SingleAnswer />} />
         <Route path="/question/:question_id" element={<SignleQuestion />} />
+        <Route path="/notifications" element={<NotificationPage />} />
         <Route path="/profile/:user_email_id" element={<Profile />}>
           <Route index element={<About />} />
           <Route path="/profile/:user_email_id/answers" element={<ProfileAnsers />} />
