@@ -4,6 +4,7 @@ import NavBar from "../../components/NavBar/NavBar";
 import Post from "./Post";
 import { UserContext } from "../../ContextAPI/UserContext";
 import { useQuery } from "react-query";
+import UserStat from "./UserStat";
 
 const Home = () => {
   const { user } = useContext(UserContext);
@@ -34,7 +35,8 @@ const Home = () => {
     <>
       <NavBar />{" "}
       {user?.user_email ? (
-        <section className="homePageContainer mx-auto gap-10 mt-8">
+        <section className="homePageGrid mx-auto gap-5 mt-8">
+          <div className="card h-fit sticky top-20 p-5">123</div>
           <div>
             <Post />
             {feedInfo?.map((feedInformation, index) => (
@@ -46,6 +48,9 @@ const Home = () => {
                 followingRefetch={followingRefetch}
               />
             ))}
+          </div>
+          <div className="card h-fit sticky top-20 p-5">
+            <UserStat />
           </div>
         </section>
       ) : (

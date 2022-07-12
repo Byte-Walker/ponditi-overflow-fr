@@ -11,7 +11,7 @@ import UserDP from "../UserDP/UserDP";
 import { useQuery } from "react-query";
 import Modal from "../Modal/Modal";
 import { BsThreeDots } from "react-icons/bs";
-import { Navbar, Dropdown, Avatar } from "flowbite-react";
+import { Dropdown } from "flowbite-react";
 import createNotification from "../UlitiyFunctions/createNotification";
 
 const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
@@ -192,7 +192,7 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
           >
             {question_description}
           </h1>
-          <p className="mb-3">
+          <p className="mb-3 text-sm">
             {answer_description && showFull
               ? answer_description
               : `${answer_description.slice(0, 300)}`}

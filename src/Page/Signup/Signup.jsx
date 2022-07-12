@@ -35,7 +35,6 @@ const Signup = () => {
         if (res) {
           toast.success("Account Created", toastConfig);
           event.target.reset();
-          const userInfo = { user_name, user_email, img_url };
           // * saving userinfo into local storage * //
           localStorage.setItem("userInfo", JSON.stringify(res));
           console.log(res);

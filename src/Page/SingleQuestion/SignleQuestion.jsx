@@ -15,7 +15,7 @@ const SignleQuestion = () => {
 
   useEffect(() => {
     document.title = `Question : ${question?.question_description}`;
-  }, []);
+  }, [question]);
 
   const { user } = useContext(UserContext);
   const {

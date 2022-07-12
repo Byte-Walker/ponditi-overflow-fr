@@ -35,7 +35,7 @@ const Notification = () => {
 
   useEffect(() => {
     notificationsRefetch();
-  }, []);
+  }, [notificationsRefetch]);
 
   if (isLoading) {
     return null;

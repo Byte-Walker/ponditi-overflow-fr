@@ -32,7 +32,7 @@ const NotificationPage = () => {
 
   useEffect(() => {
     notificationsRefetch();
-  }, []);
+  }, [notificationsRefetch]);
 
   return (
     <>

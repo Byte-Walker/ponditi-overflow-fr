@@ -1,7 +1,6 @@
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useQuery } from "react-query";
-import { UserContext } from "../../ContextAPI/UserContext";
+
 import { FaUserPlus, FaUserCheck } from "react-icons/fa";
 import UserDP from "../../components/UserDP/UserDP";
 

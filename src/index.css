@@ -38,6 +38,12 @@ body::-webkit-scrollbar-thumb {
   top: 0;
 }
 
+.homePageGrid {
+  max-width: 1120px;
+  display: grid;
+  grid-template-columns: 0.4fr 550px 0.6fr;
+}
+
 .homePageContainer {
   max-width: 700px;
 }

@@ -35,7 +35,8 @@ const Search = () => {
 
   useEffect(() => {
     peopleRefetch();
-  }, [peopleRefetch]);
+    questionsRefetch();
+  }, [peopleRefetch, questionsRefetch]);
 
   if (followListLoading) {
     return null;

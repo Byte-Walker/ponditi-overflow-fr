@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const useGetUpvote = (answer_id) => {
   const [upvoteInfo, setUpvoteInfo] = useState({});

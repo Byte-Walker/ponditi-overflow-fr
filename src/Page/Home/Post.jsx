@@ -7,11 +7,18 @@ import { toastConfig } from "../../components/toastConfig";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../ContextAPI/UserContext";
 import UserDP from "../../components/UserDP/UserDP";
+import { useQuery } from "react-query";
 
 const Post = () => {
   const [postModal, setPostModal] = useState(false);
   const { user } = useContext(UserContext);
   const path = useNavigate();
+
+  // * getting all questions asked by the user * //
+  const { refetch: questionRefecth } = useQuery(`userQuestion${user?.user_email}`, () =>
+    fetch(`http://localhost:5500/getuserquestions/${user?.user_email}`).then((res) => res.json())
+  );
+
   const askHandler = (e) => {
     e.preventDefault();
     const question_description = e.target.elements.askingFelid.value;
@@ -31,14 +38,14 @@ const Post = () => {
         if (res) {
           toast.success("You question has been published", toastConfig);
           setPostModal(false);
-          console.log(quesInfo);
+          questionRefecth();
           e.target.reset();
         }
       });
   };
 
   return (
-    <section className="mb-3 rounded-lg shadow border bg-white py-4 pt-5 border-gray-200">
+    <section className="card mb-3 py-5">
       <div className="centerY gap-5 border-b border-gray-300 px-5 pb-3">
         {/* user's dp */}
         <div>
@@ -79,7 +86,7 @@ const Post = () => {
           </Modal>
         </div>
       </div>
-      <div className="grid grid-cols-2 pt-4 px-5">
+      <div className="grid grid-cols-2 pt-2 px-5">
         <button
           className="centerXY transition hover:bg-gray-300 py-1 rounded"
           onClick={() => setPostModal(true)}
