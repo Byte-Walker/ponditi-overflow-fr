@@ -285,14 +285,6 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
               ></span>
               {sharers && Object.keys(sharers).length}
             </button>
-            {/* {user?.user_email === post_user_email && (
-                            <button
-                                className="iconButton bubleOnHOver"
-                                onClick={() => setOpenModal(true)}
-                            >
-                                <AiFillDelete />
-                            </button>
-                        )} */}
           </div>
           {/* reactions, comments and share ends */}
         </div>
