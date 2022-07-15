@@ -13,31 +13,21 @@ import Modal from "../Modal/Modal";
 import { BsThreeDots } from "react-icons/bs";
 import { Dropdown } from "flowbite-react";
 import createNotification from "../UlitiyFunctions/createNotification";
+import useGetTags from "../../Hooks/useGetTags";
 
 const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
-  // * destructering all necessary data from feedInfo object * //
-  const {
-    answer_id,
-    user_name: post_user_name,
-    user_email: post_user_email,
-    job,
-    img_url,
-    question_description,
-    answer_description,
-    question_id,
-    time,
-  } = feedInfo;
-
-  const { user } = useContext(UserContext);
-  const [upvoteInfo, setUpvoteInfo] = useGetUpvote(answer_id);
-  const upvoteContent = { answer_id, user_email: user?.user_email };
-  const path = useNavigate();
   const [openModal, setOpenModal] = useState(false);
   const [showFull, setShowFull] = useState(false);
+  const { user } = useContext(UserContext);
+
+  const path = useNavigate();
+  const [upvoteInfo, setUpvoteInfo] = useGetUpvote(feedInfo?.answer_id);
+  const upvoteContent = { answer_id: feedInfo?.answer_id, user_email: user?.user_email };
 
   // * geting sharers information * //
-  const { data: sharers, refetch: sharersRefetch } = useQuery(`sharers_${answer_id}`, () =>
-    fetch(`http://localhost:5500/sharers/${answer_id}`).then((res) => res.json())
+  const { data: sharers, refetch: sharersRefetch } = useQuery(
+    `sharers_${feedInfo?.answer_id}`,
+    () => fetch(`http://localhost:5500/sharers/${feedInfo?.answer_id}`).then((res) => res.json())
   );
 
   // * follow or unfollow * //
@@ -80,7 +70,7 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
           sharersRefetch();
           createNotification({
             provoker: user?.user_email,
-            receiver: post_user_email,
+            receiver: feedInfo?.user_email,
             mode: "share",
             answer_id,
             seen: false,
@@ -104,7 +94,7 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
   };
 
   return (
-    <section className="mb-2 shadow-lg card" id={answer_id}>
+    <section className="mb-2 shadow-lg card">
       {/* Card */}
       <div className="pt-5 pb-4">
         <div className="px-5">
@@ -112,10 +102,10 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
             {/* user info starts*/}
             <div className="flex gap-3 centerY mb-4">
               <UserDP
-                img_url={img_url}
-                user_name={post_user_name}
+                img_url={feedInfo?.img_url}
+                user_name={feedInfo?.user_name}
                 dimension="40px"
-                onClick={() => path(`/profile/${post_user_email}`)}
+                onClick={() => path(`/profile/${feedInfo?.user_email}`)}
               />
               <div>
                 {/* by clicking here any user can visit this user's profile */}
@@ -123,20 +113,20 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
                   {/* user_name */}
                   <p
                     className="font-bold text-blue-900 cursor-pointer hover:underline"
-                    onClick={() => path(`/profile/${post_user_email}`)}
+                    onClick={() => path(`/profile/${feedInfo?.user_email}`)}
                   >
-                    {post_user_name}
+                    {feedInfo?.user_name}
                   </p>
                   {/* following , follow option */}
-                  {user?.user_email !== post_user_email && (
+                  {user?.user_email !== feedInfo?.user_email && (
                     <>
                       {/* if doesn't follow then follow option */}
-                      {!following[post_user_email] && (
+                      {!following[feedInfo?.user_email] && (
                         <p
                           className="text-blue-500 text-sm font-semibold cursor-pointer hover:underline"
                           onClick={() =>
                             modFollow({
-                              followed: post_user_email,
+                              followed: feedInfo?.user_email,
                               follower: user?.user_email,
                               mode: "add",
                             })
@@ -146,7 +136,7 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
                         </p>
                       )}
                       {/* if follow show following */}
-                      {following[post_user_email] && (
+                      {following[feedInfo?.user_email] && (
                         <p className="text-gray-500 text-sm font-semibold">Following</p>
                       )}
                     </>
@@ -154,7 +144,8 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
                 </div>
                 {/* designation */}
                 <p className="text-sm text-gray-500">
-                  <span className="text-gray-500 font-medium">{job}</span> {job && "-"} {time}
+                  <span className="text-gray-500 font-medium">{feedInfo?.job}</span>{" "}
+                  {feedInfo?.job && "-"} {feedInfo?.time}
                 </p>
               </div>
             </div>
@@ -165,11 +156,11 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
                 inline={true}
                 label={<BsThreeDots className="text-2xl m-0 p-0" />}
               >
-                <Dropdown.Item onClick={() => path(`/question/${question_id}`)}>
+                <Dropdown.Item onClick={() => path(`/question/${feedInfo?.question_id}`)}>
                   See all answers
                 </Dropdown.Item>
 
-                {user?.user_email === post_user_email && (
+                {user?.user_email === feedInfo?.user_email && (
                   <>
                     <Dropdown.Divider />
                     <Dropdown.Item onClick={() => setOpenModal(true)}>
@@ -188,15 +179,15 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
           {/* question start */}
           <h1
             className="font-semibold mb-2 hover:underline cursor-pointer"
-            onClick={() => path(`/question/${question_id}`)}
+            onClick={() => path(`/question/${feedInfo?.question_id}`)}
           >
-            {question_description}
+            {feedInfo?.question_description}
           </h1>
           <p className="mb-3 text-sm">
-            {answer_description && showFull
-              ? answer_description
-              : `${answer_description.slice(0, 300)}`}
-            {answer_description.length > 300 ? (
+            {feedInfo?.answer_description && showFull
+              ? feedInfo?.answer_description
+              : `${feedInfo?.answer_description.slice(0, 300)}`}
+            {feedInfo?.answer_description.length > 300 ? (
               <span>
                 ...
                 <button
@@ -212,7 +203,10 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
           </p>
           {/* question ends */}
         </div>
-
+        {/* taglist showing */}
+        <div className="px-5">
+          <ShowTaglist list={feedInfo?.tags} />
+        </div>
         {/* Separator */}
         <div className="w-full h-px bg-blue-100 mb-3 mt-4"></div>
 
@@ -228,9 +222,9 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
                   upvoteContent,
                   upvoteInfo,
                   setUpvoteInfo,
-                  answer_id,
+                  answer_id: feedInfo?.answer_id,
                   user,
-                  receiver: post_user_email,
+                  receiver: feedInfo?.user_email,
                 })
               }
               style={{
@@ -265,7 +259,7 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
               onClick={() =>
                 handleShare({
                   user_email: user?.user_email,
-                  answer_id,
+                  answer_id: feedInfo?.answer_id,
                 })
               }
               style={{
@@ -318,7 +312,7 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
             </button>
             <button
               className="px-3 py-1 bg-blue-600 text-white rounded hover"
-              onClick={() => handleDete({ answer_id, feedRefetch })}
+              onClick={() => handleDete({ answer_id: feedInfo?.answer_id, feedRefetch })}
             >
               Delete
             </button>
@@ -326,6 +320,28 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
         </div>
       </Modal>
     </section>
+  );
+};
+
+const ShowTaglist = ({ list }) => {
+  const tagList = list && list.split(",");
+  const { tags } = useGetTags();
+  const allTags = {};
+  for (let i = 0; i < tags?.length; i++) {
+    allTags[tags[i].tag_name] = tags[i].tag_color;
+  }
+  return (
+    <div className="flex flex-wrap gap-2 mb-2 cursor-pointer">
+      {tagList?.map((tag, index) => (
+        <p
+          key={index}
+          className="p-1 rounded text-white text-[10px] font-semibold uppercase"
+          style={{ backgroundColor: allTags && allTags[tag] }}
+        >
+          {tag}
+        </p>
+      ))}
+    </div>
   );
 };
 

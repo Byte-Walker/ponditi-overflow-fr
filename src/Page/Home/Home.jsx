@@ -5,6 +5,7 @@ import Post from "./Post";
 import { UserContext } from "../../ContextAPI/UserContext";
 import { useQuery } from "react-query";
 import UserStat from "./UserStat";
+import TagList from "./TagList";
 
 const Home = () => {
   const { user } = useContext(UserContext);
@@ -35,8 +36,10 @@ const Home = () => {
     <>
       <NavBar />{" "}
       {user?.user_email ? (
-        <section className="homePageGrid mx-auto gap-5 mt-8">
-          <div className="card h-fit sticky top-20 p-5">123</div>
+        <section className="homePageGrid mx-auto gap-3 mt-8">
+          <div className="card h-fit sticky top-20 p-5">
+            <TagList />
+          </div>
           <div>
             <Post />
             {feedInfo?.map((feedInformation, index) => (

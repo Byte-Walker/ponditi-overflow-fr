@@ -8,12 +8,13 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../ContextAPI/UserContext";
 import UserDP from "../../components/UserDP/UserDP";
 import { useQuery } from "react-query";
+import useGetTags from "../../Hooks/useGetTags";
 
 const Post = () => {
   const [postModal, setPostModal] = useState(false);
   const { user } = useContext(UserContext);
   const path = useNavigate();
-
+  const { tagsRefetch } = useGetTags();
   // * getting all questions asked by the user * //
   const { refetch: questionRefecth } = useQuery(`userQuestion${user?.user_email}`, () =>
     fetch(`http://localhost:5500/getuserquestions/${user?.user_email}`).then((res) => res.json())
@@ -22,11 +23,14 @@ const Post = () => {
   const askHandler = (e) => {
     e.preventDefault();
     const question_description = e.target.elements.askingFelid.value;
+    let tags = e.target.elements.taglist.value;
+    tags = tags.split(",");
+
     const quesInfo = {
       user_email: user?.user_email,
       question_description,
+      tags,
     };
-
     const url = `http://localhost:5500/createquestion`;
     fetch(url, {
       method: "POST",
@@ -39,6 +43,7 @@ const Post = () => {
           toast.success("You question has been published", toastConfig);
           setPostModal(false);
           questionRefecth();
+          tagsRefetch();
           e.target.reset();
         }
       });
@@ -65,12 +70,24 @@ const Post = () => {
                     <li>Make sure your question has not been asked already</li>
                     <li>Keep your question short and to the point</li>
                     <li>Double-check grammar and spelling</li>
+                    {/* <li>
+                      Separate each tag with comma ( , ) ans use underscore if the tag is more than
+                      a word
+                    </li> */}
                   </ul>
                 </div>
               </div>
               {/* tips ends */}
+              <input
+                type="text"
+                className="rounded-lg border-b border-gray-400 w-full mb-3"
+                placeholder="# Taglist"
+                name="taglist"
+                required
+              />
+              {/* <TagSuggestion /> */}
               <textarea
-                className="w-full h-fit min-h-[40px] px-5 py-3 outline-none border-b border-gray-400"
+                className="w-full h-fit min-h-[40px] px-5 py-3 outline-none border-b border-gray-400 rounded-lg"
                 placeholder="What do you want to ask?"
                 name="askingFelid"
                 rows={"4"}

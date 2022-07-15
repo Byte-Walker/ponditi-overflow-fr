@@ -41,7 +41,7 @@ body::-webkit-scrollbar-thumb {
 .homePageGrid {
   max-width: 1120px;
   display: grid;
-  grid-template-columns: 0.4fr 550px 0.6fr;
+  grid-template-columns: 200px 600px 1fr;
 }
 
 .homePageContainer {
@@ -52,7 +52,12 @@ body::-webkit-scrollbar-thumb {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-
+.abs {
+  position: absolute;
+  top: 0%;
+  right: 0%;
+  transform: translate(50%, -50%);
+}
 @layer components {
   .centerXY {
     @apply flex items-center justify-center;
