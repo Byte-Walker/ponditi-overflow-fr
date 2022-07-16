@@ -381,7 +381,7 @@ const ShowTaglist = ({ list }) => {
           key={index}
           className="py-1 px-2 rounded text-white text-[10px] font-semibold uppercase hover:underline hover"
           style={{ backgroundColor: allTags && allTags[tag] }}
-          onClick={() => path(`/tags/${tag}`)}
+          onClick={() => path(`/tags/${tag.slice(1)}`)}
         >
           {tag}
         </p>

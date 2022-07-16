@@ -18,6 +18,7 @@ import Search from "./Page/Search/Search";
 import SingleAnswer from "./components/SignleAnswer/SingleAnswer";
 import NotificationPage from "./Page/NotificationPage/NotificationPage";
 import TagsPage from "./Page/TagsPage/TagsPage";
+import AuthProvider from "./AuthProvider/AuthProvider";
 
 const App = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("userInfo")));
@@ -27,7 +28,14 @@ const App = () => {
   return (
     <UserContext.Provider value={{ user, manageUser }}>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route
+          path="/"
+          element={
+            <AuthProvider>
+              <Home />
+            </AuthProvider>
+          }
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/answer" element={<AnswerPage />} />
