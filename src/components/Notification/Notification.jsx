@@ -11,6 +11,7 @@ import { UserContext } from "../../ContextAPI/UserContext";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import updateNotification from "../UlitiyFunctions/updateNotification";
+import { Spinner } from "flowbite-react";
 
 const Notification = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -20,7 +21,7 @@ const Notification = () => {
 
   const {
     data: notifications,
-    isLoading,
+    isLoading: notificationLoading,
     refetch: notificationsRefetch,
   } = useQuery(`new_notification_${user?.user_email}`, () =>
     fetch(`https://ponditi-overflow.herokuapp.com/newnotifications/${user?.user_email}`).then(
@@ -38,10 +39,6 @@ const Notification = () => {
   useEffect(() => {
     notificationsRefetch();
   }, [notificationsRefetch]);
-
-  if (isLoading) {
-    return null;
-  }
 
   return (
     <>
@@ -85,6 +82,11 @@ const Notification = () => {
             </Dropdown>
           </div>
           {/* provoker, receiver, mode, answer_id, seen */}
+          {notificationLoading && (
+            <div className="p-5 centerXY">
+              <Spinner color="info" aria-label="Info spinner example" size="xl" />
+            </div>
+          )}
           <div className="flex flex-col gap-2">
             <>
               {notifications && notifications.length === 0 && (

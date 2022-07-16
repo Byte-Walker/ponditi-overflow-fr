@@ -67,7 +67,13 @@ const NavBar = () => {
             width="480px"
           >
             <>
-              <form className="p-5 pt-3" onSubmit={() => path(`/search/${searchText}`)}>
+              <form
+                className="p-5 pt-3"
+                onSubmit={() => {
+                  setOpenModal(false);
+                  path(`/search/${searchText}`);
+                }}
+              >
                 {/* tips starts */}
                 <div className="bg-blue-100 text-blue-600 text-sm p-3 mb-6">
                   <h1 className="font-semibold text-base">

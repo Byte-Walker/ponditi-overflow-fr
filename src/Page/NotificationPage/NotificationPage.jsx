@@ -7,18 +7,21 @@ import NavBar from "../../components/NavBar/NavBar";
 import NotificationCard from "../../components/Notification/NotificationCard";
 import updateNotification from "../../components/UlitiyFunctions/updateNotification";
 import { UserContext } from "../../ContextAPI/UserContext";
+import { Spinner } from "flowbite-react";
 
 const NotificationPage = () => {
   const { user } = useContext(UserContext);
 
-  const { data: notifications, refetch: notificationsRefetch } = useQuery(
-    `notification_${user?.user_email}`,
-    () =>
-      fetch(`https://ponditi-overflow.herokuapp.com/getnotifications/${user?.user_email}`).then(
-        (res) => res.json()
-      )
+  const {
+    data: notifications,
+    refetch: notificationsRefetch,
+    isLoading: notificationLoading,
+  } = useQuery(`notification_${user?.user_email}`, () =>
+    fetch(`https://ponditi-overflow.herokuapp.com/getnotifications/${user?.user_email}`).then(
+      (res) => res.json()
+    )
   );
-  const { refetch: newNotificationsRefetch } = useQuery(
+  const { refetch: newNotificationsRefetch, isLoading: newNotificationLoading } = useQuery(
     `new_notification_${user?.user_email}`,
     () =>
       fetch(`https://ponditi-overflow.herokuapp.com/newnotifications/${user?.user_email}`).then(
@@ -54,6 +57,11 @@ const NotificationPage = () => {
             </div>
           </Dropdown>
         </div>
+        {notificationLoading && newNotificationLoading && (
+          <div className="p-5 centerXY">
+            <Spinner color="info" aria-label="Info spinner example" size="xl" />
+          </div>
+        )}
 
         <>
           {notifications && notifications.length === 0 && (

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Outlet, useParams } from "react-router-dom";
 import CustomNavLink from "../../components/CustomNavLink/CustomNavLink";
 import NavBar from "../../components/NavBar/NavBar";
@@ -6,25 +6,16 @@ import UserDP from "../../components/UserDP/UserDP";
 import { useQuery } from "react-query";
 import { UserContext } from "../../ContextAPI/UserContext";
 import createNotification from "../../components/UlitiyFunctions/createNotification";
+import useGetUserInfo from "../../Hooks/useGetUserInfo";
+import { Spinner } from "flowbite-react";
+import useGetUserFollowing from "../../Hooks/useGetUserFollowing";
 
 const Profile = () => {
   const { user_email_id } = useParams();
+  const [followButtonLoading, setFollowButtonLoading] = useState(false);
   const { user } = useContext(UserContext);
-
-  const { data: userInfo, refetch: userInfoRefetch } = useQuery(`userInfo_${user_email_id}`, () =>
-    fetch(`https://ponditi-overflow.herokuapp.com/profile/${user_email_id}`).then((res) =>
-      res.json()
-    )
-  );
-
-  // * getting follwing list logged in user's * //
-  const { data: followingUser, refetch: followingRefetchUser } = useQuery(
-    `following_${user?.user_email}`,
-    () =>
-      fetch(`https://ponditi-overflow.herokuapp.com/followings/${user?.user_email}`).then((res) =>
-        res.json()
-      )
-  );
+  const { userInfo, userInfoLoading, userInfoRefetch } = useGetUserInfo(user_email_id);
+  const { followingUser, followingUserRefetchUser } = useGetUserFollowing(user?.user_email);
 
   // * following list of the user whose profile is being visited * //
   const { data: followingList, refetch: followingListRefetch } = useQuery(
@@ -45,6 +36,7 @@ const Profile = () => {
 
   // * follower or unfollow * //
   const modFollow = ({ followed, follower, mode }) => {
+    // setFollowButtonLoading(true);
     const followData = { followed, follower, mode };
     const url = `https://ponditi-overflow.herokuapp.com/modifyfollower`;
     fetch(url, {
@@ -55,8 +47,9 @@ const Profile = () => {
       .then((res) => res.json())
       .then((res) => {
         if (res) {
-          followingRefetchUser();
+          followingUserRefetchUser();
           followersListRefetch();
+          setFollowButtonLoading(false);
           if (mode === "add") {
             createNotification({
               provoker: follower,
@@ -71,11 +64,17 @@ const Profile = () => {
 
   useEffect(() => {
     userInfoRefetch();
-    followingRefetchUser();
+    followingUserRefetchUser();
     followingListRefetch();
     followersListRefetch();
     document.title = `${userInfo?.user_name} | Ponditi-Overflow`;
-  }, [userInfoRefetch, followingListRefetch, followingRefetchUser, followersListRefetch, userInfo]);
+  }, [
+    userInfoRefetch,
+    followingListRefetch,
+    followingUserRefetchUser,
+    followersListRefetch,
+    userInfo,
+  ]);
 
   return (
     <>
@@ -83,58 +82,79 @@ const Profile = () => {
       <section className="homePageContainer mx-auto">
         {/* entire card of profile */}
         <div className="mt-8 card">
-          <div className="flex items-end justify-between px-20 py-5 border-b border-gray-200">
-            <div className="flex gap-10 items-end">
-              <UserDP
-                dimension={"100px"}
-                img_url={userInfo?.img_url}
-                user_name={userInfo?.user_name}
-                fontSize="60px"
-              />
-              <div>
-                <h1 className="text-3xl text-blue-900 font-semibold mb-1">{userInfo?.user_name}</h1>
-
-                {userInfo?.job && userInfo?.job !== "null" && (
-                  <p className="text-gray-400">{userInfo?.job}</p>
-                )}
-              </div>
+          {userInfoLoading ? (
+            <div className="p-5 centerXY">
+              <Spinner color="info" aria-label="Info spinner example" size="xl" />
             </div>
+          ) : (
+            <>
+              <div className="flex items-end justify-between px-20 py-5 border-b border-gray-200">
+                <div className="flex gap-10 items-end">
+                  <UserDP
+                    dimension={"100px"}
+                    img_url={userInfo?.img_url}
+                    user_name={userInfo?.user_name}
+                    fontSize="60px"
+                  />
+                  <div>
+                    <h1 className="text-3xl text-blue-900 font-semibold mb-1">
+                      {userInfo?.user_name}
+                    </h1>
 
-            <div className="border-gray-300 mt-4 pb-3 text-center ">
-              {user?.user_email !== user_email_id && (
-                <div>
-                  {followingUser && followingUser[user_email_id] && (
-                    <button
-                      className="btn-red w-fit"
-                      onClick={() =>
-                        modFollow({
-                          followed: user_email_id,
-                          follower: user?.user_email,
-                          mode: "delete",
-                        })
-                      }
-                    >
-                      Unfollow
-                    </button>
-                  )}
-                  {followingUser && !followingUser[user_email_id] && (
-                    <button
-                      className="btn-red w-fit"
-                      onClick={() =>
-                        modFollow({
-                          followed: user_email_id,
-                          follower: user?.user_email,
-                          mode: "add",
-                        })
-                      }
-                    >
-                      Follow
-                    </button>
+                    {userInfo?.job && userInfo?.job !== "null" && (
+                      <p className="text-gray-400">{userInfo?.job}</p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="border-gray-300 mt-4 pb-3 text-center ">
+                  {user?.user_email !== user_email_id && (
+                    <div>
+                      {followingUser && followingUser[user_email_id] && (
+                        <button
+                          className="btn-red w-fit"
+                          onClick={() => {
+                            modFollow({
+                              followed: user_email_id,
+                              follower: user?.user_email,
+                              mode: "delete",
+                            });
+                            setFollowButtonLoading(true);
+                          }}
+                        >
+                          {followButtonLoading ? (
+                            <Spinner color="info" aria-label="Info spinner example" />
+                          ) : (
+                            "Unfollow"
+                          )}
+                        </button>
+                      )}
+
+                      {followingUser && !followingUser[user_email_id] && (
+                        <button
+                          className="btn-red w-fit"
+                          onClick={() => {
+                            modFollow({
+                              followed: user_email_id,
+                              follower: user?.user_email,
+                              mode: "add",
+                            });
+                            setFollowButtonLoading(true);
+                          }}
+                        >
+                          {followButtonLoading ? (
+                            <Spinner color="info" aria-label="Info spinner example" />
+                          ) : (
+                            "Follow"
+                          )}
+                        </button>
+                      )}
+                    </div>
                   )}
                 </div>
-              )}
-            </div>
-          </div>
+              </div>
+            </>
+          )}
 
           {/* all links */}
           <div className="w-fit mx-auto pt-2 flex gap-3">

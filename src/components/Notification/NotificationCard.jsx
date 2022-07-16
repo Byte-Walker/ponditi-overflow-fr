@@ -58,8 +58,7 @@ const NotificationCard = ({
             {mode === "follow" && "Followed You"}
             {mode === "upvote" && "Upvoted Your Post"}
             {mode === "share" && "Shared Your Post"}
-            {mode === "answer" && "Answered Your Question"}
-            at {time}
+            {mode === "answer" && "Answered Your Question"} at {time}
           </span>
         </p>
       </div>

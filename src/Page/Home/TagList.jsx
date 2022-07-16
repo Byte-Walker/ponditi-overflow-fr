@@ -15,7 +15,7 @@ const TagList = () => {
     tagsRefetch();
   }, [tagsRefetch]);
   return (
-    <div className="tag-list card pb-5 h-fit relative">
+    <div className="tag-list card pb-5 h-fit sticky top-20">
       <div className="sticky top-[0] bg-white px-5 pt-5 pb-4">
         <h1 className="bg-blue-600 text-white rounded px-5 py-2 text-center font-semibold uppercase">
           Tag List

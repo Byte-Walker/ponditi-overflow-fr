@@ -4,6 +4,7 @@ import NavBar from "../../components/NavBar/NavBar";
 import { useQuery } from "react-query";
 import { useEffect } from "react";
 import QuestionFeed from "../../components/QuestionFeed/QuestionFeed";
+import { Spinner } from "flowbite-react";
 
 const TagsPage = () => {
   const { tag_name } = useParams();
@@ -21,12 +22,14 @@ const TagsPage = () => {
 };
 
 const TagQuestion = ({ tag_name }) => {
-  const { data: tagQuestions, refetch: tagsQuestionsRefetch } = useQuery(
-    `tagQuestion_${tag_name}`,
-    () =>
-      fetch(`https://ponditi-overflow.herokuapp.com/getquestionsbytagname/${tag_name}`).then(
-        (res) => res.json()
-      )
+  const {
+    data: tagQuestions,
+    refetch: tagsQuestionsRefetch,
+    isLoading,
+  } = useQuery(`tagQuestion_${tag_name}`, () =>
+    fetch(`https://ponditi-overflow.herokuapp.com/getquestionsbytagname/${tag_name}`).then((res) =>
+      res.json()
+    )
   );
   useEffect(() => {
     tagsQuestionsRefetch();
@@ -34,6 +37,11 @@ const TagQuestion = ({ tag_name }) => {
 
   return (
     <section className="card p-5">
+      {isLoading && (
+        <div className="p-5 centerXY">
+          <Spinner color="info" aria-label="Info spinner example" size="xl" />
+        </div>
+      )}
       {tagQuestions?.map((question, index) => (
         <QuestionFeed questionData={question} key={index} />
       ))}

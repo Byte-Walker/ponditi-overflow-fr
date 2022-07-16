@@ -45,9 +45,9 @@ const PeopleList = ({ userInfo, user, followListUser, followListUserRefetch }) =
         </div>
       </div>
       {/* follow button */}
-      {userInfo?.user_email !== user?.user_email && (
+      {userInfo && userInfo?.user_email !== user?.user_email && (
         <>
-          {!followListUser[userInfo?.user_email] ? (
+          {followListUser && !followListUser[userInfo?.user_email] ? (
             <button
               className="btnBlue centerXY gap-2"
               onClick={() =>

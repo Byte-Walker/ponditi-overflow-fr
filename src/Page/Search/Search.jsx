@@ -4,7 +4,9 @@ import { useParams } from "react-router-dom";
 import NavBar from "../../components/NavBar/NavBar";
 import QuestionFeed from "../../components/QuestionFeed/QuestionFeed";
 import { UserContext } from "../../ContextAPI/UserContext";
+import useGetUserFollowing from "../../Hooks/useGetUserFollowing";
 import PeopleList from "./PeopleList";
+import { Spinner } from "flowbite-react";
 
 const Search = () => {
   const { searchStr } = useParams();
@@ -15,41 +17,33 @@ const Search = () => {
   const { user } = useContext(UserContext);
   // * api call to get userList * //
   const peopleApiUrl = `https://ponditi-overflow.herokuapp.com/search/users/${str}`;
-  const { data: people, refetch: peopleRefetch } = useQuery(`search_users_${str}`, () =>
-    fetch(peopleApiUrl).then((res) => res.json())
-  );
+  const {
+    data: people,
+    refetch: peopleRefetch,
+    isLoading: peopleLoading,
+  } = useQuery(`search_users_${str}`, () => fetch(peopleApiUrl).then((res) => res.json()));
 
   // * api call to get questions * //
   const answersApiUrl = `https://ponditi-overflow.herokuapp.com/search/questions/${str}`;
-  const { data: questions, refetch: questionsRefetch } = useQuery(`search_question_${str}`, () =>
-    fetch(answersApiUrl).then((res) => res.json())
-  );
-
   const {
-    data: followListUser,
-    isLoading: followListLoading,
-    refetch: followListUserRefetch,
-  } = useQuery(`following_${user?.user_email}`, () =>
-    fetch(`https://ponditi-overflow.herokuapp.com/followings/${user?.user_email}`).then((res) =>
-      res.json()
-    )
-  );
+    data: questions,
+    refetch: questionsRefetch,
+    isLoading: questionLoading,
+  } = useQuery(`search_question_${str}`, () => fetch(answersApiUrl).then((res) => res.json()));
+
+  const { followingUser, followingUserRefetchUser } = useGetUserFollowing(user?.user_email);
 
   useEffect(() => {
     peopleRefetch();
     questionsRefetch();
-  }, [peopleRefetch, questionsRefetch]);
-
-  if (followListLoading) {
-    return null;
-  }
+  }, [peopleRefetch, questionsRefetch, str]);
 
   return (
     <>
       <NavBar />
       <section className="homePageContainer mx-auto mt-8">
         <h1 className="card p-5 text-center text-xl text-blue-900 border border-blue-200">
-          {questions && people && questions.length === 0 && people.length === 0 ? (
+          {questions && people && questions?.length === 0 && people?.length === 0 ? (
             <span>
               Nothing Found for the result of <span className="font-semibold">'{searchStr}'</span>{" "}
             </span>
@@ -59,6 +53,11 @@ const Search = () => {
             </span>
           )}
         </h1>
+        {peopleLoading && questionLoading && (
+          <div className="p-5 centerXY">
+            <Spinner color="info" aria-label="Info spinner example" size="xl" />
+          </div>
+        )}
         {/* people */}
         {people && people.length !== 0 && (
           <div className="card mt-5 py-4 border border-blue-100">
@@ -70,8 +69,8 @@ const Search = () => {
                 key={index}
                 userInfo={person}
                 user={user}
-                followListUser={followListUser}
-                followListUserRefetch={followListUserRefetch}
+                followListUser={followingUser}
+                followListUserRefetch={followingUserRefetchUser}
               />
             ))}
           </div>

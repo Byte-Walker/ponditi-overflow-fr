@@ -6,21 +6,20 @@ import { UserContext } from "../../ContextAPI/UserContext";
 import { useQuery } from "react-query";
 import UserStat from "./UserStat";
 import TagList from "./TagList";
+import useGetUserFollowing from "../../Hooks/useGetUserFollowing";
+import { Spinner } from "flowbite-react";
 
 const Home = () => {
   const { user } = useContext(UserContext);
   // * fetching followed list of logged user * //
-  const {
-    data: following,
-    refetch: followingRefetch,
-    isLoading,
-  } = useQuery(`following_${user?.user_email}`, () =>
-    fetch(`https://ponditi-overflow.herokuapp.com/followings/${user?.user_email}`).then((res) =>
-      res.json()
-    )
-  );
+  const { followingUser: following, followingUserRefetchUser: followingRefetch } =
+    useGetUserFollowing(user?.user_email);
 
-  const { data: feedInfo, refetch: feedInfoRefetch } = useQuery("allAnswers", () =>
+  const {
+    data: feedInfo,
+    refetch: feedInfoRefetch,
+    isLoading: feedInfoLoading,
+  } = useQuery("allAnswers", () =>
     fetch(`https://ponditi-overflow.herokuapp.com/getallanswers`).then((res) => res.json())
   );
 
@@ -29,10 +28,6 @@ const Home = () => {
     feedInfoRefetch();
     followingRefetch();
   }, [feedInfoRefetch, followingRefetch]);
-
-  if (isLoading) {
-    return null;
-  }
 
   return (
     <>
@@ -44,6 +39,11 @@ const Home = () => {
           </div>
           <div>
             <Post />
+            {feedInfoLoading && (
+              <div className="h-[250px] centerXY card">
+                <Spinner color="info" aria-label="Info spinner example" size="xl" />
+              </div>
+            )}
             {feedInfo?.map((feedInformation, index) => (
               <Feed
                 feedInfo={feedInformation}

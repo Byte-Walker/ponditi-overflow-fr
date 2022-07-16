@@ -32,8 +32,10 @@ const ProfileAnsers = () => {
 
   return (
     <section>
-      {answers?.length === 0 && (
+      {answers?.length === 0 ? (
         <h1 className=" card p-5 text-center text-lg font-semibold">No Answer Found😞</h1>
+      ) : (
+        <></>
       )}
       {answers?.map((answer, index) => (
         <Feed
