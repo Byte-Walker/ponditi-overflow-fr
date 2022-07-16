@@ -15,11 +15,13 @@ const Home = () => {
     refetch: followingRefetch,
     isLoading,
   } = useQuery(`following_${user?.user_email}`, () =>
-    fetch(`http://localhost:5500/followings/${user?.user_email}`).then((res) => res.json())
+    fetch(`https://ponditi-overflow.herokuapp.com/followings/${user?.user_email}`).then((res) =>
+      res.json()
+    )
   );
 
   const { data: feedInfo, refetch: feedInfoRefetch } = useQuery("allAnswers", () =>
-    fetch(`http://localhost:5500/getallanswers`).then((res) => res.json())
+    fetch(`https://ponditi-overflow.herokuapp.com/getallanswers`).then((res) => res.json())
   );
 
   useEffect(() => {

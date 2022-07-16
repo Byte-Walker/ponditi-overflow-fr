@@ -12,7 +12,9 @@ const Following = () => {
     refetch: followingRefetch,
     isLoading: followingListLoading,
   } = useQuery(`following_${user_email_id}`, () =>
-    fetch(`http://localhost:5500/followings/${user_email_id}`).then((res) => res.json())
+    fetch(`https://ponditi-overflow.herokuapp.com/followings/${user_email_id}`).then((res) =>
+      res.json()
+    )
   );
 
   useEffect(() => {

@@ -21,7 +21,7 @@ const Signup = () => {
 
     // * stroring all data to a object * //
     const userInfo = { user_name, user_email, user_pass, img_url };
-    const url = `http://localhost:5500/signup`;
+    const url = `https://ponditi-overflow.herokuapp.com/signup`;
 
     // * sending data to api * //
     fetch(url, {

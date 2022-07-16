@@ -1,5 +1,5 @@
 const createNotification = ({ provoker, receiver, mode, answer_id, seen }) => {
-  const url = `http://localhost:5500/createnotification`;
+  const url = `https://ponditi-overflow.herokuapp.com/createnotification`;
   if (provoker === receiver) {
     return;
   }

@@ -23,7 +23,10 @@ const TagsPage = () => {
 const TagQuestion = ({ tag_name }) => {
   const { data: tagQuestions, refetch: tagsQuestionsRefetch } = useQuery(
     `tagQuestion_${tag_name}`,
-    () => fetch(`http://localhost:5500/getquestionsbytagname/${tag_name}`).then((res) => res.json())
+    () =>
+      fetch(`https://ponditi-overflow.herokuapp.com/getquestionsbytagname/${tag_name}`).then(
+        (res) => res.json()
+      )
   );
   useEffect(() => {
     tagsQuestionsRefetch();

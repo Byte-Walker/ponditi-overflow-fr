@@ -20,7 +20,7 @@ const GithubLogin = () => {
         const userInfo = { user_email, user_name, img_url };
 
         // * sending to server * //
-        const url = `http://localhost:5500/sociallogin`;
+        const url = `https://ponditi-overflow.herokuapp.com/sociallogin`;
         fetch(url, {
           method: "POST",
           headers: {

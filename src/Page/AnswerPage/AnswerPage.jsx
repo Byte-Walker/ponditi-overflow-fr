@@ -5,7 +5,7 @@ import { useQuery } from "react-query";
 
 const AnswerPage = () => {
   const { data: allQuestion } = useQuery("allQuestion", () =>
-    fetch(`http://localhost:5500/getallquestions`).then((res) => res.json())
+    fetch(`https://ponditi-overflow.herokuapp.com/getallquestions`).then((res) => res.json())
   );
 
   return (

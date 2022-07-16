@@ -23,7 +23,7 @@ const SignleQuestion = () => {
     isLoading: answersLoading,
     refetch: answersRefetch,
   } = useQuery(`answer_${question_id}`, () =>
-    fetch(`http://localhost:5500/answers/${question_id}`).then((res) => res.json())
+    fetch(`https://ponditi-overflow.herokuapp.com/answers/${question_id}`).then((res) => res.json())
   );
 
   const [openModal, setOpenModal] = useState(false);
@@ -31,7 +31,10 @@ const SignleQuestion = () => {
   // * fetching followed list of logged user * //
   const { data: following, refetch: followingRefetch } = useQuery(
     `following_${user?.user_email}`,
-    () => fetch(`http://localhost:5500/followings/${user?.user_email}`).then((res) => res.json())
+    () =>
+      fetch(`https://ponditi-overflow.herokuapp.com/followings/${user?.user_email}`).then((res) =>
+        res.json()
+      )
   );
 
   if (answersLoading) {

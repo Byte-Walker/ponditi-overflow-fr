@@ -18,7 +18,7 @@ const Login = () => {
     const user_pass = event.target.elements.password.value;
     const loginInfo = { user_email, user_pass };
     // * logging in into user account * //
-    const url = `http://localhost:5500/login`;
+    const url = `https://ponditi-overflow.herokuapp.com/login`;
     fetch(url, {
       method: "POST",
       headers: {

@@ -16,26 +16,36 @@ const UserStat = () => {
 
   // * getting all answer given by user * //
   const { data: answers, refetch: answersRefetch } = useQuery(`answer_${user?.user_email}`, () =>
-    fetch(`http://localhost:5500/getuseranswers/${user?.user_email}`).then((res) => res.json())
+    fetch(`https://ponditi-overflow.herokuapp.com/getuseranswers/${user?.user_email}`).then((res) =>
+      res.json()
+    )
   );
 
   // * getting all questions asked by the user * //
   const { data: questions, refetch: questionRefecth } = useQuery(
     `userQuestion${user?.user_email}`,
     () =>
-      fetch(`http://localhost:5500/getuserquestions/${user?.user_email}`).then((res) => res.json())
+      fetch(`https://ponditi-overflow.herokuapp.com/getuserquestions/${user?.user_email}`).then(
+        (res) => res.json()
+      )
   );
 
   // * getting all following info * //
   const { data: followingList, refetch: followingListRefetch } = useQuery(
     `following_${user?.user_email}`,
-    () => fetch(`http://localhost:5500/followings/${user?.user_email}`).then((res) => res.json())
+    () =>
+      fetch(`https://ponditi-overflow.herokuapp.com/followings/${user?.user_email}`).then((res) =>
+        res.json()
+      )
   );
 
   // * getting all follower info * //
   const { data: followersList, refetch: followersListRefetch } = useQuery(
     `followers_${user?.user_email}`,
-    () => fetch(`http://localhost:5500/followers/${user?.user_email}`).then((res) => res.json())
+    () =>
+      fetch(`https://ponditi-overflow.herokuapp.com/followers/${user?.user_email}`).then((res) =>
+        res.json()
+      )
   );
 
   useEffect(() => {

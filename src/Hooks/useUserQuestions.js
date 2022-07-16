@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 const useUserQuestions = (user_email_id) => {
   const [questions, setQuestions] = useState([]);
-  const url = `http://localhost:5500/getuserquestions/${user_email_id}`;
+  const url = `https://ponditi-overflow.herokuapp.com/getuserquestions/${user_email_id}`;
   useEffect(() => {
     fetch(url)
       .then((res) => res.json())

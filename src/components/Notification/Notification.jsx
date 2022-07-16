@@ -23,7 +23,9 @@ const Notification = () => {
     isLoading,
     refetch: notificationsRefetch,
   } = useQuery(`new_notification_${user?.user_email}`, () =>
-    fetch(`http://localhost:5500/newnotifications/${user?.user_email}`).then((res) => res.json())
+    fetch(`https://ponditi-overflow.herokuapp.com/newnotifications/${user?.user_email}`).then(
+      (res) => res.json()
+    )
   );
 
   const readAllNotifications = () => {

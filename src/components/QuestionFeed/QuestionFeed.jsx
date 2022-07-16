@@ -9,7 +9,7 @@ const QuestionFeed = ({ questionData }) => {
   const [openModal, setOpenModal] = useState(false);
 
   const { data: answerData, refetch } = useQuery(`answer${question_id}`, () =>
-    fetch(`http://localhost:5500/answers/${question_id}`).then((res) => res.json())
+    fetch(`https://ponditi-overflow.herokuapp.com/answers/${question_id}`).then((res) => res.json())
   );
 
   useEffect(() => {

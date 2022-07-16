@@ -14,11 +14,14 @@ const SingleAnswer = () => {
     isLoading,
     refetch: answerRefetch,
   } = useQuery(`answer_${answer_id}`, () =>
-    fetch(`http://localhost:5500/answer/${answer_id}`).then((res) => res.json())
+    fetch(`https://ponditi-overflow.herokuapp.com/answer/${answer_id}`).then((res) => res.json())
   );
   const { data: following, refetch: followingRefetch } = useQuery(
     `following_${user?.user_email}`,
-    () => fetch(`http://localhost:5500/followings/${user?.user_email}`).then((res) => res.json())
+    () =>
+      fetch(`https://ponditi-overflow.herokuapp.com/followings/${user?.user_email}`).then((res) =>
+        res.json()
+      )
   );
 
   if (isLoading) {

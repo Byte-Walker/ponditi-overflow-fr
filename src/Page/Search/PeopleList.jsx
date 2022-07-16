@@ -10,7 +10,7 @@ const PeopleList = ({ userInfo, user, followListUser, followListUserRefetch }) =
   // * follow or unfollow * //
   const modFollow = ({ followed, follower, mode }) => {
     const followData = { followed, follower, mode };
-    const url = `http://localhost:5500/modifyfollower`;
+    const url = `https://ponditi-overflow.herokuapp.com/modifyfollower`;
     fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },

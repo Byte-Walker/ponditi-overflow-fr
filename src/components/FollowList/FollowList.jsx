@@ -15,19 +15,24 @@ const FollowList = ({ user_email_id }) => {
     isLoading,
     refetch: userInfoRefetch,
   } = useQuery(`userInfo_${user_email_id}`, () =>
-    fetch(`http://localhost:5500/profile/${user_email_id}`).then((res) => res.json())
+    fetch(`https://ponditi-overflow.herokuapp.com/profile/${user_email_id}`).then((res) =>
+      res.json()
+    )
   );
 
   // * Getting logged in user's following list * //
   const { data: followListUser, refetch: followListUserRefetch } = useQuery(
     `following_${user?.user_email}`,
-    () => fetch(`http://localhost:5500/followings/${user?.user_email}`).then((res) => res.json())
+    () =>
+      fetch(`https://ponditi-overflow.herokuapp.com/followings/${user?.user_email}`).then((res) =>
+        res.json()
+      )
   );
 
   // * follow or unfollow * //
   const modFollow = ({ followed, follower, mode }) => {
     const followData = { followed, follower, mode };
-    const url = `http://localhost:5500/modifyfollower`;
+    const url = `https://ponditi-overflow.herokuapp.com/modifyfollower`;
     fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },

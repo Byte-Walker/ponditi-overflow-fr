@@ -16,7 +16,9 @@ const About = () => {
   const { user_email_id } = useParams();
 
   const { data: userInfo, refetch } = useQuery(`userInfo_${user_email_id}`, () =>
-    fetch(`http://localhost:5500/profile/${user_email_id}`).then((res) => res.json())
+    fetch(`https://ponditi-overflow.herokuapp.com/profile/${user_email_id}`).then((res) =>
+      res.json()
+    )
   );
 
   useEffect(() => {
@@ -37,7 +39,7 @@ const About = () => {
     // * gatering all profile info * //
     const profileInfo = { job, study, location, user_email: user?.user_email };
     // * sending data to server *//
-    const url = `http://localhost:5500/updateProfile`;
+    const url = `https://ponditi-overflow.herokuapp.com/updateProfile`;
     fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },

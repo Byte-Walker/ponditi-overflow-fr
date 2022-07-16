@@ -6,7 +6,9 @@ import { useQuery } from "react-query";
 const ProfileQuesions = () => {
   const { user_email_id } = useParams();
   const { data: questions, refetch } = useQuery(`userQuestion${user_email_id}`, () =>
-    fetch(`http://localhost:5500/getuserquestions/${user_email_id}`).then((res) => res.json())
+    fetch(`https://ponditi-overflow.herokuapp.com/getuserquestions/${user_email_id}`).then((res) =>
+      res.json()
+    )
   );
   useEffect(() => {
     refetch();

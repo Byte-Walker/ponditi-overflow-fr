@@ -14,7 +14,9 @@ const Shared = () => {
     isLoading: sharedLoading,
     refetch: sharedRefetch,
   } = useQuery(`shared_${user_email_id}`, () =>
-    fetch(`http://localhost:5500/shares/${user_email_id}`).then((res) => res.json())
+    fetch(`https://ponditi-overflow.herokuapp.com/shares/${user_email_id}`).then((res) =>
+      res.json()
+    )
   );
 
   // * Follower Info * //
@@ -23,7 +25,9 @@ const Shared = () => {
     isLoading,
     refetch: followingRefetch,
   } = useQuery(`following_${user?.user_email}`, () =>
-    fetch(`http://localhost:5500/followings/${user?.user_email}`).then((res) => res.json())
+    fetch(`https://ponditi-overflow.herokuapp.com/followings/${user?.user_email}`).then((res) =>
+      res.json()
+    )
   );
   useEffect(() => {
     sharedRefetch();

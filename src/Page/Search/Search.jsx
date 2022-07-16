@@ -14,13 +14,13 @@ const Search = () => {
 
   const { user } = useContext(UserContext);
   // * api call to get userList * //
-  const peopleApiUrl = `http://localhost:5500/search/users/${str}`;
+  const peopleApiUrl = `https://ponditi-overflow.herokuapp.com/search/users/${str}`;
   const { data: people, refetch: peopleRefetch } = useQuery(`search_users_${str}`, () =>
     fetch(peopleApiUrl).then((res) => res.json())
   );
 
   // * api call to get questions * //
-  const answersApiUrl = `http://localhost:5500/search/questions/${str}`;
+  const answersApiUrl = `https://ponditi-overflow.herokuapp.com/search/questions/${str}`;
   const { data: questions, refetch: questionsRefetch } = useQuery(`search_question_${str}`, () =>
     fetch(answersApiUrl).then((res) => res.json())
   );
@@ -30,7 +30,9 @@ const Search = () => {
     isLoading: followListLoading,
     refetch: followListUserRefetch,
   } = useQuery(`following_${user?.user_email}`, () =>
-    fetch(`http://localhost:5500/followings/${user?.user_email}`).then((res) => res.json())
+    fetch(`https://ponditi-overflow.herokuapp.com/followings/${user?.user_email}`).then((res) =>
+      res.json()
+    )
   );
 
   useEffect(() => {

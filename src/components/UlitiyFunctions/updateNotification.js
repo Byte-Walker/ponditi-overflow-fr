@@ -1,5 +1,5 @@
 const updateNotification = ({ notification_ids }) => {
-  const url = `http://localhost:5500/updatenotificationstatus`;
+  const url = `https://ponditi-overflow.herokuapp.com/updatenotificationstatus`;
   const notificationObject = { notification_ids };
   const res = fetch(url, {
     method: "POST",

@@ -19,7 +19,7 @@ const NotificationCard = ({
   // * gathering userInfo * //
 
   const { data: userInfo, refetch: userInfoRefetch } = useQuery(`userInfo_${user_email}`, () =>
-    fetch(`http://localhost:5500/profile/${user_email}`).then((res) => res.json())
+    fetch(`https://ponditi-overflow.herokuapp.com/profile/${user_email}`).then((res) => res.json())
   );
 
   useEffect(() => {

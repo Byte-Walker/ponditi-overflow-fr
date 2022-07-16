@@ -17,7 +17,9 @@ const Post = () => {
   const { tagsRefetch } = useGetTags();
   // * getting all questions asked by the user * //
   const { refetch: questionRefecth } = useQuery(`userQuestion${user?.user_email}`, () =>
-    fetch(`http://localhost:5500/getuserquestions/${user?.user_email}`).then((res) => res.json())
+    fetch(`https://ponditi-overflow.herokuapp.com/getuserquestions/${user?.user_email}`).then(
+      (res) => res.json()
+    )
   );
 
   const askHandler = (e) => {
@@ -33,7 +35,7 @@ const Post = () => {
       question_description,
       tags,
     };
-    const url = `http://localhost:5500/createquestion`;
+    const url = `https://ponditi-overflow.herokuapp.com/createquestion`;
     fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },

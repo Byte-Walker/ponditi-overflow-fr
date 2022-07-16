@@ -32,13 +32,16 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
   // * geting sharers information * //
   const { data: sharers, refetch: sharersRefetch } = useQuery(
     `sharers_${feedInfo?.answer_id}`,
-    () => fetch(`http://localhost:5500/sharers/${feedInfo?.answer_id}`).then((res) => res.json())
+    () =>
+      fetch(`https://ponditi-overflow.herokuapp.com/sharers/${feedInfo?.answer_id}`).then((res) =>
+        res.json()
+      )
   );
 
   // * follow or unfollow * //
   const modFollow = ({ followed, follower, mode }) => {
     const followData = { followed, follower, mode };
-    const url = `http://localhost:5500/modifyfollower`;
+    const url = `https://ponditi-overflow.herokuapp.com/modifyfollower`;
     fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -63,7 +66,7 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
   // * handleShare * //
   const handleShare = ({ user_email, answer_id }) => {
     const shareInfo = { user_email, answer_id };
-    const url = `http://localhost:5500/createshare`;
+    const url = `https://ponditi-overflow.herokuapp.com/createshare`;
     fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -86,7 +89,7 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
 
   // * handle delete * //
   const handleDete = ({ answer_id, feedRefetch }) => {
-    const url = `http://localhost:5500/answers/${answer_id}`;
+    const url = `https://ponditi-overflow.herokuapp.com/answers/${answer_id}`;
     fetch(url, { method: "DELETE" })
       .then((res) => res.json())
       .then((res) => {

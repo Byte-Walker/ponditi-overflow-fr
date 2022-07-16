@@ -7,7 +7,7 @@ const handleUpvote = ({ upvoteContent, upvoteInfo, setUpvoteInfo, answer_id, use
     upvoteContent.mode = "delete";
   }
   // * sending request for creatig upvote * //
-  const url = `http://localhost:5500/createupvote`;
+  const url = `https://ponditi-overflow.herokuapp.com/createupvote`;
   fetch(url, {
     method: "POST",
     headers: {

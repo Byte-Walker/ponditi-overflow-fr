@@ -14,12 +14,16 @@ const NotificationPage = () => {
   const { data: notifications, refetch: notificationsRefetch } = useQuery(
     `notification_${user?.user_email}`,
     () =>
-      fetch(`http://localhost:5500/getnotifications/${user?.user_email}`).then((res) => res.json())
+      fetch(`https://ponditi-overflow.herokuapp.com/getnotifications/${user?.user_email}`).then(
+        (res) => res.json()
+      )
   );
   const { refetch: newNotificationsRefetch } = useQuery(
     `new_notification_${user?.user_email}`,
     () =>
-      fetch(`http://localhost:5500/newnotifications/${user?.user_email}`).then((res) => res.json())
+      fetch(`https://ponditi-overflow.herokuapp.com/newnotifications/${user?.user_email}`).then(
+        (res) => res.json()
+      )
   );
 
   const readAllNotifications = () => {

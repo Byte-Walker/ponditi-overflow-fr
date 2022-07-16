@@ -19,7 +19,7 @@ const AnswerModal = ({ questionInfo, setOpenModal, openModal, refetch }) => {
       answer_description,
     };
     // * sending answer's info to the server * //
-    const url = "http://localhost:5500/createanswer";
+    const url = "https://ponditi-overflow.herokuapp.com/createanswer";
 
     fetch(url, {
       method: "POST",
