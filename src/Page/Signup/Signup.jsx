@@ -1,14 +1,12 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import GoogleLogin from "../../components/Social_Login/GoogleLogin";
 import GithubLogin from "../../components/Social_Login/GithubLogin";
 import { toast } from "react-toastify";
 import { toastConfig } from "../../components/toastConfig";
-import { UserContext } from "../../ContextAPI/UserContext";
 
 const Signup = () => {
   const path = useNavigate();
-  const { manageUser } = useContext(UserContext);
 
   // * handling signup * //
   const singupHandler = (event) => {
