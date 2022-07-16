@@ -84,7 +84,11 @@ const Notification = () => {
           </div>
           {/* provoker, receiver, mode, answer_id, seen */}
           <div className="flex flex-col gap-2">
-            <>{notifications && notifications.length === 0 && <h1>No new notification</h1>}</>
+            <>
+              {notifications && notifications.length === 0 && (
+                <h1 className="text-center my-2">No new notification</h1>
+              )}
+            </>
             {notifications &&
               notifications
                 .reverse()
@@ -106,7 +110,10 @@ const Notification = () => {
           <div className="text-center mt-4">
             <button
               className="text-blue-500 hover:underline"
-              onClick={() => path("/notifications")}
+              onClick={() => {
+                setOpenModal(false);
+                path("/notifications");
+              }}
             >
               See All
             </button>
@@ -114,42 +121,6 @@ const Notification = () => {
         </div>
       </Modal>
     </>
-
-    // <Dropdown
-    //   label={<FiBell className="text-2xl" />}
-    //   arrowIcon={false}
-    //   inline={true}
-    //   style={{
-    //     background: "transparent",
-    //     color: "#233876",
-    //     border: "none",
-    //     display: "flex",
-    //     justifyItems: "start",
-    //   }}
-    // >
-    //   <Dropdown.Item>
-    //     {/* notification and three dots */}
-    //     <section className="w-[300px]">
-    //       <div className="centerY justify-between">
-    //         <h1 className="font-semibold">Notification</h1>
-    //         {/* three dots */}
-    //         <Dropdown
-    //           arrowIcon={false}
-    //           inline={true}
-    //           label={<BsThreeDots className="text-2xl m-0 p-0" />}
-    //         >
-    //           <div>
-    //             <Dropdown.Item>Mark all as read</Dropdown.Item>
-    //             <Dropdown.Item>See all Notification</Dropdown.Item>
-    //           </div>
-    //         </Dropdown>
-    //       </div>
-    //     </section>
-    //   </Dropdown.Item>
-    //   {notifications.map((notification, index) => (
-    //     <NotificationCard key={index} user_email={notification.provoker_email} />
-    //   ))}
-    // </Dropdown>
   );
 };
 

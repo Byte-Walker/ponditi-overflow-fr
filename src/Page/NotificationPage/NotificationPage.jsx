@@ -51,7 +51,11 @@ const NotificationPage = () => {
           </Dropdown>
         </div>
 
-        <>{notifications && notifications.length === 0 && <h1>No Notification</h1>}</>
+        <>
+          {notifications && notifications.length === 0 && (
+            <h1 className="text-center mt-5 font-semibold">No Notification</h1>
+          )}
+        </>
 
         {notifications &&
           notifications

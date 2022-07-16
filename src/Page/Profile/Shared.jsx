@@ -36,6 +36,9 @@ const Shared = () => {
   return (
     <section>
       <>
+        {shared?.length === 0 && (
+          <h1 className=" card p-5 text-center text-lg font-semibold">Nothing Found😞</h1>
+        )}
         {shared?.map((answer, index) => (
           <Feed
             feedInfo={answer}
@@ -45,9 +48,6 @@ const Shared = () => {
             feedRefetch={sharedRefetch}
           />
         ))}
-        {shared.length === 0 && (
-          <h1 className="card p-5 text-center font-semibold text-2xl">No post found</h1>
-        )}
       </>
     </section>
   );

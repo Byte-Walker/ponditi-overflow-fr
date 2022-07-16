@@ -15,7 +15,7 @@ import { BsThreeDots } from "react-icons/bs";
 import createNotification from "../UlitiyFunctions/createNotification";
 import useGetTags from "../../Hooks/useGetTags";
 import { AiFillDelete } from "react-icons/ai";
-import { FiEdit, FiHome } from "react-icons/fi";
+import { FiEdit } from "react-icons/fi";
 
 const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
   const [openModal, setOpenModal] = useState(false);
@@ -365,6 +365,7 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
 
 const ShowTaglist = ({ list }) => {
   const tagList = list && list.split(",");
+  const path = useNavigate();
   const { tags } = useGetTags();
   const allTags = {};
   for (let i = 0; i < tags?.length; i++) {
@@ -377,6 +378,7 @@ const ShowTaglist = ({ list }) => {
           key={index}
           className="py-1 px-2 rounded text-white text-[10px] font-semibold uppercase hover:underline hover"
           style={{ backgroundColor: allTags && allTags[tag] }}
+          onClick={() => path(`/tags/${tag}`)}
         >
           {tag}
         </p>

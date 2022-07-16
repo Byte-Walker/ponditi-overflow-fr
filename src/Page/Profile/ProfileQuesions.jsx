@@ -14,8 +14,11 @@ const ProfileQuesions = () => {
 
   return (
     <section>
-      <div className="homePageContainer card p-5 mx-auto mt-10 mb-5">
+      <div className="homePageContainer card p-5 mx-auto mb-5">
         <h1 className="font-semibold border-b pb-2">Your Questions</h1>
+        {questions?.length === 0 && (
+          <h1 className="pt-3 text-center text-lg font-semibold">No Question Found😞</h1>
+        )}
         {questions?.map((question, index) => (
           <QuestionFeed questionData={question} key={index} user_email_id={user_email_id} />
         ))}

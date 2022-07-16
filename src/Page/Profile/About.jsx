@@ -76,7 +76,7 @@ const About = () => {
         <div
           className="centerY gap-4 mb-2"
           style={{
-            display: userInfo?.job ? "flex" : "none",
+            display: userInfo?.job !== "null" && userInfo?.job ? "flex" : "none",
           }}
         >
           <button className="text-2xl">
@@ -91,7 +91,7 @@ const About = () => {
         <div
           className="centerY gap-4 mb-2"
           style={{
-            display: userInfo?.study ? "flex" : "none",
+            display: userInfo?.study !== "null" && userInfo?.study ? "flex" : "none",
           }}
         >
           <button className="text-2xl">
@@ -112,7 +112,10 @@ const About = () => {
           </p>
         </div>
         {/* Lives */}
-        <div className="centerY gap-4" style={{ display: userInfo?.location ? "flex" : "none" }}>
+        <div
+          className="centerY gap-4"
+          style={{ display: userInfo?.location !== "null" && userInfo?.location ? "flex" : "none" }}
+        >
           <button className="text-2xl">
             <ImLocation />
           </button>

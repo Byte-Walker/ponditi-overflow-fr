@@ -22,6 +22,8 @@ const Signup = () => {
     // * stroring all data to a object * //
     const userInfo = { user_name, user_email, user_pass, img_url };
     const url = `http://localhost:5500/signup`;
+
+    // * sending data to api * //
     fetch(url, {
       method: "POST",
       headers: {
@@ -35,15 +37,11 @@ const Signup = () => {
         if (res) {
           toast.success("Account Created", toastConfig);
           event.target.reset();
-          // * saving userinfo into local storage * //
-          localStorage.setItem("userInfo", JSON.stringify(res));
-          console.log(res);
-          manageUser(res);
-          path("/");
+          path("/login");
         }
       });
-    // * sending data to api * //
   };
+
   return (
     // * main container * //
     <section className={`md:bg-gray-50 bg-white min-h-screen centerXY md:p-0`}>

@@ -45,7 +45,7 @@ const Search = () => {
   return (
     <>
       <NavBar />
-      <section className="homePageContainer mx-auto mt-10">
+      <section className="homePageContainer mx-auto mt-8">
         <h1 className="card p-5 text-center text-xl text-blue-900 border border-blue-200">
           {questions && people && questions.length === 0 && people.length === 0 ? (
             <span>
@@ -77,7 +77,7 @@ const Search = () => {
 
         {/* Answers */}
         {questions && questions.length !== 0 && (
-          <div className="card mt-5 py-4 border border-blue-100 shadow-xl shadow-blue-50">
+          <div className="card mt-5 py-4 border border-blue-100 shadow-xl shadow-blue-50 mb-8">
             <h1 className="font-bold mb-3 border-b px-5 pb-4 border-blue-300 text-2xl text-blue-900">
               Questions
             </h1>

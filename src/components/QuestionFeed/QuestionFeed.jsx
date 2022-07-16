@@ -30,7 +30,8 @@ const QuestionFeed = ({ questionData }) => {
       >
         {question_description}
       </h1>
-      <p className="text-gray-400 my-1 text-sm">
+
+      <p className="text-gray-400 my-1 text-sm centerY gap-3 flex-wrap">
         <span className="font-semibold text-gray-500">
           {answerData?.length ? strGenerator(answerData?.length) : "No Answer Yet😥"}
         </span>{" "}
@@ -42,12 +43,36 @@ const QuestionFeed = ({ questionData }) => {
           <span className="text-gray-400">Answer</span>
         </button>
       </div>
+      <div className="flex items-center gap-2 mt-3">
+        Topic : <ShowTaglist list={questionData?.tags} />
+      </div>
       <AnswerModal
         questionInfo={questionData}
         openModal={openModal}
         setOpenModal={setOpenModal}
         refetch={refetch}
       />
+    </div>
+  );
+};
+
+const ShowTaglist = ({ list }) => {
+  let tagList = list && list.split(",");
+  tagList = tagList?.map((tag) => tag.trim());
+  const path = useNavigate();
+
+  return (
+    <div className="flex flex-wrap gap-2 cursor-pointer">
+      {tagList?.map((tag, index) => (
+        <p
+          key={index}
+          className="hover:underline font-semibold"
+          onClick={() => path(`/tags/${tag.slice(1)}`)}
+        >
+          {" "}
+          {tag}
+        </p>
+      ))}
     </div>
   );
 };

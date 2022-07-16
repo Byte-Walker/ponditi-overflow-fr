@@ -37,7 +37,7 @@ const Home = () => {
       <NavBar />{" "}
       {user?.user_email ? (
         <section className="homePageGrid mx-auto gap-3 mt-8">
-          <div className="card h-fit sticky top-20 p-5">
+          <div className="sticky top-20">
             <TagList />
           </div>
           <div>

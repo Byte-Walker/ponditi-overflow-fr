@@ -2,13 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Finlandica:ital,wght@1,700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Foundation:wght@500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Finlandica:ital,wght@1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Foundation:wght@500&display=swap");
 
 html,
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   background-color: rgba(239, 246, 255, 0.5);
 }
 
@@ -23,8 +23,24 @@ body::-webkit-scrollbar-thumb {
   border-radius: 20px; /* roundness of the scroll thumb */ /* creates padding around scroll thumb */
 }
 
+.tag-list::-webkit-scrollbar {
+  width: 5px; /* width of the entire scrollbar */
+}
+.tag-list::-webkit-scrollbar-track {
+  background: transparent; /* color of the tracking area */
+}
+.tag-list::-webkit-scrollbar-thumb {
+  @apply bg-gray-400;
+  border-radius: 20px; /* roundness of the scroll thumb */ /* creates padding around scroll thumb */
+}
+
+.tag-list {
+  overflow-y: auto;
+  max-height: calc(100vh - 150px);
+}
+
 .font-title {
-  font-family: 'Edu NSW ACT Foundation', cursive;
+  font-family: "Edu NSW ACT Foundation", cursive;
 }
 
 .container {
@@ -41,7 +57,7 @@ body::-webkit-scrollbar-thumb {
 .homePageGrid {
   max-width: 1120px;
   display: grid;
-  grid-template-columns: 200px 600px 1fr;
+  grid-template-columns: 220px 580px 1fr;
 }
 
 .homePageContainer {

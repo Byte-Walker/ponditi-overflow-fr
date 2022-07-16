@@ -72,10 +72,10 @@ const Post = () => {
                     <li>Make sure your question has not been asked already</li>
                     <li>Keep your question short and to the point</li>
                     <li>Double-check grammar and spelling</li>
-                    {/* <li>
-                      Separate each tag with comma ( , ) ans use underscore if the tag is more than
-                      a word
-                    </li> */}
+                    <li>
+                      Use lower case for tag name , put a (#) infront of a tag, separate each tag
+                      with comma ( , ) and use underscore if the tag is more than a word.
+                    </li>
                   </ul>
                 </div>
               </div>
