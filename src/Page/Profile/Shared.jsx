@@ -3,6 +3,8 @@ import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import Feed from "../../components/Feed/Feed";
 import { UserContext } from "../../ContextAPI/UserContext";
+import useGetUserFollowing from "../../Hooks/useGetUserFollowing";
+import { Spinner } from "flowbite-react";
 
 const Shared = () => {
   const { user_email_id } = useParams();
@@ -21,20 +23,21 @@ const Shared = () => {
 
   // * Follower Info * //
   const {
-    data: following,
-    isLoading,
-    refetch: followingRefetch,
-  } = useQuery(`following_${user?.user_email}`, () =>
-    fetch(`https://ponditi-overflow.herokuapp.com/followings/${user?.user_email}`).then((res) =>
-      res.json()
-    )
-  );
+    followingUser: following,
+    followingUserLoading,
+    followingUserRefetchUser: followingRefetch,
+  } = useGetUserFollowing(user?.user_email);
+
   useEffect(() => {
     sharedRefetch();
   }, [sharedRefetch]);
 
-  if (isLoading || sharedLoading) {
-    return null;
+  if (followingUserLoading || sharedLoading) {
+    return (
+      <div className="p-5 centerXY card">
+        <Spinner color="info" aria-label="Info spinner example" size="xl" />
+      </div>
+    );
   }
 
   return (

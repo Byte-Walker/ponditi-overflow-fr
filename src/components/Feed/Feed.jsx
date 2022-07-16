@@ -129,24 +129,28 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
                   {user?.user_email !== feedInfo?.user_email && (
                     <>
                       {/* if doesn't follow then follow option */}
-                      {!following[feedInfo?.user_email] && (
-                        <p
-                          className="text-blue-500 text-sm font-semibold cursor-pointer hover:underline"
-                          onClick={() =>
-                            modFollow({
-                              followed: feedInfo?.user_email,
-                              follower: user?.user_email,
-                              mode: "add",
-                            })
-                          }
-                        >
-                          Follow
-                        </p>
-                      )}
+                      {following &&
+                        Object.keys(following).length !== 0 &&
+                        !following[feedInfo?.user_email] && (
+                          <p
+                            className="text-blue-500 text-sm font-semibold cursor-pointer hover:underline"
+                            onClick={() =>
+                              modFollow({
+                                followed: feedInfo?.user_email,
+                                follower: user?.user_email,
+                                mode: "add",
+                              })
+                            }
+                          >
+                            Follow
+                          </p>
+                        )}
                       {/* if follow show following */}
-                      {following[feedInfo?.user_email] && (
-                        <p className="text-gray-500 text-sm font-semibold">Following</p>
-                      )}
+                      {following &&
+                        Object.keys(following).length !== 0 &&
+                        following[feedInfo?.user_email] && (
+                          <p className="text-gray-500 text-sm font-semibold">Following</p>
+                        )}
                     </>
                   )}
                 </div>

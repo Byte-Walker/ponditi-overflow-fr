@@ -8,25 +8,22 @@ import { toast } from "react-toastify";
 import { toastConfig } from "../../components/toastConfig";
 import { UserContext } from "../../ContextAPI/UserContext";
 import { useParams } from "react-router-dom";
-import { useQuery } from "react-query";
+import useGetUserInfo from "../../Hooks/useGetUserInfo";
+import { Spinner } from "flowbite-react";
 
 const About = () => {
   const [openModal, setOpenModal] = useState(false);
   const { user, manageUser } = useContext(UserContext);
   const { user_email_id } = useParams();
 
-  const { data: userInfo, refetch } = useQuery(`userInfo_${user_email_id}`, () =>
-    fetch(`https://ponditi-overflow.herokuapp.com/profile/${user_email_id}`).then((res) =>
-      res.json()
-    )
-  );
+  const { userInfo, userInfoRefetch, userInfoLoading } = useGetUserInfo(user_email_id);
 
   useEffect(() => {
-    refetch();
+    userInfoRefetch();
     setJob(userInfo?.job);
     setLocation(userInfo?.location);
     setStudy(userInfo?.study);
-  }, [refetch, user_email_id, userInfo]);
+  }, [userInfoRefetch, user_email_id, userInfo]);
 
   const [job, setJob] = useState(userInfo?.job);
   const [study, setStudy] = useState(userInfo?.study);
@@ -49,83 +46,92 @@ const About = () => {
       .then((res) => {
         if (res) {
           toast.success("Your Profile Updated", toastConfig);
-          console.log(res);
           manageUser(res);
           localStorage.setItem("userInfo", JSON.stringify(user));
           e.target.reset();
           setOpenModal(false);
-          refetch();
+          userInfoRefetch();
         }
       });
   };
   // * returning component *//
   return (
     <section className="p-5 card">
-      <div>
-        <div className="centerY justify-between mb-5">
-          <h1 className="text-2xl font-semibold">Basic Overview</h1>
-          <button
-            className="text-xl centerXY rounded-full bg-gray-300 h-[40px] w-[40px] transition 
+      {userInfoLoading && (
+        <div className="p-5 centerXY">
+          <Spinner color="info" aria-label="Info spinner example" size="xl" />
+        </div>
+      )}
+      {userInfo && (
+        <div>
+          <div className="centerY justify-between mb-5">
+            <h1 className="text-2xl font-semibold">Basic Overview</h1>
+            <button
+              className="text-xl centerXY rounded-full bg-gray-300 h-[40px] w-[40px] transition 
             hover:scale-125 hover:bg-blue-600 hover:text-white"
-            // * checking if user if the currently logged in * //
-            style={{ display: user?.user_email === userInfo?.user_email ? "flex" : "none" }}
-            onClick={() => setOpenModal(true)}
+              // * checking if user if the currently logged in * //
+              style={{ display: user?.user_email === userInfo?.user_email ? "flex" : "none" }}
+              onClick={() => setOpenModal(true)}
+            >
+              <AiOutlineEdit />
+            </button>
+          </div>
+          {/* Works */}
+          <div
+            className="centerY gap-4 mb-2"
+            style={{
+              display: userInfo?.job !== "null" && userInfo?.job ? "flex" : "none",
+            }}
           >
-            <AiOutlineEdit />
-          </button>
-        </div>
-        {/* Works */}
-        <div
-          className="centerY gap-4 mb-2"
-          style={{
-            display: userInfo?.job !== "null" && userInfo?.job ? "flex" : "none",
-          }}
-        >
-          <button className="text-2xl">
-            <MdOutlineWork />
-          </button>
-          <p className="text-md">
-            {" "}
-            <span className="font-semibold">{userInfo?.job}</span>{" "}
-          </p>
-        </div>
-        {/* study */}
-        <div
-          className="centerY gap-4 mb-2"
-          style={{
-            display: userInfo?.study !== "null" && userInfo?.study ? "flex" : "none",
-          }}
-        >
-          <button className="text-2xl">
-            <FaUserGraduate />
-          </button>
-          <p className="text-md">
-            Studies at <span className="font-semibold">{userInfo?.study}</span>
-          </p>
-        </div>
+            <button className="text-2xl">
+              <MdOutlineWork />
+            </button>
+            <p className="text-md">
+              {" "}
+              <span className="font-semibold">{userInfo?.job}</span>{" "}
+            </p>
+          </div>
+          {/* study */}
+          <div
+            className="centerY gap-4 mb-2"
+            style={{
+              display: userInfo?.study !== "null" && userInfo?.study ? "flex" : "none",
+            }}
+          >
+            <button className="text-2xl">
+              <FaUserGraduate />
+            </button>
+            <p className="text-md">
+              Studies at <span className="font-semibold">{userInfo?.study}</span>
+            </p>
+          </div>
 
-        {/* Email */}
-        <div className="centerY gap-4 mb-2">
-          <button className="text-2xl">
-            <MdEmail />
-          </button>
-          <p className="text-md">
-            Email : <span className="font-semibold">{userInfo?.user_email}</span>
-          </p>
+          {/* Email */}
+          <div className="centerY gap-4 mb-2">
+            <button className="text-2xl">
+              <MdEmail />
+            </button>
+            <p className="text-md">
+              Email : <span className="font-semibold">{userInfo?.user_email}</span>
+            </p>
+          </div>
+          {/* Lives */}
+          <div
+            className="centerY gap-4"
+            style={{
+              display: userInfo?.location !== "null" && userInfo?.location ? "flex" : "none",
+            }}
+          >
+            <button className="text-2xl">
+              <ImLocation />
+            </button>
+            <p className="text-md">
+              Lives in <span className="font-semibold">{userInfo?.location}</span>
+            </p>
+          </div>
         </div>
-        {/* Lives */}
-        <div
-          className="centerY gap-4"
-          style={{ display: userInfo?.location !== "null" && userInfo?.location ? "flex" : "none" }}
-        >
-          <button className="text-2xl">
-            <ImLocation />
-          </button>
-          <p className="text-md">
-            Lives in <span className="font-semibold">{userInfo?.location}</span>
-          </p>
-        </div>
-      </div>
+      )}
+
       <Modal title={"Add Your Basic Infor"} openModal={openModal} setOpenModal={setOpenModal}>
         <form className="p-5 flex gap-5 flex-col" onSubmit={updateProfile}>
           <div className="bg-blue-100 text-blue-600 text-sm p-3 mb-3 rounded">

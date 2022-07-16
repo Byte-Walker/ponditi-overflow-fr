@@ -42,6 +42,9 @@ const TagQuestion = ({ tag_name }) => {
           <Spinner color="info" aria-label="Info spinner example" size="xl" />
         </div>
       )}
+      {tagQuestions?.length === 0 && (
+        <h1 className="p-5 text-center text-lg font-semibold">No Question Found😞</h1>
+      )}
       {tagQuestions?.map((question, index) => (
         <QuestionFeed questionData={question} key={index} />
       ))}

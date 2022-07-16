@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
+import { Spinner } from "flowbite-react";
 import FollowList from "../../components/FollowList/FollowList";
 
 const Followers = () => {
@@ -19,18 +20,20 @@ const Followers = () => {
     followerListRefecth();
   }, [followerListRefecth, user_email_id]);
 
-  if (followerListLoading) {
-    return null;
-  }
-
   return (
     <section className="card p-5 ">
       <h1 className="font-semibold border-b pb-2">Your Followers</h1>
+      {followerListLoading && (
+        <div className="p-5 centerXY">
+          <Spinner color="info" aria-label="Info spinner example" size="xl" />
+        </div>
+      )}
       <div>
-        {Object.keys(followerList).map((follower, index) => (
-          <FollowList key={index} user_email_id={follower} />
-        ))}
-        {Object.keys(followerList).length === 0 && (
+        {followerList &&
+          Object.keys(followerList).map((follower, index) => (
+            <FollowList key={index} user_email_id={follower} />
+          ))}
+        {followerList && Object.keys(followerList).length === 0 && (
           <h1 className="pt-3 text-center text-lg font-semibold">None Followed You Yet😞</h1>
         )}
       </div>

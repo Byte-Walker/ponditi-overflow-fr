@@ -1,33 +1,17 @@
 import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useQuery } from "react-query";
 import { UserContext } from "../../ContextAPI/UserContext";
 import UserDP from "../UserDP/UserDP";
 import { FaUserPlus, FaUserCheck } from "react-icons/fa";
+import useGetUserInfo from "../../Hooks/useGetUserInfo";
+import useGetUserFollowing from "../../Hooks/useGetUserFollowing";
 
 const FollowList = ({ user_email_id }) => {
   const { user } = useContext(UserContext);
   const path = useNavigate();
-
-  // * getting the user's info whose id is shown at the following / follower's option * //
-  const {
-    data: userInfo,
-    isLoading,
-    refetch: userInfoRefetch,
-  } = useQuery(`userInfo_${user_email_id}`, () =>
-    fetch(`https://ponditi-overflow.herokuapp.com/profile/${user_email_id}`).then((res) =>
-      res.json()
-    )
-  );
-
-  // * Getting logged in user's following list * //
-  const { data: followListUser, refetch: followListUserRefetch } = useQuery(
-    `following_${user?.user_email}`,
-    () =>
-      fetch(`https://ponditi-overflow.herokuapp.com/followings/${user?.user_email}`).then((res) =>
-        res.json()
-      )
-  );
+  const { userInfo, userInfoRefetch } = useGetUserInfo(user_email_id);
+  const { followingUser: followListUser, followingUserRefetchUser: followListUserRefetch } =
+    useGetUserFollowing(user?.user_email);
 
   // * follow or unfollow * //
   const modFollow = ({ followed, follower, mode }) => {
@@ -50,10 +34,6 @@ const FollowList = ({ user_email_id }) => {
     userInfoRefetch();
     followListUserRefetch();
   }, [userInfoRefetch, followListUserRefetch]);
-
-  if (isLoading) {
-    return null;
-  }
 
   return (
     <div className="py-3 border-b centerY justify-between">
@@ -78,7 +58,9 @@ const FollowList = ({ user_email_id }) => {
       {/* follow button */}
       {userInfo?.user_email !== user?.user_email && (
         <>
-          {!followListUser[userInfo?.user_email] ? (
+          {followListUser &&
+          Object.keys(followListUser).length !== 0 &&
+          !followListUser[userInfo?.user_email] ? (
             <button
               className="btnBlue centerXY gap-2"
               onClick={() =>

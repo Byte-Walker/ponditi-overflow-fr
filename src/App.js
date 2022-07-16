@@ -4,7 +4,7 @@ import Home from "./Page/Home/Home";
 import Login from "./Page/Login/Login";
 import About from "./Page/Profile/About";
 import Profile from "./Page/Profile/Profile";
-import ProfileAnsers from "./Page/Profile/ProfileAnsers";
+import ProfileAnswers from "./Page/Profile/ProfileAnswers";
 import ProfileQuesions from "./Page/Profile/ProfileQuesions";
 import Signup from "./Page/Signup/Signup";
 import { UserContext } from "./ContextAPI/UserContext";
@@ -44,7 +44,7 @@ const App = () => {
         <Route path="/notifications" element={<NotificationPage />} />
         <Route path="/profile/:user_email_id" element={<Profile />}>
           <Route index element={<About />} />
-          <Route path="/profile/:user_email_id/answers" element={<ProfileAnsers />} />
+          <Route path="/profile/:user_email_id/answers" element={<ProfileAnswers />} />
           <Route path="/profile/:user_email_id/shared" element={<Shared />} />
           <Route path="/profile/:user_email_id/questions" element={<ProfileQuesions />} />
           <Route path="/profile/:user_email_id/followers" element={<Followers />} />
