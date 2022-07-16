@@ -2,8 +2,10 @@ import React, { useContext } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { UserContext } from "../../ContextAPI/UserContext";
+import useGetUserFollowing from "../../Hooks/useGetUserFollowing";
 import Feed from "../Feed/Feed";
 import NavBar from "../NavBar/NavBar";
+import { Spinner } from "flowbite-react";
 
 const SingleAnswer = () => {
   const { answer_id } = useParams();
@@ -16,22 +18,19 @@ const SingleAnswer = () => {
   } = useQuery(`answer_${answer_id}`, () =>
     fetch(`https://ponditi-overflow.herokuapp.com/answer/${answer_id}`).then((res) => res.json())
   );
-  const { data: following, refetch: followingRefetch } = useQuery(
-    `following_${user?.user_email}`,
-    () =>
-      fetch(`https://ponditi-overflow.herokuapp.com/followings/${user?.user_email}`).then((res) =>
-        res.json()
-      )
-  );
 
-  if (isLoading) {
-    return null;
-  }
+  const { followingUser: following, followingUserRefetchUser: followingRefetch } =
+    useGetUserFollowing(user?.user_email);
 
   return (
     <>
       <NavBar />
       <div className="homePageContainer mx-auto mt-8">
+        {isLoading && (
+          <div className="p-5 centerXY">
+            <Spinner color="info" aria-label="Info spinner example" size="xl" />
+          </div>
+        )}
         {answer && (
           <Feed
             feedInfo={answer[0]}

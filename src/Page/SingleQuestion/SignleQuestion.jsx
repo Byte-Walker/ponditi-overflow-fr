@@ -8,6 +8,7 @@ import AnswerModal from "../../components/AnswerModal/AnswerModal";
 import Feed from "../../components/Feed/Feed";
 import { useQuery } from "react-query";
 import UserDP from "../../components/UserDP/UserDP";
+import { Spinner } from "flowbite-react";
 
 const SignleQuestion = () => {
   const { question_id } = useParams();
@@ -36,10 +37,6 @@ const SignleQuestion = () => {
         res.json()
       )
   );
-
-  if (answersLoading) {
-    return null;
-  }
 
   return (
     <>
@@ -86,6 +83,11 @@ const SignleQuestion = () => {
         </div>
         {/* all answer of that specific quesion */}
         <div className="mt-2">
+          {answersLoading && (
+            <div className="p-5 card centerXY">
+              <Spinner color="info" aria-label="Info spinner example" size="xl" />
+            </div>
+          )}
           {answers?.map((answer, index) => (
             <Feed
               feedInfo={answer}
