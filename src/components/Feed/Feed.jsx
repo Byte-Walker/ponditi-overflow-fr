@@ -1,19 +1,21 @@
-import React, { useContext, useState } from "react";
-import { ImArrowUp } from "react-icons/im";
-import { TbArrowBigTop } from "react-icons/tb";
-import { RiShareForwardLine, RiShareForwardFill } from "react-icons/ri";
-import { AiFillDelete } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
-import useGetUpvote from "../../Hooks/useGetUpvote";
-import { UserContext } from "../../ContextAPI/UserContext";
-import handleUpvote from "../UlitiyFunctions/handleUpvote";
-import UserDP from "../UserDP/UserDP";
-import { useQuery } from "react-query";
-import Modal from "../Modal/Modal";
-import { BsThreeDots } from "react-icons/bs";
-import { Dropdown } from "flowbite-react";
-import createNotification from "../UlitiyFunctions/createNotification";
-import useGetTags from "../../Hooks/useGetTags";
+import React, { useContext, useState } from 'react';
+import { Fragment } from 'react';
+import { Menu, Transition } from '@headlessui/react';
+import { ImArrowUp } from 'react-icons/im';
+import { TbArrowBigTop } from 'react-icons/tb';
+import { RiShareForwardLine, RiShareForwardFill } from 'react-icons/ri';
+import { useNavigate } from 'react-router-dom';
+import useGetUpvote from '../../Hooks/useGetUpvote';
+import { UserContext } from '../../ContextAPI/UserContext';
+import handleUpvote from '../UlitiyFunctions/handleUpvote';
+import UserDP from '../UserDP/UserDP';
+import { useQuery } from 'react-query';
+import Modal from '../Modal/Modal';
+import { BsThreeDots } from 'react-icons/bs';
+import createNotification from '../UlitiyFunctions/createNotification';
+import useGetTags from '../../Hooks/useGetTags';
+import { AiFillDelete } from 'react-icons/ai';
+import { FiEdit, FiHome } from 'react-icons/fi';
 
 const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
   const [openModal, setOpenModal] = useState(false);
@@ -22,12 +24,18 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
 
   const path = useNavigate();
   const [upvoteInfo, setUpvoteInfo] = useGetUpvote(feedInfo?.answer_id);
-  const upvoteContent = { answer_id: feedInfo?.answer_id, user_email: user?.user_email };
+  const upvoteContent = {
+    answer_id: feedInfo?.answer_id,
+    user_email: user?.user_email,
+  };
 
   // * geting sharers information * //
   const { data: sharers, refetch: sharersRefetch } = useQuery(
     `sharers_${feedInfo?.answer_id}`,
-    () => fetch(`http://localhost:5500/sharers/${feedInfo?.answer_id}`).then((res) => res.json())
+    () =>
+      fetch(`http://localhost:5500/sharers/${feedInfo?.answer_id}`).then(
+        (res) => res.json()
+      )
   );
 
   // * follow or unfollow * //
@@ -35,19 +43,19 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
     const followData = { followed, follower, mode };
     const url = `http://localhost:5500/modifyfollower`;
     fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(followData),
     })
       .then((res) => res.json())
       .then((res) => {
         if (res) {
           followingRefetch();
-          if ((mode = "add")) {
+          if ((mode = 'add')) {
             createNotification({
               provoker: follower,
               receiver: followed,
-              mode: "follow",
+              mode: 'follow',
               seen: false,
             });
           }
@@ -60,8 +68,8 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
     const shareInfo = { user_email, answer_id };
     const url = `http://localhost:5500/createshare`;
     fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(shareInfo),
     })
       .then((res) => res.json())
@@ -71,7 +79,7 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
           createNotification({
             provoker: user?.user_email,
             receiver: feedInfo?.user_email,
-            mode: "share",
+            mode: 'share',
             answer_id,
             seen: false,
           });
@@ -82,11 +90,11 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
   // * handle delete * //
   const handleDete = ({ answer_id, feedRefetch }) => {
     const url = `http://localhost:5500/answers/${answer_id}`;
-    fetch(url, { method: "DELETE" })
+    fetch(url, { method: 'DELETE' })
       .then((res) => res.json())
       .then((res) => {
         if (res) {
-          console.log("deleted");
+          console.log('deleted');
           feedRefetch();
           setOpenModal(false);
         }
@@ -128,7 +136,7 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
                             modFollow({
                               followed: feedInfo?.user_email,
                               follower: user?.user_email,
-                              mode: "add",
+                              mode: 'add',
                             })
                           }
                         >
@@ -137,21 +145,25 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
                       )}
                       {/* if follow show following */}
                       {following[feedInfo?.user_email] && (
-                        <p className="text-gray-500 text-sm font-semibold">Following</p>
+                        <p className="text-gray-500 text-sm font-semibold">
+                          Following
+                        </p>
                       )}
                     </>
                   )}
                 </div>
                 {/* designation */}
                 <p className="text-sm text-gray-500">
-                  <span className="text-gray-500 font-medium">{feedInfo?.job}</span>{" "}
-                  {feedInfo?.job && "-"} {feedInfo?.time}
+                  <span className="text-gray-500 font-medium">
+                    {feedInfo?.job}
+                  </span>{' '}
+                  {feedInfo?.job && '-'} {feedInfo?.time}
                 </p>
               </div>
             </div>
 
             <div>
-              <Dropdown
+              {/* <Dropdown
                 arrowIcon={false}
                 inline={true}
                 label={<BsThreeDots className="text-2xl m-0 p-0" />}
@@ -171,7 +183,52 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
                     </Dropdown.Item>
                   </>
                 )}
-              </Dropdown>
+              </Dropdown> */}
+              <Menu as="div" className="relative inline-block text-left">
+                <div>
+                  <Menu.Button className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-offset-gray-100 focus:ring-indigo-500">
+                    <BsThreeDots className="text-xl text-blue-900" />
+                  </Menu.Button>
+                </div>
+
+                <Transition
+                  as={Fragment}
+                  enter="transition ease-out duration-100"
+                  enterFrom="transform opacity-0 scale-95"
+                  enterTo="transform opacity-100 scale-100"
+                  leave="transition ease-in duration-75"
+                  leaveFrom="transform opacity-100 scale-100"
+                  leaveTo="transform opacity-0 scale-95"
+                >
+                  <Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
+                    <div className="py-1">
+                      <Menu.Item>
+                        <div
+                          onClick={() =>
+                            path(`/question/${feedInfo?.question_id}`)
+                          }
+                          className="dropDownItem icon-hover"
+                        >
+                          <FiEdit className="dropDownIcon" /> See all answers
+                        </div>
+                      </Menu.Item>
+                      {user?.user_email === feedInfo?.user_email && (
+                        <Fragment>
+                          <Menu.Item>
+                            <div
+                              className="flex items-center py-2 px-3 text-red-600 hover:bg-red-600 hover:text-white my-1 mx-2 rounded-md cursor-pointer icon-hover"
+                              onClick={() => setOpenModal(true)}
+                            >
+                              <AiFillDelete className="mr-2 text-lg text-red-600" />
+                              Delete Post
+                            </div>
+                          </Menu.Item>
+                        </Fragment>
+                      )}
+                    </div>
+                  </Menu.Items>
+                </Transition>
+              </Menu>
             </div>
             {/* user info ends*/}
           </div>
@@ -194,11 +251,11 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
                   onClick={() => setShowFull(showFull ? false : true)}
                   className="text-sm ml-3 px-2 py-px bg-blue-100 text-blue-700 rounded-lg hover:underline"
                 >
-                  {showFull ? "Less" : "More"}
+                  {showFull ? 'Less' : 'More'}
                 </button>
               </span>
             ) : (
-              ""
+              ''
             )}
           </p>
           {/* question ends */}
@@ -228,8 +285,8 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
                 })
               }
               style={{
-                backgroundColor: upvoteInfo[user?.user_email] ? "#DBEAFE" : " ",
-                color: upvoteInfo[user?.user_email] ? "#2563EB" : "",
+                backgroundColor: upvoteInfo[user?.user_email] ? '#DBEAFE' : ' ',
+                color: upvoteInfo[user?.user_email] ? '#2563EB' : '',
               }}
               //
             >
@@ -246,7 +303,7 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
               {/* Vertical separator */}
               <span
                 className={`h-4 w-px ${
-                  upvoteInfo[user?.user_email] ? "bg-blue-600" : "bg-gray-400"
+                  upvoteInfo[user?.user_email] ? 'bg-blue-600' : 'bg-gray-400'
                 }`}
               ></span>
               {Object.keys(upvoteInfo).length}
@@ -254,7 +311,9 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
 
             <button
               className={`iconButton  ${
-                sharers && sharers[user?.user_email] ? "btnDisabled" : "bubleOnHOver"
+                sharers && sharers[user?.user_email]
+                  ? 'btnDisabled'
+                  : 'bubleOnHOver'
               }`}
               onClick={() =>
                 handleShare({
@@ -263,9 +322,13 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
                 })
               }
               style={{
-                cursor: sharers && sharers[user?.user_email] ? "not-allowed" : "pointer",
-                backgroundColor: sharers && sharers[user?.user_email] ? "#DBEAFE" : "",
-                color: sharers && sharers[user?.user_email] ? "#2563EB" : "",
+                cursor:
+                  sharers && sharers[user?.user_email]
+                    ? 'not-allowed'
+                    : 'pointer',
+                backgroundColor:
+                  sharers && sharers[user?.user_email] ? '#DBEAFE' : '',
+                color: sharers && sharers[user?.user_email] ? '#2563EB' : '',
               }}
             >
               {sharers && sharers[user?.user_email] ? (
@@ -280,7 +343,7 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
               {/* Vertical separator */}
               <span
                 className={`h-4 w-px ${
-                  upvoteInfo[user?.user_email] ? "bg-blue-600" : "bg-gray-400"
+                  upvoteInfo[user?.user_email] ? 'bg-blue-600' : 'bg-gray-400'
                 }`}
               ></span>
               {sharers && Object.keys(sharers).length}
@@ -289,22 +352,28 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
           {/* reactions, comments and share ends */}
         </div>
       </div>
-      <Modal openModal={openModal} setOpenModal={setOpenModal} title={"Delete This post?"}>
+      <Modal
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+        title={'Delete This post?'}
+      >
         <div className="p-5">
           <p className="">
-            You delete this post, it will be gone forever. Even if cry till you death it will be
-            gone for good.
+            You delete this post, it will be gone forever. Even if cry till you
+            death it will be gone for good.
           </p>
           <div className="w-fit ml-auto flex gap-5 mt-3">
             <button
-              className="px-3 py-1 hover:bg-gray-400 hover:text-white rounded hover"
+              className="px-3 py-1 hover:bg-gray-400 hover:text-white rounded transition"
               onClick={() => setOpenModal(false)}
             >
               Cancel
             </button>
             <button
-              className="px-3 py-1 bg-blue-600 text-white rounded hover"
-              onClick={() => handleDete({ answer_id: feedInfo?.answer_id, feedRefetch })}
+              className="px-3 py-1 bg-red-600 hover:bg-red-800 text-white rounded transitionClass"
+              onClick={() =>
+                handleDete({ answer_id: feedInfo?.answer_id, feedRefetch })
+              }
             >
               Delete
             </button>
@@ -316,7 +385,7 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
 };
 
 const ShowTaglist = ({ list }) => {
-  const tagList = list && list.split(",");
+  const tagList = list && list.split(',');
   const { tags } = useGetTags();
   const allTags = {};
   for (let i = 0; i < tags?.length; i++) {
@@ -327,7 +396,7 @@ const ShowTaglist = ({ list }) => {
       {tagList?.map((tag, index) => (
         <p
           key={index}
-          className="p-1 rounded text-white text-[10px] font-semibold uppercase"
+          className="py-1 px-2 rounded text-white text-[10px] font-semibold uppercase hover:underline hover"
           style={{ backgroundColor: allTags && allTags[tag] }}
         >
           {tag}
