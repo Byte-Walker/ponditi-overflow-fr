@@ -17,6 +17,7 @@ import Followers from "./Page/Profile/Followers";
 import Search from "./Page/Search/Search";
 import SingleAnswer from "./components/SignleAnswer/SingleAnswer";
 import NotificationPage from "./Page/NotificationPage/NotificationPage";
+import TagsPage from "./Page/TagsPage/TagsPage";
 
 const App = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("userInfo")));
@@ -42,6 +43,7 @@ const App = () => {
           <Route path="/profile/:user_email_id/followings" element={<Following />} />
         </Route>
         <Route path="/search/:searchStr" element={<Search />} />
+        <Route path="/tags/:tag_name" element={<TagsPage />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </UserContext.Provider>

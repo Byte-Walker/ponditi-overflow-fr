@@ -25,6 +25,8 @@ const Post = () => {
     const question_description = e.target.elements.askingFelid.value;
     let tags = e.target.elements.taglist.value;
     tags = tags.split(",");
+    tags = tags.map((tag) => tag.trim());
+    console.log(tags);
 
     const quesInfo = {
       user_email: user?.user_email,

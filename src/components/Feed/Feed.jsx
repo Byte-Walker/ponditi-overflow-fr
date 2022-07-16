@@ -1,21 +1,21 @@
-import React, { useContext, useState } from 'react';
-import { Fragment } from 'react';
-import { Menu, Transition } from '@headlessui/react';
-import { ImArrowUp } from 'react-icons/im';
-import { TbArrowBigTop } from 'react-icons/tb';
-import { RiShareForwardLine, RiShareForwardFill } from 'react-icons/ri';
-import { useNavigate } from 'react-router-dom';
-import useGetUpvote from '../../Hooks/useGetUpvote';
-import { UserContext } from '../../ContextAPI/UserContext';
-import handleUpvote from '../UlitiyFunctions/handleUpvote';
-import UserDP from '../UserDP/UserDP';
-import { useQuery } from 'react-query';
-import Modal from '../Modal/Modal';
-import { BsThreeDots } from 'react-icons/bs';
-import createNotification from '../UlitiyFunctions/createNotification';
-import useGetTags from '../../Hooks/useGetTags';
-import { AiFillDelete } from 'react-icons/ai';
-import { FiEdit, FiHome } from 'react-icons/fi';
+import React, { useContext, useState } from "react";
+import { Fragment } from "react";
+import { Menu, Transition } from "@headlessui/react";
+import { ImArrowUp } from "react-icons/im";
+import { TbArrowBigTop } from "react-icons/tb";
+import { RiShareForwardLine, RiShareForwardFill } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
+import useGetUpvote from "../../Hooks/useGetUpvote";
+import { UserContext } from "../../ContextAPI/UserContext";
+import handleUpvote from "../UlitiyFunctions/handleUpvote";
+import UserDP from "../UserDP/UserDP";
+import { useQuery } from "react-query";
+import Modal from "../Modal/Modal";
+import { BsThreeDots } from "react-icons/bs";
+import createNotification from "../UlitiyFunctions/createNotification";
+import useGetTags from "../../Hooks/useGetTags";
+import { AiFillDelete } from "react-icons/ai";
+import { FiEdit, FiHome } from "react-icons/fi";
 
 const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
   const [openModal, setOpenModal] = useState(false);
@@ -32,10 +32,7 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
   // * geting sharers information * //
   const { data: sharers, refetch: sharersRefetch } = useQuery(
     `sharers_${feedInfo?.answer_id}`,
-    () =>
-      fetch(`http://localhost:5500/sharers/${feedInfo?.answer_id}`).then(
-        (res) => res.json()
-      )
+    () => fetch(`http://localhost:5500/sharers/${feedInfo?.answer_id}`).then((res) => res.json())
   );
 
   // * follow or unfollow * //
@@ -43,19 +40,19 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
     const followData = { followed, follower, mode };
     const url = `http://localhost:5500/modifyfollower`;
     fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(followData),
     })
       .then((res) => res.json())
       .then((res) => {
         if (res) {
           followingRefetch();
-          if ((mode = 'add')) {
+          if ((mode = "add")) {
             createNotification({
               provoker: follower,
               receiver: followed,
-              mode: 'follow',
+              mode: "follow",
               seen: false,
             });
           }
@@ -68,8 +65,8 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
     const shareInfo = { user_email, answer_id };
     const url = `http://localhost:5500/createshare`;
     fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(shareInfo),
     })
       .then((res) => res.json())
@@ -79,7 +76,7 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
           createNotification({
             provoker: user?.user_email,
             receiver: feedInfo?.user_email,
-            mode: 'share',
+            mode: "share",
             answer_id,
             seen: false,
           });
@@ -90,11 +87,11 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
   // * handle delete * //
   const handleDete = ({ answer_id, feedRefetch }) => {
     const url = `http://localhost:5500/answers/${answer_id}`;
-    fetch(url, { method: 'DELETE' })
+    fetch(url, { method: "DELETE" })
       .then((res) => res.json())
       .then((res) => {
         if (res) {
-          console.log('deleted');
+          console.log("deleted");
           feedRefetch();
           setOpenModal(false);
         }
@@ -136,7 +133,7 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
                             modFollow({
                               followed: feedInfo?.user_email,
                               follower: user?.user_email,
-                              mode: 'add',
+                              mode: "add",
                             })
                           }
                         >
@@ -145,19 +142,15 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
                       )}
                       {/* if follow show following */}
                       {following[feedInfo?.user_email] && (
-                        <p className="text-gray-500 text-sm font-semibold">
-                          Following
-                        </p>
+                        <p className="text-gray-500 text-sm font-semibold">Following</p>
                       )}
                     </>
                   )}
                 </div>
                 {/* designation */}
                 <p className="text-sm text-gray-500">
-                  <span className="text-gray-500 font-medium">
-                    {feedInfo?.job}
-                  </span>{' '}
-                  {feedInfo?.job && '-'} {feedInfo?.time}
+                  <span className="text-gray-500 font-medium">{feedInfo?.job}</span>{" "}
+                  {feedInfo?.job && "-"} {feedInfo?.time}
                 </p>
               </div>
             </div>
@@ -204,9 +197,7 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
                     <div className="py-1">
                       <Menu.Item>
                         <div
-                          onClick={() =>
-                            path(`/question/${feedInfo?.question_id}`)
-                          }
+                          onClick={() => path(`/question/${feedInfo?.question_id}`)}
                           className="dropDownItem icon-hover"
                         >
                           <FiEdit className="dropDownIcon" /> See all answers
@@ -251,11 +242,11 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
                   onClick={() => setShowFull(showFull ? false : true)}
                   className="text-sm ml-3 px-2 py-px bg-blue-100 text-blue-700 rounded-lg hover:underline"
                 >
-                  {showFull ? 'Less' : 'More'}
+                  {showFull ? "Less" : "More"}
                 </button>
               </span>
             ) : (
-              ''
+              ""
             )}
           </p>
           {/* question ends */}
@@ -285,8 +276,8 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
                 })
               }
               style={{
-                backgroundColor: upvoteInfo[user?.user_email] ? '#DBEAFE' : ' ',
-                color: upvoteInfo[user?.user_email] ? '#2563EB' : '',
+                backgroundColor: upvoteInfo[user?.user_email] ? "#DBEAFE" : " ",
+                color: upvoteInfo[user?.user_email] ? "#2563EB" : "",
               }}
               //
             >
@@ -303,7 +294,7 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
               {/* Vertical separator */}
               <span
                 className={`h-4 w-px ${
-                  upvoteInfo[user?.user_email] ? 'bg-blue-600' : 'bg-gray-400'
+                  upvoteInfo[user?.user_email] ? "bg-blue-600" : "bg-gray-400"
                 }`}
               ></span>
               {Object.keys(upvoteInfo).length}
@@ -311,9 +302,7 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
 
             <button
               className={`iconButton  ${
-                sharers && sharers[user?.user_email]
-                  ? 'btnDisabled'
-                  : 'bubleOnHOver'
+                sharers && sharers[user?.user_email] ? "btnDisabled" : "bubleOnHOver"
               }`}
               onClick={() =>
                 handleShare({
@@ -322,13 +311,9 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
                 })
               }
               style={{
-                cursor:
-                  sharers && sharers[user?.user_email]
-                    ? 'not-allowed'
-                    : 'pointer',
-                backgroundColor:
-                  sharers && sharers[user?.user_email] ? '#DBEAFE' : '',
-                color: sharers && sharers[user?.user_email] ? '#2563EB' : '',
+                cursor: sharers && sharers[user?.user_email] ? "not-allowed" : "pointer",
+                backgroundColor: sharers && sharers[user?.user_email] ? "#DBEAFE" : "",
+                color: sharers && sharers[user?.user_email] ? "#2563EB" : "",
               }}
             >
               {sharers && sharers[user?.user_email] ? (
@@ -343,7 +328,7 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
               {/* Vertical separator */}
               <span
                 className={`h-4 w-px ${
-                  upvoteInfo[user?.user_email] ? 'bg-blue-600' : 'bg-gray-400'
+                  upvoteInfo[user?.user_email] ? "bg-blue-600" : "bg-gray-400"
                 }`}
               ></span>
               {sharers && Object.keys(sharers).length}
@@ -352,15 +337,11 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
           {/* reactions, comments and share ends */}
         </div>
       </div>
-      <Modal
-        openModal={openModal}
-        setOpenModal={setOpenModal}
-        title={'Delete This post?'}
-      >
+      <Modal openModal={openModal} setOpenModal={setOpenModal} title={"Delete This post?"}>
         <div className="p-5">
           <p className="">
-            You delete this post, it will be gone forever. Even if cry till you
-            death it will be gone for good.
+            You delete this post, it will be gone forever. Even if cry till you death it will be
+            gone for good.
           </p>
           <div className="w-fit ml-auto flex gap-5 mt-3">
             <button
@@ -371,9 +352,7 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
             </button>
             <button
               className="px-3 py-1 bg-red-600 hover:bg-red-800 text-white rounded transitionClass"
-              onClick={() =>
-                handleDete({ answer_id: feedInfo?.answer_id, feedRefetch })
-              }
+              onClick={() => handleDete({ answer_id: feedInfo?.answer_id, feedRefetch })}
             >
               Delete
             </button>
@@ -385,7 +364,7 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
 };
 
 const ShowTaglist = ({ list }) => {
-  const tagList = list && list.split(',');
+  const tagList = list && list.split(",");
   const { tags } = useGetTags();
   const allTags = {};
   for (let i = 0; i < tags?.length; i++) {
