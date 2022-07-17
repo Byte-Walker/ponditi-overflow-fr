@@ -218,15 +218,12 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
               ? feedInfo?.answer_description
               : `${feedInfo?.answer_description.slice(0, 300)}`}
             {feedInfo?.answer_description.length > 300 ? (
-              <span>
-                ...
-                <button
-                  onClick={() => setShowFull(showFull ? false : true)}
-                  className="text-sm ml-3 px-2 py-px bg-blue-100 text-blue-700 rounded-lg hover:underline"
-                >
-                  {showFull ? "Less" : "More"}
-                </button>
-              </span>
+              <button
+                onClick={() => setShowFull(showFull ? false : true)}
+                className="text-sm ml-3 px-2 py-px bg-blue-100 text-blue-700 rounded-lg hover:underline"
+              >
+                {showFull ? "Less" : "... More"}
+              </button>
             ) : (
               ""
             )}
