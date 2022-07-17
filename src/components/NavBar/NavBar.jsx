@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../ContextAPI/UserContext";
 import { Dropdown, Avatar } from "flowbite-react";
 import { SiMusicbrainz } from "react-icons/si";
+import { BiGroup } from "react-icons/bi";
 import DpMaker from "../DpMaker/DpMaker";
 import Notification from "../Notification/Notification";
 
@@ -43,6 +44,9 @@ const NavBar = () => {
           </CustomNavLink>
           <CustomNavLink to={"/answer"}>
             <FiEdit />
+          </CustomNavLink>
+          <CustomNavLink to={`/about-us`}>
+            <BiGroup />
           </CustomNavLink>
           <CustomNavLink to={`/profile/${user?.user_email}`}>
             <CgProfile />

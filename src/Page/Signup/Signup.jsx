@@ -12,9 +12,11 @@ const Signup = () => {
   const singupHandler = (event) => {
     event.preventDefault();
     const user_name =
-      event.target.elements.firstName.value + " " + event.target.elements.lastName.value;
-    const user_email = event.target.elements.email.value;
-    const user_pass = event.target.elements.password.value;
+      event.target.elements.firstName.value.trim() +
+      " " +
+      event.target.elements.lastName.value.trim();
+    const user_email = event.target.elements.email.value.trim();
+    const user_pass = event.target.elements.password.value.trim();
     const img_url = "null";
 
     // * stroring all data to a object * //

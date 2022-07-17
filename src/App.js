@@ -19,6 +19,7 @@ import SingleAnswer from "./components/SignleAnswer/SingleAnswer";
 import NotificationPage from "./Page/NotificationPage/NotificationPage";
 import TagsPage from "./Page/TagsPage/TagsPage";
 import AuthProvider from "./AuthProvider/AuthProvider";
+import AboutUs from "./Page/AboutUs/AboutUs";
 
 const App = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("userInfo")));
@@ -52,6 +53,7 @@ const App = () => {
         </Route>
         <Route path="/search/:searchStr" element={<Search />} />
         <Route path="/tags/:tag_name" element={<TagsPage />} />
+        <Route path="/about-us" element={<AboutUs />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </UserContext.Provider>

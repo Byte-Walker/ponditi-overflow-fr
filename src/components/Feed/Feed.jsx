@@ -129,28 +129,24 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
                   {user?.user_email !== feedInfo?.user_email && (
                     <>
                       {/* if doesn't follow then follow option */}
-                      {following &&
-                        Object.keys(following).length !== 0 &&
-                        !following[feedInfo?.user_email] && (
-                          <p
-                            className="text-blue-500 text-sm font-semibold cursor-pointer hover:underline"
-                            onClick={() =>
-                              modFollow({
-                                followed: feedInfo?.user_email,
-                                follower: user?.user_email,
-                                mode: "add",
-                              })
-                            }
-                          >
-                            Follow
-                          </p>
-                        )}
+                      {following && !following[feedInfo?.user_email] && (
+                        <p
+                          className="text-blue-500 text-sm font-semibold cursor-pointer hover:underline"
+                          onClick={() =>
+                            modFollow({
+                              followed: feedInfo?.user_email,
+                              follower: user?.user_email,
+                              mode: "add",
+                            })
+                          }
+                        >
+                          Follow
+                        </p>
+                      )}
                       {/* if follow show following */}
-                      {following &&
-                        Object.keys(following).length !== 0 &&
-                        following[feedInfo?.user_email] && (
-                          <p className="text-gray-500 text-sm font-semibold">Following</p>
-                        )}
+                      {following && following[feedInfo?.user_email] && (
+                        <p className="text-gray-500 text-sm font-semibold">Following</p>
+                      )}
                     </>
                   )}
                 </div>
@@ -163,27 +159,6 @@ const Feed = ({ feedInfo, following, followingRefetch, feedRefetch }) => {
             </div>
 
             <div>
-              {/* <Dropdown
-                arrowIcon={false}
-                inline={true}
-                label={<BsThreeDots className="text-2xl m-0 p-0" />}
-              >
-                <Dropdown.Item onClick={() => path(`/question/${feedInfo?.question_id}`)}>
-                  See all answers
-                </Dropdown.Item>
-
-                {user?.user_email === feedInfo?.user_email && (
-                  <>
-                    <Dropdown.Divider />
-                    <Dropdown.Item onClick={() => setOpenModal(true)}>
-                      <button className="flex items-center text-red-600">
-                        <AiFillDelete className="mr-1 text-lg" />
-                        Delete Post
-                      </button>
-                    </Dropdown.Item>
-                  </>
-                )}
-              </Dropdown> */}
               <Menu as="div" className="relative inline-block text-left">
                 <div>
                   <Menu.Button className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-offset-gray-100 focus:ring-indigo-500">

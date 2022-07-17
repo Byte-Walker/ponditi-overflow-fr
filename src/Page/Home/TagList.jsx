@@ -38,7 +38,7 @@ const TagList = () => {
                     <div>
                       <FaSlackHash className="text-blue-600" />{" "}
                     </div>
-                    <p className="hover:underline truncate uppercase">{tag?.tag_name}.slice(1)</p>
+                    <p className="hover:underline truncate uppercase">{tag?.tag_name.slice(1)}</p>
                   </div>
                 </div>
               ))}
@@ -46,7 +46,7 @@ const TagList = () => {
         ) : (
           <div>
             {tags &&
-              tags?.slice(0, 15).map((tag, index) => (
+              tags?.slice(0, 10).map((tag, index) => (
                 <div
                   className="cursor-pointer px-5"
                   key={index}
@@ -63,7 +63,7 @@ const TagList = () => {
           </div>
         )}
       </div>
-      <div style={{ display: tags?.length <= 15 ? "none" : "block" }}>
+      <div style={{ display: tags?.length <= 10 ? "none" : "block" }}>
         <button
           style={{ display: showall ? "none" : "flex" }}
           className="bg-blue-600 text-white w-fit rounded-full  mx-auto mt-2 px-5 py-1 centerY gap-1"
