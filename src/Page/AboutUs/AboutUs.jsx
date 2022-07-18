@@ -89,7 +89,7 @@ const UserCard = ({ userInfo }) => {
 
   return (
     <div className="card pb-5 relative">
-      <div className="absolute top-0 left-[50%] translate-x-[-50%] translate-y-[-50%]">
+      <div className="absolute top-0 left-[50%] translate-x-[-50%] translate-y-[-50%] hover">
         <UserDP dimension={"120px"} img_url={img} />
       </div>
       <div className="mt-20 px-5 text-center">
