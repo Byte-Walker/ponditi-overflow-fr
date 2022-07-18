@@ -54,7 +54,7 @@ const AboutUs = () => {
       poditiLink: "",
     },
     {
-      name: "Md. Thanos Ansary Fahim",
+      name: "Md. Thasan Ansary Fahim",
       img: "https://i.ibb.co/gdmDSyJ/Fahim-min.jpg",
       id: "20211103024",
       intake: "46/1",
@@ -66,7 +66,7 @@ const AboutUs = () => {
   return (
     <>
       <NavBar />
-      <section className="mt-16 w-[1120px] mx-auto">
+      <section className="mt-16 w-[1120px] mx-auto pb-5">
         <div className="mb-28 text-center">
           <h1 className="font-black text-4xl mb-3 text-blue-900">About Us</h1>
           <p className="text-xl">
