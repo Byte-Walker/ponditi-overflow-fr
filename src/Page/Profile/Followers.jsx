@@ -34,7 +34,7 @@ const Followers = () => {
             <FollowList key={index} user_email_id={follower} />
           ))}
         {followerList && Object.keys(followerList).length === 0 && (
-          <h1 className="pt-3 text-center text-lg font-semibold">None Followed You Yet😞</h1>
+          <h1 className="pt-3 text-center text-lg font-semibold">No Followers Found😞</h1>
         )}
       </div>
     </section>
