@@ -24,7 +24,7 @@ const Following = () => {
 
   return (
     <section className="card p-5 ">
-      <h1 className="font-semibold border-b pb-2">Your Followings</h1>
+      <h1 className="font-semibold border-b pb-2">Followings</h1>
       {followingListLoading && (
         <div className="p-5 centerXY">
           <Spinner color="info" aria-label="Info spinner example" size="xl" />

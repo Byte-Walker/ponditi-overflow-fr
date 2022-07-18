@@ -22,7 +22,7 @@ const Followers = () => {
 
   return (
     <section className="card p-5 ">
-      <h1 className="font-semibold border-b pb-2">Your Followers</h1>
+      <h1 className="font-semibold border-b pb-2">Followers</h1>
       {followerListLoading && (
         <div className="p-5 centerXY">
           <Spinner color="info" aria-label="Info spinner example" size="xl" />

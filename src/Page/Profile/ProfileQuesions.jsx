@@ -16,7 +16,7 @@ const ProfileQuesions = () => {
   return (
     <section>
       <div className="homePageContainer card p-5 mx-auto mb-5">
-        <h1 className="font-semibold border-b pb-2">Your Questions</h1>
+        <h1 className="font-semibold border-b pb-2">All Questions</h1>
         {userQuestionLoading ? (
           <div className="p-5 centerXY">
             <Spinner color="info" aria-label="Info spinner example" size="xl" />
